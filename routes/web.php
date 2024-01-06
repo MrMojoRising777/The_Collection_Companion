@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AbbreviationController;
 use App\Http\Controllers\ComicController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -20,6 +21,8 @@ Route::get('/', function () {
 });
 
 Route::get('/comics', [ComicController::class, 'index']);
+
+Route::get('/abbrevations', [AbbreviationController::class, 'index']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
