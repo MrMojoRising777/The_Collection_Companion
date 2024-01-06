@@ -23,6 +23,7 @@ Route::get('/', function () {
 Route::get('/comics', [ComicController::class, 'index'])->name('comics.index');
 
 Route::get('/abbrevations', [AbbreviationController::class, 'index'])->name('abbreviations.index');
+Route::get('/abbreviations/{id}', [AbbreviationController::class, 'show'])->name('abbreviations.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
