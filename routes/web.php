@@ -20,9 +20,9 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/comics', [ComicController::class, 'index']);
+Route::get('/comics', [ComicController::class, 'index'])->name('comics.index');
 
-Route::get('/abbrevations', [AbbreviationController::class, 'index']);
+Route::get('/abbrevations', [AbbreviationController::class, 'index'])->name('abbreviations.index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');
