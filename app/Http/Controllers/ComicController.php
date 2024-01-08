@@ -12,6 +12,15 @@ class ComicController extends Controller
     {
         $comics = Comic::all();
         $abbreviations = Abbreviation::all();
+
         return view('comics.index', compact('comics', 'abbreviations'));
+    }
+
+    public function filter(Request $request)
+    {
+        $abbreviation = $request->input('abbreviation');
+        $filteredComics = Comic::where($abbreviation, '>', 0)->get();
+
+        return view('comics.filtered', compact('filteredComics', 'abbreviation'));
     }
 }
