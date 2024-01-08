@@ -35,9 +35,18 @@
         <tbody>
           @foreach($comics as $comic)
             <tr>
-              @foreach(['id', 'date', 'title', 'VO', 'BR', 'HO', 'VT', 'HT', 'GT', 'VK', 'SK', 'DS', 'RK', 'BK', 'PR', 'CL', 'HR'] as $column)
+              @foreach(['id', 'date', 'title', 'VO', 'BR', 'HO', 'VT', 'HT', 'GT', 'VK', 'SK', 'DS', 'RK', 'BK', 'PR', 'CL', 'HR', 'obtained'] as $column)
                 <td>
-                  {{ $comic->$column }}
+                  @if($column == 'obtained')
+                    <form method="POST" action="{{ route('comics.toggleObtained', $comic) }}">
+                      @csrf
+                      <button type="submit" class="btn btn-{{ $comic->obtained ? 'success' : 'danger' }}">
+                        {{ $comic->obtained ? 'Obtained' : 'Unobtained' }}
+                      </button>
+                    </form>
+                  @else
+                    {{ $comic->$column }}
+                  @endif
                 </td>
               @endforeach
             </tr>
@@ -52,4 +61,31 @@
       </a>
     </div>
   </div>
+
+  <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+  <script>
+    $(document).ready(function () {
+      // Handle click event on table rows
+      $('.clickable-row').click(function () {
+        var comicId = $(this).data('comic-id');
+
+        // Send AJAX request to mark comic as obtained
+        $.ajax({
+          type: 'POST',
+          url: '/mark-as-obtained/' + comicId,
+          data: {
+            _token: '{{ csrf_token() }}', // Add CSRF token
+          },
+          success: function (data) {
+            // Handle success
+            console.log('Comic marked as obtained:', data);
+          },
+          error: function (error) {
+            // Handle error
+            console.error('Error marking comic as obtained:', error);
+          },
+        });
+      });
+    });
+  </script>
 @endsection

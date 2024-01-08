@@ -23,4 +23,23 @@ class ComicController extends Controller
 
         return view('comics.filtered', compact('filteredComics', 'abbreviation'));
     }
+
+    public function markAsObtained($id)
+    {
+        $comic = Comic::find($id);
+
+        if ($comic) {
+            $comic->update(['obtained' => true]);
+            return response()->json(['message' => 'Comic marked as obtained.']);
+        }
+
+        return response()->json(['error' => 'Comic not found.'], 404);
+    }
+
+    public function toggleObtained(Comic $comic)
+    {
+        $comic->update(['obtained' => !$comic->obtained]);
+
+        return redirect()->back()->with('success', 'Obtained status updated successfully.');
+    }
 }

@@ -23,6 +23,9 @@ Route::get('/', function () {
 Route::get('/comics', [ComicController::class, 'index'])->name('comics.index');
 Route::post('/comics/filter', [ComicController::class, 'filter'])->name('comics.filter');
 
+Route::post('/mark-as-obtained/{id}', [ComicController::class, 'markAsObtained'])->name('comics.markAsObtained');
+Route::post('/comics/{comic}/toggle-obtained', [ComicController::class, 'toggleObtained'])->name('comics.toggleObtained');
+
 Route::get('/abbrevations', [AbbreviationController::class, 'index'])->name('abbreviations.index');
 Route::get('/abbreviations/{id}', [AbbreviationController::class, 'show'])->name('abbreviations.show');
 
