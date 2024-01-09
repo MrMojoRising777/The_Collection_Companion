@@ -16,6 +16,11 @@ class ComicController extends Controller
         return view('comics.index', compact('comics', 'abbreviations'));
     }
 
+    public function show(Comic $comic)
+    {
+        return view('comics.show', compact('comic'));
+    }
+
     public function filter(Request $request)
     {
         $abbreviation = $request->input('abbreviation');

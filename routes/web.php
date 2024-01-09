@@ -21,6 +21,7 @@ Route::get('/', function () {
 });
 
 Route::get('/comics', [ComicController::class, 'index'])->name('comics.index');
+Route::get('/comics/{comic}', [ComicController::class, 'show'])->name('comics.show');
 Route::post('/comics/filter', [ComicController::class, 'filter'])->name('comics.filter');
 
 Route::post('/mark-as-obtained/{id}', [ComicController::class, 'markAsObtained'])->name('comics.markAsObtained');

@@ -34,7 +34,7 @@
         </thead>
         <tbody>
           @foreach($comics as $comic)
-            <tr>
+            <tr onclick="window.location='{{ route('comics.show', $comic) }}';" style="cursor: pointer;">
               @foreach(['id', 'date', 'title', 'VO', 'BR', 'HO', 'VT', 'HT', 'GT', 'VK', 'SK', 'DS', 'RK', 'BK', 'PR', 'CL', 'HR', 'obtained'] as $column)
                 <td>
                   @if($column == 'obtained')
