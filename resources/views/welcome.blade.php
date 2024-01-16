@@ -7,28 +7,23 @@
 
     <!-- Include the compiled Tailwind CSS -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-
-    <!-- Your custom styles (if any) -->
-    <link href="{{ asset('css/custom.css') }}" rel="stylesheet">
 </head>
-<body class="antialiased bg-light text-dark">
-    <div class="container mx-auto">
-        @if (Route::has('login'))
-            <div class="fixed top-0 right-0 p-4">
-                @auth
-                    <a href="{{ url('/dashboard') }}" class="bg-blue-500 text-white p-2 rounded">Dashboard</a>
-                @else
-                    <a href="{{ route('login') }}" class="bg-blue-500 text-white p-2 rounded">Log in</a>
+<body class="font-sans text-gray-900 antialiased">
+    <div class="container mx-auto p-4 bg-gray-100 dark:bg-gray-900">
+        <div class="flex justify-end space-x-2">
+            @auth
+                <a href="{{ url('/dashboard') }}" class="btn-primary">Dashboard</a>
+            @else
+                <button class="hover:bg-red-500 hover:text-white text-black bg-transparent font-bold py-2 px-4 rounded-full" onclick="window.location='{{ route('login') }}'">
+                    Log in
+                </button>
+                @if (Route::has('register'))
+                    <button class="hover:bg-red-500 hover:text-white text-black bg-transparent font-bold py-2 px-4 rounded-full" onclick="window.location='{{ route('register') }}'">Register</button>
+                @endif
+            @endauth
+        </div>        
 
-                    @if (Route::has('register'))
-                        <a href="{{ route('register') }}" class="bg-blue-500 text-white p-2 ml-2 rounded">Register</a>
-                    @endif
-                @endauth
-            </div>
-        @endif
-
-        <!-- Your content goes here -->
-
+        <img src="{{ asset('images/sw_welcome.jpeg') }}" alt="Description" class="mx-auto rounded-lg shadow-md max-w-full h-auto mt-4">
     </div>
 
     <!-- Your custom scripts -->
