@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\Abbreviation;
+use App\Models\Serie;
 use App\Models\Comic;
 
 class ComicController extends Controller
@@ -11,9 +11,9 @@ class ComicController extends Controller
     public function index()
     {
         $comics = Comic::all();
-        $abbreviations = Abbreviation::all();
+        $series = Serie::all();
 
-        return view('comics.index', compact('comics', 'abbreviations'));
+        return view('comics.index', compact('comics', 'series'));
     }
 
     public function show(Comic $comic)
@@ -23,10 +23,10 @@ class ComicController extends Controller
 
     public function filter(Request $request)
     {
-        $abbreviation = $request->input('abbreviation');
+        $serie = $request->input('serie');
         $filteredComics = Comic::where($abbreviation, '>', 0)->get();
 
-        return view('comics.filtered', compact('filteredComics', 'abbreviation'));
+        return view('comics.filtered', compact('filteredComics', 'serie'));
     }
 
     public function markAsObtained($id)

@@ -9,11 +9,11 @@
     <form method="POST" action="{{ route('comics.filter') }}" class="mt-3 p-4 bg-light rounded shadow">
       @csrf
       <div class="mb-3">
-        <label for="abbreviation" class="form-label">Select Abbreviation:</label>
-        <select name="abbreviation" id="abbreviation" class="form-select">
-          @foreach ($abbreviations as $abbreviation)
-            <option value="{{ strtolower($abbreviation->abbreviation) }}">
-              {{ $abbreviation->abbreviation }} - {{ $abbreviation->description }}
+        <label for="serie" class="form-label">Select serie:</label>
+        <select name="serie" id="serie" class="form-select">
+          @foreach ($series as $serie)
+            <option value="{{ strtolower($serie->name) }}">
+              {{ $serie->name }} - {{ $serie->abbreviation }}
             </option>
           @endforeach
         </select>

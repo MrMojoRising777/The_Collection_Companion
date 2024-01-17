@@ -1,6 +1,6 @@
 <?php
 
-use App\Http\Controllers\AbbreviationController;
+use App\Http\Controllers\SerieController;
 use App\Http\Controllers\ComicController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
@@ -27,8 +27,8 @@ Route::post('/comics/filter', [ComicController::class, 'filter'])->name('comics.
 Route::post('/mark-as-obtained/{id}', [ComicController::class, 'markAsObtained'])->name('comics.markAsObtained');
 Route::post('/comics/{comic}/toggle-obtained', [ComicController::class, 'toggleObtained'])->name('comics.toggleObtained');
 
-Route::get('/abbrevations', [AbbreviationController::class, 'index'])->name('abbreviations.index');
-Route::get('/abbreviations/{id}', [AbbreviationController::class, 'show'])->name('abbreviations.show');
+Route::get('/series', [SerieController::class, 'index'])->name('series.index');
+Route::get('/series/{id}', [SerieController::class, 'show'])->name('series.show');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

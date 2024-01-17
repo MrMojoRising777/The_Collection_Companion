@@ -13,11 +13,11 @@
     {{-- dropdown items --}}
     <div x-show="open" @click.away="open = false" class="origin-top-right absolute right-0 mt-2 w-56 rounded-md shadow-lg bg-white ring-1 ring-black ring-opacity-5">
       <div class="py-1" role="menu" aria-orientation="vertical" aria-labelledby="options-menu">
-        @foreach ($abbreviations as $abbreviation)
-          <a href="{{ route('abbreviations.show', ['id' => $abbreviation->id]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
-            {{ $abbreviation->abbreviation }}
+        @foreach ($series as $serie)
+          <a href="{{ route('series.show', ['id' => $serie->id]) }}" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 hover:text-gray-900" role="menuitem">
+            {{ $serie->name }}
             -
-            {{ $abbreviation->description }}
+            {{ $serie->abbreviation }}
           </a>
         @endforeach
       </div>
@@ -29,7 +29,7 @@
     <table class="min-w-full table-auto border border-gray-300 dark:border-gray-700 bg-white dark:bg-gray-800">
       <thead>
         <tr>
-          @foreach(['id', 'abbreviation', 'description', 'period'] as $column)
+          @foreach(['id', 'name', 'abbreviation', 'period'] as $column)
             <th class="border border-gray-300 dark:border-gray-700 p-2 bg-gray-200 dark:bg-gray-600">
               {{ $column }}
             </th>
@@ -37,11 +37,11 @@
         </tr>
       </thead>
       <tbody>
-        @foreach($abbreviations as $abbreviation)
+        @foreach($series as $serie)
           <tr class="hover:bg-gray-100 dark:hover:bg-gray-700">
-            @foreach(['id', 'abbreviation', 'description', 'period'] as $column)
+            @foreach(['id', 'name', 'abbreviation', 'period'] as $column)
               <td class="border border-gray-300 dark:border-gray-700 p-2 bg-gray-200 dark:bg-gray-600">
-                {{ $abbreviation->$column }}
+                {{ $serie->$column }}
               </td>
             @endforeach
           </tr>
