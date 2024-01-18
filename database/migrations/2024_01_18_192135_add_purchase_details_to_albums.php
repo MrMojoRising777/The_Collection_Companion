@@ -12,9 +12,9 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('albums', function (Blueprint $table) {
-            $table->date('purchase_place')->nullable()->after('condition');
+            $table->string('purchase_place')->nullable()->after('condition');
             $table->decimal('purchase_price')->nullable()->after('purchase_place');
-            $table->string('purchase_date')->nullable()->after('purchase_price');
+            $table->date('purchase_date')->nullable()->after('purchase_price');
         });
     }
 
