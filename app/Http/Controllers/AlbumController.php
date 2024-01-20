@@ -34,7 +34,7 @@ class AlbumController extends Controller
             'name' => 'required|string|max:255',
             'comic_id' => 'required|exists:comics,id',
             'serie_id' => 'required|exists:series,id',
-            'volume' => 'nullable|numeric',
+            'volume' => 'nullable|string',
             'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
             'color' => 'nullable|string|max:255',
             'print_year' => 'nullable|integer',
