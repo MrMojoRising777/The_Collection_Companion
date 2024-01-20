@@ -11,18 +11,27 @@
         <link rel="preconnect" href="https://fonts.bunny.net">
         <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
 
-        <!-- Scripts -->
-        @vite(['resources/css/app.css', 'resources/js/app.js'])
+        <!-- Favicon -->
+        <link rel="shortcut icon" type="image/x-icon" href="{{ asset('img/favicon.ico') }}">
+
+        <!-- Styles -->
+        <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     </head>
     <body class="font-sans text-gray-900 antialiased">
         <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
+
+            <!-- Image -->
             <div>
                 <img src="{{ asset('images/sw_welcome.jpeg') }}" alt="Description" class="mx-auto rounded-lg shadow-md max-w-full h-auto mt-4">
             </div>
 
+            <!-- Content -->
             <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
                 {{ $slot }}
             </div>
         </div>
+
+        <!-- Scripts -->
+        <script src="{{ mix('js/app.js') }}"></script>
     </body>
 </html>
