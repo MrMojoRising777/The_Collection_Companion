@@ -37,7 +37,7 @@
 
             <div class="form-group mb-3">
                 <label for="volume" class="text-white">Volume:</label>
-                <input type="number" name="volume" class="form-control" value="{{ old('volume', $album->volume) }}">
+                <input type="text" name="volume" class="form-control" value="{{ old('volume', $album->volume) }}">
             </div>
 
             <div class="form-group mb-3">
