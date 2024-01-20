@@ -3,8 +3,10 @@
 @section('content')
     <div class="container">
         <h2>All Albums</h2>
-
-        <a href="{{ route('albums.create') }}" class="btn btn-primary">Create</a>
+        
+        <a href="{{ route('albums.create') }}" class="btn btn-primary mb-3">
+            Create
+        </a>
 
         @if(session('success'))
             <div class="alert alert-success">
@@ -52,5 +54,6 @@
                 </tbody>
             </table>
         </div>
+        {{ $albums->links() }}
     </div>
 @endsection
