@@ -31,10 +31,27 @@ class AlbumController extends Controller
     public function update(Request $request, Album $album)
     {
         $validatedData = $request->validate([
-            'name' => 'required',
-            // Add other validation rules for your input fields here
+            'name' => 'required|string|max:255',
+            'comic_id' => 'required|exists:comics,id',
+            'serie_id' => 'required|exists:series,id',
+            'volume' => 'nullable|numeric',
+            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'color' => 'nullable|string|max:255',
+            'print_year' => 'nullable|integer',
+            'obtained' => 'nullable|boolean',
+            'condition' => 'nullable|string|max:255',
+            'purchase_place' => 'nullable|string|max:255',
+            'purchase_price' => 'nullable|numeric',
+            'purchase_date' => 'nullable|date',
+            'notes' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
+        if ($request->hasFile('image')) {
+            // Handle image file upload
+        }
+
+        // Update the album with validated data
         $album->update($validatedData);
 
         return redirect()->route('albums.index')->with('success', 'Album updated successfully.');

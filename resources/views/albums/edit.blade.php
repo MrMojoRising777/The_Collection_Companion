@@ -57,7 +57,7 @@
 
             <div class="form-group mb-3">
                 <label for="obtained" class="text-white">Obtained:</label>
-                <input type="checkbox" name="obtained" value="{{ old('obtained', $album->obtained) }}">
+                <input type="checkbox" name="obtained" {{ old('obtained', $album->obtained) ? 'checked' : '' }}>
             </div>
 
             <div class="form-group mb-3">
@@ -82,7 +82,7 @@
 
             <div class="form-group mb-3">
                 <label for="notes" class="text-white">Notes:</label>
-                <textarea name="notes" class="form-control" value="{{ old('note', $album->note) }}"></textarea>
+                <textarea name="notes" class="form-control">{{ old('notes', $album->notes) }}</textarea>
             </div>
 
             <div class="form-group mb-3">
