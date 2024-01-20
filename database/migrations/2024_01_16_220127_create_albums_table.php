@@ -16,6 +16,17 @@ return new class extends Migration
             $table->string('name');
             $table->foreignId('comic_id')->constrained();
             $table->foreignId('serie_id')->constrained();
+            $table->integer('volume')->nullable();
+            $table->boolean('obtained')->nullable();
+            $table->string('condition')->nullable();
+            $table->text('notes')->nullable();
+            $table->string('image')->nullable();
+            $table->string('cover')->nullable();
+            $table->string('color')->nullable();
+            $table->string('print_year')->nullable();
+            $table->string('purchase_place')->nullable();
+            $table->decimal('purchase_price')->nullable();
+            $table->date('purchase_date')->nullable();
             $table->timestamps();
         });
     }

@@ -9,6 +9,18 @@ class Album extends Model
 {
     use HasFactory;
 
+    protected $fillable = [
+        'name', 'comic_id', 'serie_id', 'volume', 'cover', 'color', 'print_year',
+        'obtained', 'condition', 'purchase_place', 'purchase_price', 'purchase_date',
+        'notes', 'image',
+    ];
+
+    // Define relationships with Comic and Serie models
+    public function comic()
+    {
+        return $this->belongsTo(Comic::class);
+    }
+
     public function serie()
     {
         return $this->belongsTo(Serie::class);

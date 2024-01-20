@@ -19,7 +19,10 @@
                         {{ __('Comics') }}
                     </x-nav-link>
                     <x-nav-link :href="route('series.index')" :active="request()->routeIs('series.index')">
-                        {{ __('series') }}
+                        {{ __('Series') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('albums.index')" :active="request()->routeIs('series.index')">
+                        {{ __('Albums') }}
                     </x-nav-link>
                 </div>
             </div>
