@@ -15,14 +15,11 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('comics.index')" :active="request()->routeIs('comics.index')">
-                        {{ __('Comics') }}
+                    <x-nav-link :href="route('albums.index')" :active="request()->routeIs('series.index')">
+                        {{ __('Albums') }}
                     </x-nav-link>
                     <x-nav-link :href="route('series.index')" :active="request()->routeIs('series.index')">
                         {{ __('Series') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('albums.index')" :active="request()->routeIs('series.index')">
-                        {{ __('Albums') }}
                     </x-nav-link>
                 </div>
             </div>

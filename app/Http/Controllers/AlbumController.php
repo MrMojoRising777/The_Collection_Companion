@@ -12,7 +12,27 @@ class AlbumController extends Controller
     public function index()
     {
         $albums = Album::paginate(10);
-        return view('albums.index', compact('albums'));
+        $series = Serie::all();
+        return view('albums.index', compact('albums', 'series'));
+    }
+
+    public function markAsObtained($id)
+    {
+        $album = Album::find($id);
+
+        if ($album) {
+            $album->update(['obtained' => true]);
+            return response()->json(['message' => 'Album marked as obtained.']);
+        }
+
+        return response()->json(['error' => 'Album not found.'], 404);
+    }
+
+    public function toggleObtained(Album $album)
+    {
+        $album->update(['obtained' => !$album->obtained]);
+
+        return redirect()->back()->with('success', 'Obtained status updated successfully.');
     }
 
     public function show(Album $album)
@@ -35,7 +55,7 @@ class AlbumController extends Controller
             'comic_id' => 'required|exists:comics,id',
             'serie_id' => 'required|exists:series,id',
             'volume' => 'nullable|string',
-            'cover' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'cover' => 'nullable|string',
             'color' => 'nullable|string|max:255',
             'print_year' => 'nullable|integer',
             'obtained' => 'nullable|boolean',
@@ -44,12 +64,7 @@ class AlbumController extends Controller
             'purchase_price' => 'nullable|numeric',
             'purchase_date' => 'nullable|date',
             'notes' => 'nullable|string',
-            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
-
-        if ($request->hasFile('image')) {
-            // Handle image file upload
-        }
 
         // Update the album with validated data
         $album->update($validatedData);

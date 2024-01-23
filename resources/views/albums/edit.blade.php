@@ -42,7 +42,7 @@
 
             <div class="form-group mb-3">
                 <label for="cover" class="text-white">Cover:</label>
-                <input type="file" name="cover" class="form-control-file" value="{{ old('cover', $album->cover) }}">
+                <input type="text" name="cover" class="form-control" value="{{ old('cover', $album->cover) }}">
             </div>
 
             <div class="form-group mb-3">
