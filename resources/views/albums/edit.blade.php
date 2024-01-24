@@ -52,9 +52,9 @@
                         <input type="text" name="color" class="form-control" value="{{ old('color', $album->color) }}">
                     </div>
         
-                    <div class="form-group mb-3"> {{-- PRINT_YEAR --}}
-                        <label for="print_year" class="text-black">Print Year:</label>
-                        <input type="text" name="print_year" class="form-control" value="{{ old('print_year', $album->print_year) }}">
+                    <div class="form-group mb-3"> {{-- FIRST_PRINT --}}
+                        <label for="first_print" class="text-black">First Print:</label>
+                        <input type="text" name="first_print" class="form-control" value="{{ old('first_print', $album->first_print) }}">
                     </div>
 
                     <div class="form-group mb-3"> {{-- OBTAINED --}}
@@ -63,6 +63,11 @@
                     </div>
                 </div>
                 <div class="col-md-6">
+                    <div class="form-group mb-3"> {{-- PRINT_YEAR --}}
+                        <label for="print_year" class="text-black">Print Year:</label>
+                        <input type="text" name="print_year" class="form-control" value="{{ old('print_year', $album->print_year) }}">
+                    </div>
+
                     <div class="form-group mb-3"> {{-- CONDITION --}}
                         <label for="condition" class="text-black">Condition:</label>
                         <input type="text" name="condition" class="form-control" value="{{ old('condition', $album->condition) }}">

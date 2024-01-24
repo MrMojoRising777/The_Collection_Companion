@@ -26,7 +26,7 @@
             <th>Volume</th>
             <th>Obtained</th>
             <th>Cover</th>
-            <th>Print Year</th>
+            <th>First Print</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -48,7 +48,7 @@
               <td>{{ $album->volume }}</td>
               <td>{{ $album->obtained ? 'Yes' : 'No' }}</td>
               <td>{{ $album->cover }}</td>
-              <td>{{ $album->print_year }}</td>
+              <td>{{ $album->first_print }}</td>
               <td>
                 <a href="{{ route('albums.show', $album->id) }}" class="btn btn-info">View</a>
                 <a href="{{ route('albums.edit', $album->id) }}" class="btn btn-warning">Edit</a>

@@ -11,11 +11,12 @@
                 <p class="mb-2"><strong>Nummer:</strong> {{ $album->volume }}</p>
                 <p class="mb-2"><strong>Kaft:</strong> {{ $album->cover }}</p>
                 <p class="mb-2"><strong>Kleur:</strong> {{ $album->color }}</p>
-                <p class="mb-2"><strong>Print Jaar:</strong> {{ $album->print_year }}</p>
+                <p class="mb-2"><strong>Eerste Druk:</strong> {{ $album->first_print }}</p>
 
                 {{-- Display acquisition details if available --}}
                 @if ($album->obtained)
                     <p class="mb-2"><strong>Notitie:</strong> {{ $album->notes }}</p>
+                    <p class="mb-2"><strong>Print Jaar:</strong> {{ $album->print_year }}</p>
                     <p class="mb-2"><strong>Plaats van aankoop:</strong> {{ $album->purchase_place }}</p>
                     <p class="mb-2"><strong>Aankoopprijs:</strong> €{{ $album->purchase_price }}</p>
                     <p class="mb-2"><strong>Aankoopdatum:</strong> {{ $album->purchase_date }}</p>

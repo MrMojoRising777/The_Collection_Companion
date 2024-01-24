@@ -34,6 +34,9 @@
               {{ $column }}
             </th>
           @endforeach
+          <th class="border border-gray-300 dark:border-gray-700 p-2 bg-gray-200 dark:bg-gray-600">
+            Aantal albums
+          </th>
         </tr>
       </thead>
       <tbody>
@@ -44,6 +47,9 @@
                 {{ $serie->$column }}
               </td>
             @endforeach
+            <td class="border border-gray-300 dark:border-gray-700 p-2 bg-gray-200 dark:bg-gray-600">
+              {{ $serie->albums->count() }}
+            </td>
           </tr>
         @endforeach
       </tbody>
