@@ -4,7 +4,7 @@
   <div class="container dark-mode">
     <div class="p-4">
       <h2 class="text-white">Edit Album</h2>
-      <form method="POST" action="{{ route('albums.update', $album->id) }}">
+      <form method="POST" action="{{ route('albums.update', $album->id) }}" enctype="multipart/form-data">
           @csrf
           @method('PUT')
 

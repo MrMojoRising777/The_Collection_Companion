@@ -64,9 +64,28 @@ class AlbumController extends Controller
             'purchase_price' => 'nullable|numeric',
             'purchase_date' => 'nullable|date',
             'notes' => 'nullable|string',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
         ]);
 
-        // Update the album with validated data
+        if ($request->hasFile('image')) {
+            // Handle uploaded image
+            $image = $request->file('image');
+            $serieId = $request->serie_id;
+            
+            // Fetch serie
+            $serie = Serie::where('id', $serieId)->first();
+
+            // Build filename using Serie name and original filename
+            $filename = $serie->abbreviation . '_' . $image->getClientOriginalName();
+
+            // Save image to 'public_uploads' disk
+            $image->storeAs('images', $filename, ['disk' => 'public_uploads']);
+            
+            // Store image path in $validatedData array
+            $validatedData['image'] = 'uploads/images/' . $filename;
+        }
+
+        // Update album with validated data
         $album->update($validatedData);
 
         return redirect()->route('albums.index')->with('success', 'Album updated successfully.');

@@ -24,7 +24,13 @@
                 @endif
             </div>
             <div class="album-image w-full md:w-1/3 lg:w-1/2">
-                <img class="w-full h-auto rounded-lg" src="{{ $album->image }}" alt="Album Image">
+                @if ($album->image)
+                {{-- Album cover --}}
+                    <img class="w-full h-auto rounded-lg" src="{{ asset($album->image) }}" alt="Album Image">
+                @else
+                    {{-- Placeholder image --}}
+                    <img class="w-full h-auto rounded-lg" src="{{ asset('uploads/images/placeholder_cover.jpg') }}" alt="Placeholder Image">
+                @endif
             </div>
         </div>
     </div>
