@@ -14,6 +14,8 @@
       </div>
     @endif
 
+    {{ $albums->links() }}
+    
     <div class="table-responsive">
       <table class="table">
         <thead>
@@ -64,6 +66,5 @@
         </tbody>
       </table>
     </div>
-    {{ $albums->links() }}
   </div>
 @endsection

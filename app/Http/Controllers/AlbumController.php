@@ -55,6 +55,7 @@ class AlbumController extends Controller
             'comic_id' => 'required|exists:comics,id',
             'serie_id' => 'required|exists:series,id',
             'volume' => 'nullable|string',
+            'first_print' => 'nullqble|string',
             'cover' => 'nullable|string',
             'color' => 'nullable|string|max:255',
             'print_year' => 'nullable|integer',
