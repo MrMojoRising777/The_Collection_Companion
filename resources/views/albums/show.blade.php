@@ -1,9 +1,9 @@
 @extends('layouts.app')
 
 @section('content')
-    <div class="album-wrapper bg-white shadow-md p-6 pt-8 md:w-3/4 lg:w-4/6 xl:w-1/2 mx-auto">
+    <div class="album-wrapper shadow-md p-6 pt-8 md:w-3/4 lg:w-4/6 xl:w-1/2 mx-auto suske_wiske_bg">
         <div class="album-header text-center mb-6">
-            <p class="text-2xl font-bold">{{ $album->name }}</p>
+            <p class="text-2xl font-bold suske_wiske_font">{{ $album->name }}</p>
         </div>
         <div class="album-content flex flex-col md:flex-row">
             <div class="album-info mb-4 md:mb-0 md:mr-4 w-full md:w-2/3 lg:w-1/2 bg-gray-100 p-4 rounded-lg">

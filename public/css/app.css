@@ -20,10 +20,15 @@ html {
 /* Custom Styles 
  ============================================================================ */
 
- .suske_wiske {
+ .suske_wiske_font {
   font-family: 'Suske_en_Wiske_Kaftletters_Regular';
+  color: #e5c73b;
  }
 
+ .suske_wiske_bg {
+  background-color: #b4311f;
+ }
+ 
 /* Sections
    ========================================================================== */
 
