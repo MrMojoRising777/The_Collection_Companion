@@ -30,12 +30,12 @@
               </a>
           @endif
           @if(Route::currentRouteName() !== 'albums.obtained')
-              <a href="{{ route('albums.obtained') }}" class="btn btn-primary">
+              <a href="{{ route('albums.obtained') }}" class="btn btn-success">
                   Obtained
               </a>
           @endif
           @if(Route::currentRouteName() !== 'albums.wanted')
-              <a href="{{ route('albums.wanted') }}" class="btn btn-primary">
+              <a href="{{ route('albums.wanted') }}" class="btn btn-warning">
                   Wanted
               </a>
           @endif
@@ -63,7 +63,9 @@
             <th>Obtained</th>
             <th>Cover</th>
             <th>First Print</th>
-            <th>Actions</th>
+            @if (Auth::user() && Auth::user()->isAdmin())
+              <th>Actions</th>
+            @endif
           </tr>
         </thead>
         <tbody>
@@ -85,16 +87,18 @@
               <td>{{ $album->obtained ? 'Yes' : 'No' }}</td>
               <td>{{ $album->cover }}</td>
               <td>{{ $album->first_print }}</td>
-              <td>
-                <a href="{{ route('albums.show', $album->id) }}" class="btn btn-info">View</a>
-                <a href="{{ route('albums.edit', $album->id) }}" class="btn btn-warning">Edit</a>
-                <form action="{{ route('albums.destroy', $album->id) }}" method="POST" style="display: inline;">
-                  @csrf
-                  @method('DELETE')
-                  <button type="submit" class="btn btn-danger"
-                    onclick="return confirm('Are you sure you want to delete this album?')">Delete</button>
-                </form>
-              </td>
+              @if (Auth::user() && Auth::user()->isAdmin())
+                <td>
+                  <a href="{{ route('albums.show', $album->id) }}" class="btn btn-info">View</a>
+                  <a href="{{ route('albums.edit', $album->id) }}" class="btn btn-warning">Edit</a>
+                  <form action="{{ route('albums.destroy', $album->id) }}" method="POST" style="display: inline;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger"
+                      onclick="return confirm('Are you sure you want to delete this album?')">Delete</button>
+                  </form>
+                </td>
+              @endif
             </tr>
           @endforeach
         </tbody>

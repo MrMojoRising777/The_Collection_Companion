@@ -76,7 +76,12 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
-        </div>
+            <x-responsive-nav-link :href="route('albums.index')" :active="request()->routeIs('series.index')">
+                {{ __('Albums') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('series.index')" :active="request()->routeIs('series.index')">
+                {{ __('Series') }}
+            </x-responsive-nav-link>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
