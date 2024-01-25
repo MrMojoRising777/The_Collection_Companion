@@ -9,15 +9,32 @@ use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
-    public function index()
-    {
+    public function index() {
         $albums = Album::paginate(10);
         $series = Serie::all();
         return view('albums.index', compact('albums', 'series'));
     }
 
-    public function markAsObtained($id)
-    {
+    public function getObtained() {
+        $albums = Album::where('obtained', 1)->paginate(15);
+        $series = Serie::all();
+        return view('albums.index', compact('albums', 'series'));
+    }
+
+    public function getWanted() {
+        $albums = Album::where('obtained', 0)->paginate(15);
+        $series = Serie::all();
+        return view('albums.index', compact('albums', 'series'));
+    }
+
+    public function search(Request $request) {
+        $search = $request->input('search');
+        $albums = Album::where('name', 'like', '%'.$search.'%')->paginate(15);
+        $series = Serie::all();
+        return view('albums.index', compact('albums', 'series'));
+    }
+
+    public function markAsObtained($id) {
         $album = Album::find($id);
 
         if ($album) {
@@ -28,28 +45,24 @@ class AlbumController extends Controller
         return response()->json(['error' => 'Album not found.'], 404);
     }
 
-    public function toggleObtained(Album $album)
-    {
+    public function toggleObtained(Album $album) {
         $album->update(['obtained' => !$album->obtained]);
 
         return redirect()->back()->with('success', 'Obtained status updated successfully.');
     }
 
-    public function show(Album $album)
-    {
+    public function show(Album $album) {
         return view('albums.show', compact('album'));
     }
 
-    public function edit(Album $album)
-    {
+    public function edit(Album $album) {
         $comics = Comic::all();
         $series = Serie::all();
 
         return view('albums.edit', compact('album', 'comics', 'series'));
     }
 
-    public function update(Request $request, Album $album)
-    {
+    public function update(Request $request, Album $album) {
         $validatedData = $request->validate([
             'name' => 'required|string|max:255',
             'comic_id' => 'required|exists:comics,id',
@@ -92,23 +105,20 @@ class AlbumController extends Controller
         return redirect()->route('albums.index')->with('success', 'Album updated successfully.');
     }
 
-    public function destroy(Album $album)
-    {
+    public function destroy(Album $album) {
         $album->delete();
 
         return redirect()->route('albums.index')->with('success', 'Album deleted successfully.');
     }
     
-    public function create()
-    {
+    public function create() {
         $comics = Comic::all();
         $series = Serie::all();
 
         return view('albums.create', compact('comics', 'series'));
     }
 
-    public function store(Request $request)
-    {
+    public function store(Request $request) {
         $validatedData = $request->validate([
             'name' => 'required',
             'comic_id' => 'required',

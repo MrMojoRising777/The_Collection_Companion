@@ -2,11 +2,45 @@
 
 @section('content')
   <div class="container">
-    <h2>All Albums</h2>
+    <h1 class="h1 text-center mb-3 suske_wiske_font">All Albums</h1>
 
-    <a href="{{ route('albums.create') }}" class="btn btn-primary mb-3">
-      Create
-    </a>
+    <div class="row">
+      <div class="col-md-4 mb-3">
+        @if (Auth::user() && Auth::user()->isAdmin())
+          <a href="{{ route('albums.create') }}" class="btn btn-primary">
+            Create
+          </a>
+        @endif
+      </div>
+      <div class="col-md-4 mb-3">
+          <form action="{{ route('albums.search') }}" method="post">
+              @csrf
+              <div class="input-group">
+                  <input type="text" class="form-control" placeholder="Search..." name="search">
+                  <div class="input-group-append">
+                      <button class="btn btn-primary" type="submit">Search</button>
+                  </div>
+              </div>
+          </form>
+      </div>
+      <div class="col-md-4 mb-3">
+          @if(Route::currentRouteName() !== 'albums.index')
+              <a href="{{ route('albums.index') }}" class="btn btn-primary">
+                  All
+              </a>
+          @endif
+          @if(Route::currentRouteName() !== 'albums.obtained')
+              <a href="{{ route('albums.obtained') }}" class="btn btn-primary">
+                  Obtained
+              </a>
+          @endif
+          @if(Route::currentRouteName() !== 'albums.wanted')
+              <a href="{{ route('albums.wanted') }}" class="btn btn-primary">
+                  Wanted
+              </a>
+          @endif
+      </div>
+  </div>
 
     @if (session('success'))
       <div class="alert alert-success">
