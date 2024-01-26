@@ -32,10 +32,10 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 
     // AlbumController
-    Route::get('/albums/obtained', [AlbumController::class, 'getObtained'])->name('albums.obtained');
-    Route::get('/albums/wanted', [AlbumController::class, 'getWanted'])->name('albums.wanted');
-    Route::post('/albums/search', [AlbumController::class, 'search'])->name('albums.search');
-    Route::post('/albums/{album}/toggle-obtained', [AlbumController::class, 'toggleObtained'])->name('albums.toggleObtained');
+    Route::get('/obtained', [AlbumController::class, 'getObtained'])->name('albums.obtained');
+    Route::get('/wanted', [AlbumController::class, 'getWanted'])->name('albums.wanted');
+    Route::post('/{album}/toggle-obtained', [AlbumController::class, 'toggleObtained'])->name('albums.toggleObtained');
+    Route::post('/search', [AlbumController::class, 'search'])->name('albums.search');
     Route::resource('albums', AlbumController::class);
 
     // SerieController (old)
