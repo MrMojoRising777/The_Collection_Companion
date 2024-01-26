@@ -42,6 +42,26 @@
       </div>
   </div>
 
+  <div class="row">
+    <form id="filterForm" action="{{ route('albums.index') }}" method="GET">
+      <label for="serie_id">Filter by Serie:</label>
+      <select class="form-select mb-1" name="serie_id" id="serie_id">
+        <option value="">All Series</option>
+        @foreach($series as $serie)
+          <option value="{{ $serie->id }}" {{ request('serie_id') == $serie->id ? 'selected' : '' }}>
+            {{ $serie->name }}
+          </option>
+        @endforeach
+      </select>
+    </form>
+
+    <script>
+      document.getElementById('serie_id').addEventListener('change', function () {
+        document.getElementById('filterForm').submit();
+      });
+    </script>
+  </div>
+
     @if (session('success'))
       <div class="alert alert-success">
         {{ session('success') }}

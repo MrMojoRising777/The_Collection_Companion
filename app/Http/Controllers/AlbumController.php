@@ -9,9 +9,28 @@ use Illuminate\Http\Request;
 
 class AlbumController extends Controller
 {
-    public function index() {
-        $albums = Album::paginate(10);
+    public function index(Request $request)
+    {
+        $perPage = 10;
+
+        // Get all series for the filter dropdown
         $series = Serie::all();
+
+        // Start with all albums
+        $albums = Album::query();
+
+        // Check if a serie_id is provided in the request
+        if ($request->has('serie_id')) {
+            $serieId = $request->input('serie_id');
+
+            if ($serieId !== null) {
+                $albums->where('serie_id', $serieId);
+            }
+        }
+
+        // Paginate the filtered albums
+        $albums = $albums->paginate($perPage);
+
         return view('albums.index', compact('albums', 'series'));
     }
 
