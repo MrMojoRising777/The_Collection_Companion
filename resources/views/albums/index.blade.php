@@ -34,9 +34,9 @@
                   Obtained
               </a>
           @endif
-          @if(Route::currentRouteName() !== 'albums.wanted')
-              <a href="{{ route('albums.wanted') }}" class="btn btn-warning">
-                  Wanted
+          @if(Route::currentRouteName() !== 'albums.favorite')
+              <a href="{{ route('albums.favorite') }}" class="btn btn-warning">
+                  Favorites
               </a>
           @endif
       </div>

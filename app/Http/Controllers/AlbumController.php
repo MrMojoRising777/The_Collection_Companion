@@ -40,8 +40,8 @@ class AlbumController extends Controller
         return view('albums.index', compact('albums', 'series'));
     }
 
-    public function getWanted() {
-        $albums = Album::where('obtained', 0)->paginate(15);
+    public function getFavorites() {
+        $albums = Album::where('favorite', 1)->paginate(15);
         $series = Serie::all();
         return view('albums.index', compact('albums', 'series'));
     }

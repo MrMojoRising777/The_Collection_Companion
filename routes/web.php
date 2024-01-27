@@ -33,7 +33,7 @@ Route::middleware('auth')->group(function () {
 
     // AlbumController
     Route::get('/obtained', [AlbumController::class, 'getObtained'])->name('albums.obtained');
-    Route::get('/wanted', [AlbumController::class, 'getWanted'])->name('albums.wanted');
+    Route::get('/favorite', [AlbumController::class, 'getFavorites'])->name('albums.favorite');
     Route::post('/{album}/toggle-obtained', [AlbumController::class, 'toggleObtained'])->name('albums.toggleObtained');
     Route::post('/{album}/toggle-favorite', [AlbumController::class, 'toggleFavorite'])->name('albums.toggleFavorite');
     Route::post('/search', [AlbumController::class, 'search'])->name('albums.search');
