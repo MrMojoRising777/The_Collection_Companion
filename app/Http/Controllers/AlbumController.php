@@ -52,6 +52,12 @@ class AlbumController extends Controller
         return view('albums.index', compact('albums', 'series'));
     }
 
+    public function getFirstPrints() {
+        $albums = Album::where('first_print_obtained', 1)->paginate(15);
+        $series = Serie::all();
+        return view('albums.index', compact('albums', 'series'));
+    }
+
     public function search(Request $request) {
         $search = $request->input('search');
         $albums = Album::where('name', 'like', '%'.$search.'%')->paginate(15);
@@ -86,6 +92,12 @@ class AlbumController extends Controller
         $album->update(['wanted' => !$album->wanted]);
 
         return redirect()->back()->with('success', 'Wanted status updated successfully.');
+    }
+
+    public function toggleFirstPrint(Album $album) {
+        $album->update(['first_print_obtained' => !$album->first_print_obtained]);
+
+        return redirect()->back()->with('success', 'First print status updated successfully.');
     }
 
     public function show(Album $album) {

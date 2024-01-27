@@ -35,9 +35,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/obtained', [AlbumController::class, 'getObtained'])->name('albums.obtained');
     Route::get('/favorite', [AlbumController::class, 'getFavorites'])->name('albums.favorite');
     Route::get('/wanted', [AlbumController::class, 'getWanted'])->name('albums.wanted');
+    Route::get('/first_prints', [AlbumController::class, 'getFirstPrints'])->name('albums.firstPrints');
     Route::post('/{album}/toggle-obtained', [AlbumController::class, 'toggleObtained'])->name('albums.toggleObtained');
     Route::post('/{album}/toggle-favorite', [AlbumController::class, 'toggleFavorite'])->name('albums.toggleFavorite');
     Route::post('/{album}/toggle-wanted', [AlbumController::class, 'toggleWanted'])->name('albums.toggleWanted');
+    Route::post('/{album}/toggle-first_print', [AlbumController::class, 'toggleFirstPrint'])->name('albums.toggleFirstPrint');
     Route::post('/search', [AlbumController::class, 'search'])->name('albums.search');
     Route::resource('albums', AlbumController::class);
 

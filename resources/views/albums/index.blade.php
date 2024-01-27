@@ -39,6 +39,11 @@
                   Favorites
               </a>
           @endif
+          @if(Route::currentRouteName() !== 'albums.firstPrints')
+              <a href="{{ route('albums.firstPrints') }}" class="btn btn-secondary">
+                  First prints
+              </a>
+          @endif
       </div>
   </div>
 
@@ -115,6 +120,17 @@
                       <i class="bi bi-bookmark-fill"></i>
                     @else
                       <i class="bi bi-bookmark"></i>
+                    @endif
+                  </button>
+                </form>
+
+                <form method="POST" action="{{ route('albums.toggleFirstPrint', $album) }}">
+                  @csrf
+                  <button type="submit" class="btn">
+                    @if($album->first_print_obtained == 1)
+                      <i class="bi bi-check-circle-fill"></i>
+                    @else
+                      <i class="bi bi-circle"></i>
                     @endif
                   </button>
                 </form>
