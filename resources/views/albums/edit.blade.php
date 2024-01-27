@@ -55,12 +55,7 @@
                     <div class="form-group mb-3"> {{-- FIRST_PRINT --}}
                         <label for="first_print" class="text-black">First Print:</label>
                         <input type="text" name="first_print" class="form-control" value="{{ old('first_print', $album->first_print) }}">
-                    </div>
-
-                    <div class="form-group mb-3"> {{-- OBTAINED --}}
-                        <label for="obtained" class="text-black">Obtained:</label>
-                        <input type="checkbox" name="obtained" {{ old('obtained', $album->obtained) ? 'checked' : '' }}>
-                    </div>
+                    </div>                   
                 </div>
                 <div class="col-md-6">
                     <div class="form-group mb-3"> {{-- PRINT_YEAR --}}

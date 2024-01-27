@@ -75,12 +75,10 @@
         <thead>
           <tr>
             <th>Collected</th>
-            <th>ID</th>
             <th>Name</th>
             <th>Comic</th>
             <th>Serie</th>
             <th>Volume</th>
-            <th>Obtained</th>
             <th>Cover</th>
             <th>First Print</th>
             @if (Auth::user() && Auth::user()->isAdmin())
@@ -91,20 +89,29 @@
         <tbody>
           @foreach ($albums as $album)
             <tr>
-              <td>
+              <td class="d-flex">
                 <form method="POST" action="{{ route('albums.toggleObtained', $album) }}">
                   @csrf
                   <button type="submit" class="btn btn-{{ $album->obtained ? 'success' : 'danger' }}">
                     {{ $album->obtained ? 'Obtained' : 'Unobtained' }}
                   </button>
                 </form>
+
+                <form method="POST" action="{{ route('albums.toggleFavorite', $album) }}">
+                  @csrf
+                  <button type="submit" class="btn">
+                    @if($album->favorite == 1)
+                      <i class="bi bi-star-fill" style="color: #e5c73b;"></i>
+                    @else
+                      <i class="bi bi-star"></i>
+                    @endif
+                  </button>
+                </form>
               </td>
-              <td>{{ $album->id }}</td>
               <td>{{ $album->name }}</td>
               <td>{{ $album->comic->name }}</td>
               <td>{{ $album->serie->name }}</td>
               <td>{{ $album->volume }}</td>
-              <td>{{ $album->obtained ? 'Yes' : 'No' }}</td>
               <td>{{ $album->cover }}</td>
               <td>{{ $album->first_print }}</td>
               @if (Auth::user() && Auth::user()->isAdmin())

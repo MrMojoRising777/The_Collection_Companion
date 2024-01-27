@@ -70,6 +70,12 @@ class AlbumController extends Controller
         return redirect()->back()->with('success', 'Obtained status updated successfully.');
     }
 
+    public function toggleFavorite(Album $album) {
+        $album->update(['favorite' => !$album->favorite]);
+
+        return redirect()->back()->with('success', 'Favorite status updated successfully.');
+    }
+
     public function show(Album $album) {
         return view('albums.show', compact('album'));
     }
@@ -91,7 +97,6 @@ class AlbumController extends Controller
             'cover' => 'nullable|string',
             'color' => 'nullable|string|max:255',
             'print_year' => 'nullable|integer',
-            'obtained' => 'nullable|boolean',
             'condition' => 'nullable|string|max:255',
             'purchase_place' => 'nullable|string|max:255',
             'purchase_price' => 'nullable|numeric',

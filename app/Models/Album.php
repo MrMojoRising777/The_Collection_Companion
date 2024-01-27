@@ -12,7 +12,7 @@ class Album extends Model
     protected $fillable = [
         'name', 'comic_id', 'serie_id', 'volume', 'cover', 'color', 'print_year',
         'obtained', 'condition', 'purchase_place', 'purchase_price', 'purchase_date',
-        'notes', 'image', 'first_print'
+        'notes', 'image', 'first_print', 'favorite'
     ];
 
     // Define relationships with Comic and Serie models
