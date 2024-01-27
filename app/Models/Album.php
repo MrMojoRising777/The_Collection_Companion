@@ -17,9 +17,9 @@ class Album extends Model
     ];
 
     // Define relationships with Comic and Serie models
-    public function comic()
+    public function comics()
     {
-        return $this->belongsTo(Comic::class);
+        return $this->belongsTo(Comic::class, 'comic_id');
     }
 
     public function serie()

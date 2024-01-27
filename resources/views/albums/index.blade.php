@@ -136,7 +136,7 @@
                 </form>
               </td>
               <td>{{ $album->name }}</td>
-              <td>{{ $album->comic->name }}</td>
+              <td>{{ $album->comics->name }}</td>
               <td>{{ $album->serie->name }}</td>
               <td>{{ $album->volume }}</td>
               <td>{{ $album->cover }}</td>

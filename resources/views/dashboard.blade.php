@@ -15,5 +15,22 @@
                 </div>
             </div>
         </div>
+
+        <div class="container mt-2">
+            <div class="card">
+                <div class="card-header">
+                    <h5>Recent Album Additions</h5>
+                </div>
+                <div class="card-body addition-container">
+                    @foreach ($recentAlbums as $index => $album)
+                        <div class="{{ $index === 0 ? '' : 'mt-2' }}">
+                            <h6 class="card-subtitle mb-2 text-muted">{{ $album->comics->name }} - {{ $album->name }}</h6>
+                            <p>{{ $album->updated_at->diffForHumans() }}</p>
+                        </div>
+                        <hr>
+                    @endforeach
+                </div>
+            </div>
+        </div>
     </div>
 @endsection

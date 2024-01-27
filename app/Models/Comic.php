@@ -15,4 +15,9 @@ class Comic extends Model
     {
         return $this->belongsTo(Serie::class);
     }
+
+    public function albums()
+    {
+        return $this->hasMany(Album::class, 'comic_id');
+    }
 }
