@@ -141,9 +141,9 @@
               <td>{{ $album->volume }}</td>
               <td>{{ $album->cover }}</td>
               <td>{{ $album->first_print }}</td>
-              @if (Auth::user() && Auth::user()->isAdmin())
-                <td>
-                  <a href="{{ route('albums.show', $album->id) }}" class="btn btn-info">View</a>
+              <td>
+                <a href="{{ route('albums.show', $album->id) }}" class="btn btn-info">View</a>
+                @if (Auth::user() && Auth::user()->isAdmin())
                   <a href="{{ route('albums.edit', $album->id) }}" class="btn btn-warning">Edit</a>
                   <form action="{{ route('albums.destroy', $album->id) }}" method="POST" style="display: inline;">
                     @csrf
@@ -151,8 +151,8 @@
                     <button type="submit" class="btn btn-danger"
                       onclick="return confirm('Are you sure you want to delete this album?')">Delete</button>
                   </form>
-                </td>
-              @endif
+                @endif
+              </td>
             </tr>
           @endforeach
         </tbody>
