@@ -107,6 +107,17 @@
                     @endif
                   </button>
                 </form>
+
+                <form method="POST" action="{{ route('albums.toggleWanted', $album) }}">
+                  @csrf
+                  <button type="submit" class="btn">
+                    @if($album->wanted == 1)
+                      <i class="bi bi-bookmark-fill"></i>
+                    @else
+                      <i class="bi bi-bookmark"></i>
+                    @endif
+                  </button>
+                </form>
               </td>
               <td>{{ $album->name }}</td>
               <td>{{ $album->comic->name }}</td>

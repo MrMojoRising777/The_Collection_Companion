@@ -46,6 +46,12 @@ class AlbumController extends Controller
         return view('albums.index', compact('albums', 'series'));
     }
 
+    public function getWanted() {
+        $albums = Album::where('wanted', 1)->paginate(15);
+        $series = Serie::all();
+        return view('albums.index', compact('albums', 'series'));
+    }
+
     public function search(Request $request) {
         $search = $request->input('search');
         $albums = Album::where('name', 'like', '%'.$search.'%')->paginate(15);
@@ -74,6 +80,12 @@ class AlbumController extends Controller
         $album->update(['favorite' => !$album->favorite]);
 
         return redirect()->back()->with('success', 'Favorite status updated successfully.');
+    }
+
+    public function toggleWanted(Album $album) {
+        $album->update(['wanted' => !$album->wanted]);
+
+        return redirect()->back()->with('success', 'Wanted status updated successfully.');
     }
 
     public function show(Album $album) {
