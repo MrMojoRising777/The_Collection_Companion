@@ -12,6 +12,7 @@
                 <p class="mb-2"><strong>Kaft:</strong> {{ $album->cover }}</p>
                 <p class="mb-2"><strong>Kleur:</strong> {{ $album->color }}</p>
                 <p class="mb-2"><strong>Eerste Druk:</strong> {{ $album->first_print }}</p>
+                <p class="mb-2"><strong>Waarde:</strong> €{{ $album->value }}</p>
 
                 {{-- Display acquisition details if available --}}
                 @if ($album->obtained)

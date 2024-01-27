@@ -13,13 +13,12 @@ class AlbumController extends Controller
     {
         $perPage = 10;
 
-        // Get all series for the filter dropdown
+        // Get all series for filter dropdown
         $series = Serie::all();
 
         // Start with all albums
         $albums = Album::query();
 
-        // Check if a serie_id is provided in the request
         if ($request->has('serie_id')) {
             $serieId = $request->input('serie_id');
 
@@ -127,6 +126,7 @@ class AlbumController extends Controller
             'purchase_date' => 'nullable|date',
             'notes' => 'nullable|string',
             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+            'value' => 'nullable|numeric'
         ]);
 
         if ($request->hasFile('image')) {
@@ -166,16 +166,15 @@ class AlbumController extends Controller
         return view('albums.create', compact('comics', 'series'));
     }
 
-    public function store(Request $request) {
-        $validatedData = $request->validate([
-            'name' => 'required',
-            'comic_id' => 'required',
-            'serie_id' => 'required'
-            // Add other validation rules for your input fields here
-        ]);
+    // public function store(Request $request) {
+    //     $validatedData = $request->validate([
+    //         'name' => 'required',
+    //         'comic_id' => 'required',
+    //         'serie_id' => 'required'
+    //     ]);
 
-        Album::create($validatedData);
+    //     Album::create($validatedData);
 
-        return redirect()->route('albums.index')->with('success', 'Album created successfully.');
-    }
+    //     return redirect()->route('albums.index')->with('success', 'Album created successfully.');
+    // }
 }

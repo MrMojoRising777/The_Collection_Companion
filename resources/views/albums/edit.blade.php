@@ -51,6 +51,11 @@
                         <label for="color" class="text-black">Color:</label>
                         <input type="text" name="color" class="form-control" value="{{ old('color', $album->color) }}">
                     </div>
+
+                    <div class="form-group mb-3">
+                        <label for="value" class="text-black">Value:</label>
+                        <input type="number" name="value" class="form-control" step="0.01" value="{{ old('value', $album->value) }}">
+                    </div>
         
                     <div class="form-group mb-3"> {{-- FIRST_PRINT --}}
                         <label for="first_print" class="text-black">First Print:</label>
