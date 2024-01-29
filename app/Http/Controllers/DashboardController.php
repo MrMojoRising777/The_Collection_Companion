@@ -10,8 +10,11 @@ class DashboardController extends Controller
     public function index()
     {
         $recentAlbums = $this->getRecentAdditions();
+        $valueAlbums = $this->getMostValued();
 
-        return view('dashboard', compact('recentAlbums'));
+        dd($valueAlbums);
+
+        return view('dashboard', compact('recentAlbums', 'valueAlbums'));
     }
 
     private function getRecentAdditions()
@@ -22,5 +25,16 @@ class DashboardController extends Controller
         ->get();
 
         return $recentAlbums;
+    }
+
+    private function getMostValued()
+    {
+        $valueAlbums = Album::with('comics')
+        ->where('obtained', 1)
+        ->orderBy('value', 'desc')
+        ->take(5)
+        ->get();
+
+        return $valueAlbums;
     }
 }
