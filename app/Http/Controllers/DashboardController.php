@@ -12,8 +12,6 @@ class DashboardController extends Controller
         $recentAlbums = $this->getRecentAdditions();
         $valueAlbums = $this->getMostValued();
 
-        dd($valueAlbums);
-
         return view('dashboard', compact('recentAlbums', 'valueAlbums'));
     }
 
