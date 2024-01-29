@@ -39,9 +39,19 @@
                   Favorites
               </a>
           @endif
+          @if(Route::currentRouteName() !== 'albums.wanted')
+              <a href="{{ route('albums.wanted') }}" class="btn btn-success">
+                  Wanted
+              </a>
+          @endif
           @if(Route::currentRouteName() !== 'albums.firstPrints')
               <a href="{{ route('albums.firstPrints') }}" class="btn btn-secondary">
                   First prints
+              </a>
+          @endif
+          @if(Route::currentRouteName() !== 'albums.damaged')
+              <a href="{{ route('albums.damaged') }}" class="btn btn-danger">
+                  Damaged
               </a>
           @endif
       </div>
@@ -131,6 +141,17 @@
                       <i class="bi bi-check-circle-fill"></i>
                     @else
                       <i class="bi bi-circle"></i>
+                    @endif
+                  </button>
+                </form>
+
+                <form method="POST" action="{{ route('albums.toggleDamaged', $album) }}">
+                  @csrf
+                  <button type="submit" class="btn">
+                    @if($album->damaged == 1)
+                      <i class="bi bi-bandaid-fill"></i>
+                    @else
+                      <i class="bi bi-bandaid"></i>
                     @endif
                   </button>
                 </form>

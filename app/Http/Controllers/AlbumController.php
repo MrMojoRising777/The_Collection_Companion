@@ -57,6 +57,12 @@ class AlbumController extends Controller
         return view('albums.index', compact('albums', 'series'));
     }
 
+    public function getDamaged() {
+        $albums = Album::where('damaged', 1)->paginate(15);
+        $series = Serie::all();
+        return view('albums.index', compact('albums', 'series'));
+    }
+
     public function search(Request $request) {
         $search = $request->input('search');
         $albums = Album::where('name', 'like', '%'.$search.'%')->paginate(15);
@@ -97,6 +103,12 @@ class AlbumController extends Controller
         $album->update(['first_print_obtained' => !$album->first_print_obtained]);
 
         return redirect()->back()->with('success', 'First print status updated successfully.');
+    }
+
+    public function toggleDamaged(Album $album) {
+        $album->update(['damaged' => !$album->damaged]);
+
+        return redirect()->back()->with('success', 'Damaged status updated successfully.');
     }
 
     public function show(Album $album) {
