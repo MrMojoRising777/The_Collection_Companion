@@ -9,6 +9,7 @@
     <div class="container-fluid">
         <div class="row mt-2">
             <div class="col-md-8">
+                <h2>Progression</h2>
                 @include('components.series-progress-bars')
             </div>
             <div class="col-md-4">
@@ -16,12 +17,12 @@
             </div>
         </div>
         <div class="row mt-1">
-            {{-- recent additions carousel --}}
             <div class="col-md-4">
+                <h2>Recent additions</h2>
                 @include('components.carousel')
             </div>
-            {{-- most valued albums --}}
             <div class="col-md-4">
+                <h2>Most valued albums</h2>
                 @if ($valueAlbums->isNotEmpty())
                     <ul class="list-group list-group-flush">
                         @foreach ($valueAlbums as $valueAlbum)

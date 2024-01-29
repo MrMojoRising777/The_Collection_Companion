@@ -1,5 +1,13 @@
+@php
+    $allObtainedZero = true;
+@endphp
+
 @foreach ($seriesPercentages as $seriesPercentage)
     @if ($seriesPercentage['obtained'] !== 0)
+        @php
+            $allObtainedZero = false;
+        @endphp
+
         <div class="mb-3">
             <p class="mb-0">{{ $seriesPercentage['serie_name'] }}</p>
             <div class="d-flex align-items-center container">
@@ -13,3 +21,7 @@
         </div>
     @endif
 @endforeach
+
+@if ($allObtainedZero)
+    <p><i>Currently no albums in your collection</i></p>
+@endif
