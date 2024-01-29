@@ -7,51 +7,62 @@
         </h2>
     </x-slot>
 
-    <div class="row">
-        <div class="col-12 col-md-8">
-            <div class="container mt-2">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Recent Album Additions</h5>
-                    </div>
-                    <div class="card-body addition-container">
-                        @foreach ($recentAlbums as $index => $album)
-                            <div class="{{ $index === 0 ? '' : 'mt-2' }}">
-                                <h6 class="card-subtitle text-muted mb-2">{{ $album->comics->name }} - {{ $album->name }}</h6>
-                                <p>{{ $album->updated_at->diffForHumans() }}</p>
-                            </div>
-                            <hr>
-                        @endforeach
-                    </div>
-                </div>
+    <div class="container-fluid">
+        <div class="row mt-2">
+            <div class="col-md-8">
+                progress bar + summary of series
+            </div>
+            <div class="col-md-4">
+                Something
             </div>
         </div>
-        <div class="col-6 col-md-4">
-            <div class="container mt-2">
-                <div class="card">
-                    <div class="card-header">
-                        <h5>Most Value Albums</h5>
-                    </div>
-                    <div class="card-body addition-container">
-                        @foreach ($valueAlbums as $index => $album)
-                            <div class="{{ $index === 0 ? '' : 'mt-2' }}">
-                                <h6 class="card-subtitle text-muted mb-2">{{ $album->comics->name }} - {{ $album->name }}</h6>
-                                <p>{{ $album->updated_at->diffForHumans() }}</p>
+        <div class="row mt-1">
+            {{-- recent additions carousel --}}
+            <div class="col-md-4">
+                <div id="carouselExampleCaptions" class="carousel slide" data-bs-ride="carousel">
+                    <div class="carousel-inner">
+                        @foreach ($recentAlbums as $key => $recentAlbum)
+                            <div class="carousel-item{{ $key === 0 ? ' active' : '' }}">
+                                @if($recentAlbum->image)
+                                    <img src="{{ $recentAlbum->image }}" class="d-block w-100" alt="{{ $recentAlbum->name }}">
+                                @else
+                                    {{-- Placeholder image --}}
+                                    <img class="w-full h-auto rounded-lg" src="{{ asset('uploads/images/placeholder_cover.jpg') }}" alt="Placeholder Image">
+                                @endif
+                                <div class="carousel-caption d-none d-md-block">
+                                    <h5 class="text-black font-weight-bold">{{ $recentAlbum->name }}</h5>
+                                    <p>Some representative placeholder content for the slide.</p>
+                                </div>
                             </div>
-                            <hr>
                         @endforeach
                     </div>
+                    <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Previous</span>
+                    </button>
+                    <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions"
+                            data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                        <span class="visually-hidden">Next</span>
+                    </button>
                 </div>
+            </div>
+            {{-- most valued albums --}}
+            <div class="col-md-4">
+                @if ($valueAlbums->isNotEmpty())
+                    <ul class="list-group list-group-flush">
+                        @foreach ($valueAlbums as $valueAlbum)
+                            <li class="list-group-item">{{ $valueAlbum->name }} - €{{ $valueAlbum->value }}</li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p><i>Currently no albums in your collection</i></p>
+                @endif
+            </div>
+            <div class="col-md-4">
+                upcoming releases
             </div>
         </div>
     </div>
 @endsection
-
-
-        {{-- <div class="mx-auto max-w-7xl sm:px-6 lg:px-8">
-            <div class="suske_wiske_bg overflow-hidden shadow-sm dark:bg-gray-800 sm:rounded-lg">
-                <div class="suske_wiske_font p-6">
-                    {{ __("You're logged in!") }}
-                </div>
-            </div>
-        </div> --}}
