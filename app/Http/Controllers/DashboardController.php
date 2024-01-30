@@ -54,7 +54,7 @@ class DashboardController extends Controller
 
     private function getRecentAdditions()
     {
-        return $this->getGroupedAlbumsQuery()->orderBy('updated_at', 'desc')->take(10)->get();
+        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->orderBy('updated_at', 'desc')->take(10)->get();
     }
 
     private function getMostValued()

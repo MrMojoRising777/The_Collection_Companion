@@ -178,15 +178,15 @@ class AlbumController extends Controller
         return view('albums.create', compact('comics', 'series'));
     }
 
-    // public function store(Request $request) {
-    //     $validatedData = $request->validate([
-    //         'name' => 'required',
-    //         'comic_id' => 'required',
-    //         'serie_id' => 'required'
-    //     ]);
+    public function store(Request $request) {
+        $validatedData = $request->validate([
+            'name' => 'required',
+            'comic_id' => 'required',
+            'serie_id' => 'required'
+        ]);
 
-    //     Album::create($validatedData);
+        Album::create($validatedData);
 
-    //     return redirect()->route('albums.index')->with('success', 'Album created successfully.');
-    // }
+        return redirect()->route('albums.index')->with('success', 'Album created successfully.');
+    }
 }
