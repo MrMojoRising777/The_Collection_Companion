@@ -49,6 +49,15 @@
                 @else
                     <p><i>Currently no albums in your collection</i></p>
                 @endif
+                <h2>Achievements</h2>
+                @if($achievements)
+                    @foreach ($achievements as $achievement)
+                        <img src="{{ $achievement->image }}" alt="">
+                        <p>{{ $achievement->title }}</p>
+                    @endforeach
+                @else
+                    <p><i>Currently no achievements unlocked</i></p>
+                @endif
             </div>
         </div>
     </div>

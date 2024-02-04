@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\User;
 use App\Models\Album;
 use Illuminate\Http\Request;
 
@@ -25,7 +26,10 @@ class DashboardController extends Controller
         // value of collection
         $collectionValue = $this->getCollectionValue();
 
-        return view('dashboard', compact('recentAlbums', 'valueAlbums', 'seriesPercentages', 'favorites', 'collectionValue'));
+        // achievements
+        $achievements = $this->getAchievements();
+
+        return view('dashboard', compact('recentAlbums', 'valueAlbums', 'seriesPercentages', 'favorites', 'collectionValue', 'achievements'));
     }
 
     private function getGroupedAlbums()
@@ -79,5 +83,11 @@ class DashboardController extends Controller
     private function getCollectionValue()
     {
         return $this->getGroupedAlbumsQuery()->where('obtained', 1)->sum('value');
+    }
+
+    private function getAchievements()
+    {
+        $user = User::where('id', 1)->first();
+        return $achievements = $user->achievements;
     }
 }
