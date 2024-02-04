@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ComicController;
 use App\Http\Controllers\SerieController;
+use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 
@@ -17,6 +18,20 @@ use App\Http\Controllers\DashboardController;
 | be assigned to the "web" middleware group. Make something great!
 |
 */
+
+Route::get('/test', function () {
+    return view('scan');
+});
+
+Route::get('/test-blade', function () {
+    return view('test');
+});
+
+Route::get('/sw.js', function () {
+    return response()->file(public_path('sw.js'));
+});
+
+Route::get('sendTitle/{title}', [ISBNController::class, 'setAlbumObtained']);
 
 Route::get('/', function () {
     return view('welcome');
