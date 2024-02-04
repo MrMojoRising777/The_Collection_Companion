@@ -13,7 +13,16 @@
                 @include('components.series-progress-bars')
             </div>
             <div class="col-md-4">
-                Something
+                <h2>Favorite albums</h2>
+                @if ($favorites->isNotEmpty())
+                    <ul class="list-group list-group-flush">
+                        @foreach ($favorites as $favorite)
+                            <li class="list-group-item">{{ $favorite->name }}</li>
+                        @endforeach
+                    </ul>
+                @else
+                    <p><i>Currently no albums in your collection</i></p>
+                @endif
             </div>
         </div>
         <div class="row mt-1">

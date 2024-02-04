@@ -9,14 +9,20 @@ class DashboardController extends Controller
 {
     public function index()
     {
+        // recent albums
         $recentAlbums = $this->getRecentAdditions();
+        // most value albums
         $valueAlbums = $this->getMostValued();
 
+        // percentage of collection (/serie)
         $groupedAlbums = $this->getGroupedAlbums();
         $groupedObtainedAlbums = $this->getGroupedObtainedAlbums();
         $seriesPercentages = $this->calculateObtainedPercentage($groupedAlbums, $groupedObtainedAlbums);
 
-        return view('dashboard', compact('recentAlbums', 'valueAlbums', 'seriesPercentages'));
+        // favorite albums
+        $favorites = $this->getFavoriteAlbums();
+
+        return view('dashboard', compact('recentAlbums', 'valueAlbums', 'seriesPercentages', 'favorites'));
     }
 
     private function getGroupedAlbums()
@@ -54,11 +60,16 @@ class DashboardController extends Controller
 
     private function getRecentAdditions()
     {
-        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->orderBy('updated_at', 'desc')->take(10)->get();
+        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->orderBy('updated_at', 'desc')->take(5)->get();
     }
 
     private function getMostValued()
     {
         return $this->getGroupedAlbumsQuery()->where('obtained', 1)->orderBy('value', 'desc')->take(5)->get();
+    }
+
+    private function getFavoriteAlbums()
+    {
+        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->where('favorite', 1)->take(5)->get();
     }
 }
