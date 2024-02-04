@@ -136,7 +136,7 @@ async function captureAndDecode() {
   }
 };
 
-let apiKey = 'AIzaSyDjKMoqjufx6R7ZUd4XV3yiALbsInporn8';
+let apiKey = env('API_KEY');
 let baseURL = 'https://www.googleapis.com/books/v1/volumes';
 
 function getData(isbn) {
