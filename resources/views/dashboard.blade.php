@@ -43,7 +43,12 @@
                 @endif
             </div>
             <div class="col-md-4">
-                upcoming releases
+                <h2>Collection value</h2>
+                @if ($collectionValue)
+                    <p>€ {{ $collectionValue }}</p>
+                @else
+                    <p><i>Currently no albums in your collection</i></p>
+                @endif
             </div>
         </div>
     </div>

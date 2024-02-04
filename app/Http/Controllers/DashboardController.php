@@ -22,7 +22,10 @@ class DashboardController extends Controller
         // favorite albums
         $favorites = $this->getFavoriteAlbums();
 
-        return view('dashboard', compact('recentAlbums', 'valueAlbums', 'seriesPercentages', 'favorites'));
+        // value of collection
+        $collectionValue = $this->getCollectionValue();
+
+        return view('dashboard', compact('recentAlbums', 'valueAlbums', 'seriesPercentages', 'favorites', 'collectionValue'));
     }
 
     private function getGroupedAlbums()
@@ -71,5 +74,10 @@ class DashboardController extends Controller
     private function getFavoriteAlbums()
     {
         return $this->getGroupedAlbumsQuery()->where('obtained', 1)->where('favorite', 1)->take(5)->get();
+    }
+
+    private function getCollectionValue()
+    {
+        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->sum('value');
     }
 }
