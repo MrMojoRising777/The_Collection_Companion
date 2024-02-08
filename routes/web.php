@@ -7,6 +7,7 @@ use App\Http\Controllers\SerieController;
 use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\CollectionController;
 
 /*
 |--------------------------------------------------------------------------
@@ -41,28 +42,28 @@ Route::middleware('auth')->group(function () {
     // DashboardController
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
+    // AlbumController
+    Route::post('/search', [AlbumController::class, 'search'])->name('albums.search');
+    Route::resource('albums', AlbumController::class);
+
+    // collections view
+    Route::get('/collection', [CollectionController::class, 'index'])->name('collection.index');
+    Route::get('/{album}', [CollectionController::class, 'show'])->name('collection.show');
+    Route::get('/edit/{album}', [CollectionController::class, 'edit'])->name('collection.edit');
+    Route::post('/update/{album}', [CollectionController::class, 'update'])->name('collection.update');
+    Route::delete('/collection/remove/{album}', [CollectionController::class, 'removeFromCollection'])->name('collection.removeFromCollection');
+    Route::post('/collection/toggleFavorite/{album}', [CollectionController::class, 'toggleFavorite'])->name('collection.toggleFavorite');
+    Route::get('/collection/favorites', [CollectionController::class, 'getFavorites'])->name('collection.favorites');
+    Route::post('/collection/toggleFirstPrint/{album}', [CollectionController::class, 'toggleFirstPrint'])->name('collection.toggleFirstPrint');
+    Route::get('/collection/first_prints', [CollectionController::class, 'getFirstPrints'])->name('collection.first_prints');
+
+    //albums view
+    Route::match(['post', 'delete'], '/collection/toggle/{album}', [CollectionController::class, 'toggleCollection'])->name('albums.toggleCollected');
+
     // ProfileController
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-
-    // AlbumController
-    Route::get('/obtained', [AlbumController::class, 'getObtained'])->name('albums.obtained');
-    Route::get('/favorite', [AlbumController::class, 'getFavorites'])->name('albums.favorite');
-    Route::get('/wanted', [AlbumController::class, 'getWanted'])->name('albums.wanted');
-    Route::get('/first_prints', [AlbumController::class, 'getFirstPrints'])->name('albums.firstPrints');
-    Route::get('/damaged', [AlbumController::class, 'getDamaged'])->name('albums.damaged');
-    Route::post('/{album}/toggle-obtained', [AlbumController::class, 'toggleObtained'])->name('albums.toggleObtained');
-    Route::post('/{album}/toggle-favorite', [AlbumController::class, 'toggleFavorite'])->name('albums.toggleFavorite');
-    Route::post('/{album}/toggle-wanted', [AlbumController::class, 'toggleWanted'])->name('albums.toggleWanted');
-    Route::post('/{album}/toggle-first_print', [AlbumController::class, 'toggleFirstPrint'])->name('albums.toggleFirstPrint');
-    Route::post('/{album}/toggle-damaged', [AlbumController::class, 'toggleDamaged'])->name('albums.toggleDamaged');
-    Route::post('/search', [AlbumController::class, 'search'])->name('albums.search');
-    Route::resource('albums', AlbumController::class);
-
-    // SerieController (old)
-    Route::get('/series', [SerieController::class, 'index'])->name('series.index');
-    Route::get('/series/{id}', [SerieController::class, 'show'])->name('series.show');
 });
 
 require __DIR__.'/auth.php';

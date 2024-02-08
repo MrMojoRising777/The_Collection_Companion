@@ -13,78 +13,64 @@
         @endif
       </div>
       <div class="col-md-4 mb-3">
-          <form action="{{ route('albums.search') }}" method="post">
-              @csrf
-              <div class="input-group">
-                  <input type="text" class="form-control" placeholder="Search..." name="search">
-                  <div class="input-group-append">
-                      <button class="btn btn-primary" type="submit">Search</button>
-                  </div>
-              </div>
-          </form>
+        <form action="{{ route('albums.search') }}" method="post">
+          @csrf
+          <div class="input-group">
+            <input type="text" class="form-control" placeholder="Search..." name="search">
+            <div class="input-group-append">
+              <button class="btn btn-primary" type="submit">Search</button>
+            </div>
+          </div>
+        </form>
       </div>
       <div class="col-md-4 mb-3">
-          @if(Route::currentRouteName() !== 'albums.index')
-              <a href="{{ route('albums.index') }}" class="btn btn-primary">
-                  All
-              </a>
-          @endif
-          @if(Route::currentRouteName() !== 'albums.obtained')
-              <a href="{{ route('albums.obtained') }}" class="btn btn-success">
-                  Obtained
-              </a>
-          @endif
-          @if(Route::currentRouteName() !== 'albums.favorite')
-              <a href="{{ route('albums.favorite') }}" class="btn btn-warning">
-                  Favorites
-              </a>
-          @endif
-          @if(Route::currentRouteName() !== 'albums.wanted')
-              <a href="{{ route('albums.wanted') }}" class="btn btn-success">
-                  Wanted
-              </a>
-          @endif
-          @if(Route::currentRouteName() !== 'albums.firstPrints')
-              <a href="{{ route('albums.firstPrints') }}" class="btn btn-secondary">
-                  First prints
-              </a>
-          @endif
-          @if(Route::currentRouteName() !== 'albums.damaged')
-              <a href="{{ route('albums.damaged') }}" class="btn btn-danger">
-                  Damaged
-              </a>
-          @endif
+        @if (Route::currentRouteName() !== 'albums.index')
+          <a href="{{ route('albums.index') }}" class="btn btn-primary">
+            All
+          </a>
+        @endif
+        @if (Route::currentRouteName() !== 'collection.index')
+          <a href="{{ route('collection.index') }}" class="btn btn-warning">
+            Collection
+          </a>
+        @endif
+        {{-- add wishlist route --}}
       </div>
-  </div>
+    </div>
 
-  <div class="row">
-    <form id="filterForm" action="{{ route('albums.index') }}" method="GET">
-      <label for="serie_id">Filter by Serie:</label>
-      <select class="form-select mb-1" name="serie_id" id="serie_id">
-        <option value="">All Series</option>
-        @foreach($series as $serie)
-          <option value="{{ $serie->id }}" {{ request('serie_id') == $serie->id ? 'selected' : '' }}>
-            {{ $serie->name }}
-          </option>
-        @endforeach
-      </select>
-    </form>
+    <div class="row">
+      <form id="filterForm" action="{{ route('albums.index') }}" method="GET">
+        <label for="serie_id">Filter by Serie:</label>
+        <select class="form-select mb-1" name="serie_id" id="serie_id">
+          <option value="">All Series</option>
+          @foreach ($series as $serie)
+            <option value="{{ $serie->id }}" {{ request('serie_id') == $serie->id ? 'selected' : '' }}>
+              {{ $serie->name }}
+            </option>
+          @endforeach
+        </select>
+      </form>
 
-    <script>
-      document.getElementById('serie_id').addEventListener('change', function () {
-        document.getElementById('filterForm').submit();
-      });
-    </script>
-  </div>
+      <script>
+        document.getElementById('serie_id').addEventListener('change', function() {
+          document.getElementById('filterForm').submit();
+        });
+      </script>
+    </div>
 
     @if (session('success'))
       <div class="alert alert-success">
         {{ session('success') }}
       </div>
     @endif
+    @if (session('error'))
+      <div class="alert alert-danger">
+        {{ session('error') }}
+      </div>
+    @endif
 
     {{ $albums->links() }}
-    
+
     <div class="table-responsive">
       <table class="table">
         <thead>
@@ -105,56 +91,31 @@
           @foreach ($albums as $album)
             <tr>
               <td class="d-flex">
-                <form method="POST" action="{{ route('albums.toggleObtained', $album) }}">
+
+                <form method="POST" action="{{ route('albums.toggleCollected', $album) }}">
                   @csrf
-                  <button type="submit" class="btn btn-{{ $album->obtained ? 'success' : 'danger' }}">
-                    {{ $album->obtained ? 'Obtained' : 'Unobtained' }}
-                  </button>
+                  @if ($album->isInCollection())
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-danger">
+                      Remove
+                    </button>
+                  @else
+                    <button type="submit" class="btn btn-success">
+                      Collect
+                    </button>
+                  @endif
                 </form>
 
-                <form method="POST" action="{{ route('albums.toggleFavorite', $album) }}">
+                {{-- <form method="POST" action="{{ route('albums.toggleWanted', $album) }}">
                   @csrf
                   <button type="submit" class="btn">
-                    @if($album->favorite == 1)
-                      <i class="bi bi-star-fill" style="color: #e5c73b;"></i>
-                    @else
-                      <i class="bi bi-star"></i>
-                    @endif
-                  </button>
-                </form>
-
-                <form method="POST" action="{{ route('albums.toggleWanted', $album) }}">
-                  @csrf
-                  <button type="submit" class="btn">
-                    @if($album->wanted == 1)
+                    @if ($album->wanted == 1)
                       <i class="bi bi-bookmark-fill"></i>
                     @else
                       <i class="bi bi-bookmark"></i>
                     @endif
                   </button>
-                </form>
-
-                <form method="POST" action="{{ route('albums.toggleFirstPrint', $album) }}">
-                  @csrf
-                  <button type="submit" class="btn">
-                    @if($album->first_print_obtained == 1)
-                      <i class="bi bi-check-circle-fill"></i>
-                    @else
-                      <i class="bi bi-circle"></i>
-                    @endif
-                  </button>
-                </form>
-
-                <form method="POST" action="{{ route('albums.toggleDamaged', $album) }}">
-                  @csrf
-                  <button type="submit" class="btn">
-                    @if($album->damaged == 1)
-                      <i class="bi bi-bandaid-fill"></i>
-                    @else
-                      <i class="bi bi-bandaid"></i>
-                    @endif
-                  </button>
-                </form>
+                </form> --}}
               </td>
               <td>{{ $album->name }}</td>
               <td>{{ $album->comics->name }}</td>
@@ -164,6 +125,8 @@
               <td>{{ $album->first_print }}</td>
               <td>
                 <a href="{{ route('albums.show', $album->id) }}" class="btn btn-info">View</a>
+
+                {{-- admin actions | CRUD albums --}}
                 @if (Auth::user() && Auth::user()->isAdmin())
                   <a href="{{ route('albums.edit', $album->id) }}" class="btn btn-warning">Edit</a>
                   <form action="{{ route('albums.destroy', $album->id) }}" method="POST" style="display: inline;">
@@ -173,6 +136,7 @@
                       onclick="return confirm('Are you sure you want to delete this album?')">Delete</button>
                   </form>
                 @endif
+
               </td>
             </tr>
           @endforeach

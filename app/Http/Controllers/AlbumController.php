@@ -11,8 +11,6 @@ class AlbumController extends Controller
 {
     public function index(Request $request)
     {
-        $perPage = 10;
-
         // Get all series for filter dropdown
         $series = Serie::all();
 
@@ -28,7 +26,7 @@ class AlbumController extends Controller
         }
 
         // Paginate the filtered albums
-        $albums = $albums->paginate($perPage);
+        $albums = $albums->paginate(10);
 
         return view('albums.index', compact('albums', 'series'));
     }
@@ -70,39 +68,10 @@ class AlbumController extends Controller
         return view('albums.index', compact('albums', 'series'));
     }
 
-    public function markAsObtained($id) {
-        $album = Album::find($id);
-
-        if ($album) {
-            $album->update(['obtained' => true]);
-            return response()->json(['message' => 'Album marked as obtained.']);
-        }
-
-        return response()->json(['error' => 'Album not found.'], 404);
-    }
-
-    public function toggleObtained(Album $album) {
-        $album->update(['obtained' => !$album->obtained]);
-
-        return redirect()->back()->with('success', 'Obtained status updated successfully.');
-    }
-
-    public function toggleFavorite(Album $album) {
-        $album->update(['favorite' => !$album->favorite]);
-
-        return redirect()->back()->with('success', 'Favorite status updated successfully.');
-    }
-
     public function toggleWanted(Album $album) {
         $album->update(['wanted' => !$album->wanted]);
 
         return redirect()->back()->with('success', 'Wanted status updated successfully.');
-    }
-
-    public function toggleFirstPrint(Album $album) {
-        $album->update(['first_print_obtained' => !$album->first_print_obtained]);
-
-        return redirect()->back()->with('success', 'First print status updated successfully.');
     }
 
     public function toggleDamaged(Album $album) {

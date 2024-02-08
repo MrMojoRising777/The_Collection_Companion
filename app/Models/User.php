@@ -17,6 +17,16 @@ class User extends Authenticatable
         return $this->belongsToMany(Achievement::class)->withPivot('unlocked_at');
     }
 
+    public function collections()
+    {
+        return $this->hasMany(Collection::class);
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Album::class, 'favorites', 'user_id', 'album_id')->withTimestamps();
+    }
+
     /**
      * The attributes that are mass assignable.
      *

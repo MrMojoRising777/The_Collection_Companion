@@ -16,7 +16,6 @@ class Album extends Model
         'value', 'damaged', 'damage'
     ];
 
-    // Define relationships with Comic and Serie models
     public function comics()
     {
         return $this->belongsTo(Comic::class, 'comic_id');
@@ -25,5 +24,22 @@ class Album extends Model
     public function serie()
     {
         return $this->belongsTo(Serie::class);
+    }
+
+    public function collections()
+    {
+        return $this->hasMany(Collection::class);
+    }
+
+    public function isInCollection()
+    {
+        $userId = auth()->id();
+        return $this->collections()->where('user_id', $userId)->exists();
+    }
+
+    public function collection()
+    {
+        $userId = auth()->id();
+        return $this->collections()->where('user_id', $userId)->first();
     }
 }
