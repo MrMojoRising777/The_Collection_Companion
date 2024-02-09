@@ -49,7 +49,7 @@ Route::middleware('auth')->group(function () {
 
     // collections view
     Route::get('/collection', [CollectionController::class, 'index'])->name('collection.index');
-    Route::get('/{album}', [CollectionController::class, 'show'])->name('collection.show');
+    Route::get('/show/{album}', [CollectionController::class, 'show'])->name('collection.show');
     Route::get('/edit/{album}', [CollectionController::class, 'edit'])->name('collection.edit');
     Route::post('/update/{album}', [CollectionController::class, 'update'])->name('collection.update');
     Route::delete('/collection/remove/{album}', [CollectionController::class, 'removeFromCollection'])->name('collection.removeFromCollection');
@@ -69,6 +69,10 @@ Route::middleware('auth')->group(function () {
     // Show contact form
     Route::get('/contact/form', [ContactController::class, 'show'])->name('contact.show');
     Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.submit');
+
+    // SerieController (old)
+    Route::get('/series', [SerieController::class, 'index'])->name('series.index');
+    Route::get('/series/{id}', [SerieController::class, 'show'])->name('series.show');
 });
 
 require __DIR__.'/auth.php';
