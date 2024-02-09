@@ -5,6 +5,7 @@ use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ComicController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\BarcodeController;
+use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\CollectionController;
@@ -64,6 +65,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+
+    // Show contact form
+    Route::get('/contact/form', [ContactController::class, 'show'])->name('contact.show');
+    Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.submit');
 });
 
 require __DIR__.'/auth.php';
