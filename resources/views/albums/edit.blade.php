@@ -60,39 +60,8 @@
                     <div class="form-group mb-3"> {{-- FIRST_PRINT --}}
                         <label for="first_print" class="text-black">First Print:</label>
                         <input type="text" name="first_print" class="form-control" value="{{ old('first_print', $album->first_print) }}">
-                    </div>                   
-                </div>
-                <div class="col-md-6">
-                    <div class="form-group mb-3"> {{-- PRINT_YEAR --}}
-                        <label for="print_year" class="text-black">Print Year:</label>
-                        <input type="text" name="print_year" class="form-control" value="{{ old('print_year', $album->print_year) }}">
                     </div>
-
-                    <div class="form-group mb-3"> {{-- CONDITION --}}
-                        <label for="condition" class="text-black">Condition:</label>
-                        <input type="text" name="condition" class="form-control" value="{{ old('condition', $album->condition) }}">
-                    </div>
-        
-                    <div class="form-group mb-3"> {{-- PURCHASE_PLACE --}}
-                        <label for="purchase_place" class="text-black">Purchase Place:</label>
-                        <input type="text" name="purchase_place" class="form-control" value="{{ old('purchase_place', $album->purchase_place) }}">
-                    </div>
-        
-                    <div class="form-group mb-3"> {{-- PURCHASE_PRICE --}}
-                        <label for="purchase_price" class="text-black">Purchase Price:</label>
-                        <input type="number" name="purchase_price" class="form-control" step="0.01" value="{{ old('purchase_price', $album->purchase_price) }}">
-                    </div>
-        
-                    <div class="form-group mb-3"> {{-- PURCHASE_DATE --}}
-                        <label for="purchase_date" class="text-black">Purchase Date:</label>
-                        <input type="date" name="purchase_date" class="form-control" value="{{ old('purchase_date', $album->purchase_date) }}">
-                    </div>
-        
-                    <div class="form-group mb-3"> {{-- NOTES --}}
-                        <label for="notes" class="text-black">Notes:</label>
-                        <textarea name="notes" class="form-control">{{ old('notes', $album->notes) }}</textarea>
-                    </div>
-        
+                    
                     <div class="form-group mb-3"> {{-- IMAGE --}}
                         <label for="image" class="text-black">Image:</label>
                         <input type="file" name="image" class="form-control-file">

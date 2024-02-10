@@ -24,11 +24,13 @@ class CollectionController extends Controller
     public function update(Request $request, Album $album) // UPDATE COLLECTEC ALBUM //*needs logic
     {
         $validatedData = $request->validate([
-
+            'notes' => 'nullable|string',
+            'print_year' => 'nullable|integer',
+            'condition' => 'nullable|string|max:255'
         ]);
 
-        // Update album with validated data
-        $album->update($validatedData);
+        $collected = Collection::where('album_id', $album->id)->update($validatedData);
+        dd($validatedData);
 
         return redirect()->route('collection.index')->with('success', 'Album succesvol bijgewerkt.');
     }

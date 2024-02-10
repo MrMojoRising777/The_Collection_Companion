@@ -19,7 +19,6 @@ return new class extends Migration
             $table->boolean('favorite')->nullable();                    // ALBUM - FAVORITE
             $table->boolean('first_print')->nullable();                 // ALBUM - FIRST PRINT OWNED
             $table->string('condition')->nullable();                    // ALBUM - CONDITION (dropdown menu)
-            $table->text('damage')->nullable();                         // ALBUM - DAMAGES (if damaged)
             $table->text('notes')->nullable();                          // ALBUM - NOTES (could be combined with damages)
             $table->string('print_year')->nullable();                   // ALBUM - PRINT DATE OWNED
             // $table->string('purchase_place')->nullable();               // ARE THESE NECESSARY

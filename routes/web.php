@@ -51,7 +51,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/collection', [CollectionController::class, 'index'])->name('collection.index');
     Route::get('/show/{album}', [CollectionController::class, 'show'])->name('collection.show');
     Route::get('/edit/{album}', [CollectionController::class, 'edit'])->name('collection.edit');
-    Route::post('/update/{album}', [CollectionController::class, 'update'])->name('collection.update');
+    Route::put('/update/{album}', [CollectionController::class, 'update'])->name('collection.update');
     Route::delete('/collection/remove/{album}', [CollectionController::class, 'removeFromCollection'])->name('collection.removeFromCollection');
     Route::post('/collection/toggleFavorite/{album}', [CollectionController::class, 'toggleFavorite'])->name('collection.toggleFavorite');
     Route::get('/collection/favorites', [CollectionController::class, 'getFavorites'])->name('collection.favorites');

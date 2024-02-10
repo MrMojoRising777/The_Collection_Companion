@@ -9,7 +9,7 @@ class Collection extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['user_id', 'album_id', 'acquisition_date', 'favorite', 'first_print'];
+    protected $fillable = ['user_id', 'album_id', 'acquisition_date', 'favorite', 'first_print', 'condition', 'notes', 'print_year'];
 
     public function user()
     {
