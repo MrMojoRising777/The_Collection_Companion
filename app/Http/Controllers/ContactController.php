@@ -35,6 +35,6 @@ class ContactController extends Controller
         // send notification email to admin
         Mail::to('alexander.goyens@gmail.com')->send(new AdminNotification($formData));
 
-        return redirect()->back()->with('success', 'Your contact form has been sent!');
+        return redirect()->back()->with('success', 'Dankjewel! Wij hebben je email ontvangen en reageren zo snel mogelijk!');
     }
 }

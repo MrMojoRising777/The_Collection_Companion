@@ -68,17 +68,17 @@ class AlbumController extends Controller
         return view('albums.index', compact('albums', 'series'));
     }
 
-    public function toggleWanted(Album $album) {
-        $album->update(['wanted' => !$album->wanted]);
+    // public function toggleWanted(Album $album) {
+    //     $album->update(['wanted' => !$album->wanted]);
 
-        return redirect()->back()->with('success', 'Wanted status updated successfully.');
-    }
+    //     return redirect()->back()->with('success', 'Wanted status updated successfully.');
+    // }
 
-    public function toggleDamaged(Album $album) {
-        $album->update(['damaged' => !$album->damaged]);
+    // public function toggleDamaged(Album $album) {
+    //     $album->update(['damaged' => !$album->damaged]);
 
-        return redirect()->back()->with('success', 'Damaged status updated successfully.');
-    }
+    //     return redirect()->back()->with('success', 'Damaged status updated successfully.');
+    // }
 
     public function show(Album $album) {
         return view('albums.show', compact('album'));

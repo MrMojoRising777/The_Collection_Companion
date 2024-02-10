@@ -19,7 +19,7 @@
                         {{ __('Albums') }}
                     </x-nav-link>
                     <x-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
-                        {{ __('Collection') }}
+                        {{ __('Collectie') }}
                     </x-nav-link>
                     <x-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
                         {{ __('Contact') }}
@@ -44,7 +44,7 @@
 
                     <x-slot name="content">
                         <x-dropdown-link :href="route('profile.edit')">
-                            {{ __('Profile') }}
+                            {{ __('Profiel') }}
                         </x-dropdown-link>
 
                         <!-- Authentication -->
@@ -54,7 +54,7 @@
                             <x-dropdown-link :href="route('logout')"
                                     onclick="event.preventDefault();
                                                 this.closest('form').submit();">
-                                {{ __('Log Out') }}
+                                {{ __('Uitloggen') }}
                             </x-dropdown-link>
                         </form>
                     </x-slot>
@@ -82,6 +82,12 @@
             <x-responsive-nav-link :href="route('albums.index')" :active="request()->routeIs('albums.index')">
                 {{ __('Albums') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
+                {{ __('Collectie') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
+                {{ __('Contact') }}
+            </x-responsive-nav-link>
 
         <!-- Responsive Settings Options -->
         <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
@@ -92,7 +98,7 @@
 
             <div class="mt-3 space-y-1">
                 <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profile') }}
+                    {{ __('Profiel') }}
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
@@ -102,7 +108,7 @@
                     <x-responsive-nav-link :href="route('logout')"
                             onclick="event.preventDefault();
                                         this.closest('form').submit();">
-                        {{ __('Log Out') }}
+                        {{ __('Uitloggen') }}
                     </x-responsive-nav-link>
                 </form>
             </div>

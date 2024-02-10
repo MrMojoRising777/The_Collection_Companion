@@ -8,26 +8,26 @@
 
 @section('content')
   <div class="container">
-    <h1 class="h1 text-center mb-3 suske_wiske_font">Collection</h1>
+    <h1 class="h1 text-center mb-3 suske_wiske_font">Collectie</h1>
     
     @if ($collection->isEmpty())
-      <p>{{ __('You have no albums in your collection.') }}</p>
+      <p><i>Er zijn geen albums gevonden in je collectie</i></p>
     @else
       <div class="row">
         <div class="col-md-4 mb-3">
           @if(Route::currentRouteName() !== 'collection.index')
             <a href="{{ route('collection.index') }}" class="btn btn-success">
-              Collection
+              Collectie
             </a>
           @endif
           @if (Route::currentRouteName() !== 'collection.favorites')
             <a href="{{ route('collection.favorites') }}" class="btn btn-warning">
-              Favorites
+              Favorieten
             </a>
           @endif
           @if (Route::currentRouteName() !== 'collection.first_prints')
             <a href="{{ route('collection.first_prints') }}" class="btn btn-secondary">
-              First prints
+              Eerste drukken
             </a>
           @endif
         </div>
@@ -39,13 +39,13 @@
         <table class="table">
           <thead>
             <tr>
-              <th>Collected</th>
+              <th>Verzameld</th>
               <th>Name</th>
               <th>Serie</th>
-              <th>Volume</th>
-              <th>Cover</th>
-              <th>First Print</th>
-              <th>Actions</th>
+              <th>Nummer</th>
+              <th>Kaft</th>
+              <th>Uitgebracht</th>
+              <th>Acties</th>
             </tr>
           </thead>
           <tbody>
@@ -56,7 +56,7 @@
                   <form method="POST" action="{{ route('collection.removeFromCollection', $collected->album_id) }}">
                     @csrf
                     @method('DELETE')
-                    <button type="submit" class="btn btn-danger">Remove from Collection</button>
+                    <button type="submit" class="btn btn-danger">Verwijder</button>
                   </form>
 
                   <form method="POST" action="{{ route('collection.toggleFavorite', $collected->album_id) }}">
@@ -87,8 +87,8 @@
                 <td>{{ $collected->album->cover }}</td>
                 <td>{{ $collected->album->first_print }}</td>
                 <td>
-                  <a href="{{ route('collection.show', $collected->album_id) }}" class="btn btn-info">View</a>
-                  <a href="{{ route('collection.edit', $collected->album_id) }}" class="btn btn-info">Edit</a>
+                  <a href="{{ route('collection.show', $collected->album_id) }}" class="btn btn-info">Bekijk</a>
+                  <a href="{{ route('collection.edit', $collected->album_id) }}" class="btn btn-warning">Wijzig</a>
                 </td>
               </tr>
             @endforeach

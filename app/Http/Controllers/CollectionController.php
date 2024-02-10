@@ -15,7 +15,8 @@ class CollectionController extends Controller
         return view('collection.index', compact('collection'));
     }
 
-    public function edit(Album $album) {
+    public function edit(Album $album)
+    {
         $collected = auth()->user()->collections()->where('album_id', $album->id)->first();
         return view('collection.edit', compact('collected'));
     }
@@ -29,7 +30,7 @@ class CollectionController extends Controller
         // Update album with validated data
         $album->update($validatedData);
 
-        return redirect()->route('collection.index')->with('success', 'Album updated successfully.');
+        return redirect()->route('collection.index')->with('success', 'Album succesvol bijgewerkt.');
     }
 
     public function show(Album $album) // SHOW SPECIFIC COLLECTED ALBUM
@@ -56,27 +57,27 @@ class CollectionController extends Controller
         $collection = $user->collections()->where('album_id', $album->id)->first();
         if ($collection) {
             $collection->delete();
-            $message = 'Album removed from collection successfully.';
+            $message = 'Album succesvol uit je collectie verwijderd.';
         } else {
             $user->collections()->create([
                 'album_id' => $album->id,
                 'acquisition_date' => Carbon::now()
             ]);
-            $message = 'Album added to collection successfully.';
+            $message = 'Album succesvol aan je collectie toegevoegd.';
         }
         return redirect()->back()->with('success', $message);
     }
 
     public function toggleFavorite(Album $album) // SWITCH COLLECTED ALBUM (UN)FAVORITE
     {
-        $message = $this->toggleItemProperty($album, 'favorite', 'Favorite status toggled successfully.');
-        return redirect()->back()->with('success', $message);
+        $message = $this->toggleItemProperty($album);
+        return redirect()->back();
     }
 
     public function toggleFirstPrint(Album $album) // SWITCH COLLECTED ALBUM (NOT)FIRST_PRINT
     {
-        $message = $this->toggleItemProperty($album, 'first_print', 'First print status toggled successfully.');
-        return redirect()->back()->with('success', $message);
+        $message = $this->toggleItemProperty($album);
+        return redirect()->back();
     }
 
     public function removeFromCollection(Album $album) // REMOVE ALBUM FROM COLLECTION //*add confirmation check
@@ -87,7 +88,7 @@ class CollectionController extends Controller
             $collection->delete();
         }
 
-        return redirect()->back()->with('success', 'Album removed from collection successfully.');
+        return redirect()->back()->with('success', 'Album succesvol uit je collectie verwijderd.');
     }
 
     protected function toggleItemProperty(Album $album, $property, $successMessage) // REUSABLE TOGGLE FUNCTION
@@ -98,7 +99,7 @@ class CollectionController extends Controller
             $collection->update([$property => !$collection->$property]);
             return $successMessage;
         } else {
-            return 'Album is not in your collection.';
+            return 'Dit album is niet in je collectie.';
         }
     }
 }

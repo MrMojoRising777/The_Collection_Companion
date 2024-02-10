@@ -22,7 +22,7 @@
                     <p class="mb-2"><strong>Aankoopprijs:</strong> €{{ $album->purchase_price }}</p>
                     <p class="mb-2"><strong>Aankoopdatum:</strong> {{ $album->purchase_date }}</p>
                 @else
-                    <p class="mb-2"><strong>Nog niet in je collectie</strong></p>
+                    <p class="mb-2"><i>Meer informatie wordt beschikbaar als je dit album in je collectie hebt</i></p>
                 @endif
             </div>
             <div class="album-image w-full md:w-1/3 lg:w-1/2">

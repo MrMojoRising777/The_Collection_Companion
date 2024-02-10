@@ -23,5 +23,5 @@
 @endforeach
 
 @if ($allObtainedZero)
-    <p><i>Currently no albums in your collection</i></p>
+    <p><i>Er zijn geen albums gevonden in je collectie</i></p>
 @endif

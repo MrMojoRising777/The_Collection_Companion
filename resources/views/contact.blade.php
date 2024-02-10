@@ -5,7 +5,7 @@
     <div class="row justify-content-center">
       <div class="col-md-8">
         <div class="card">
-          <div class="card-header">{{ __('Contact Us') }}</div>
+          <div class="card-header">Contacteer ons</div>
 
           <div class="card-body">
             @if (session('success'))
@@ -18,7 +18,7 @@
               @csrf
 
               <div class="form-group">
-                <label for="subject">{{ __('Subject') }}</label>
+                <label for="subject">Onderwerp</label>
                 <input id="subject" type="text" class="form-control @error('subject') is-invalid @enderror"
                   name="subject" value="{{ old('subject') }}" required autofocus>
                 @error('subject')
@@ -29,7 +29,7 @@
               </div>
 
               <div class="form-group">
-                <label for="email">{{ __('Email Address') }}</label>
+                <label for="email">Emailadres</label>
                 <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
                   name="email" value="{{ old('email') }}" required>
                 @error('email')
@@ -40,7 +40,7 @@
               </div>
 
               <div class="form-group">
-                <label for="message">{{ __('Message') }}</label>
+                <label for="message">Bericht</label>
                 <textarea id="message" class="form-control @error('message') is-invalid @enderror" name="message" rows="6"
                   required>{{ old('message') }}</textarea>
                 @error('message')
@@ -50,7 +50,7 @@
                 @enderror
               </div>
 
-              <button type="submit" class="btn btn-primary">{{ __('Submit') }}</button>
+              <button type="submit" class="btn btn-primary">Verzend</button>
             </form>
           </div>
         </div>

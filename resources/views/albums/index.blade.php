@@ -2,13 +2,13 @@
 
 @section('content')
   <div class="container">
-    <h1 class="h1 text-center mb-3 suske_wiske_font">All Albums</h1>
+    <h1 class="h1 text-center mb-3 suske_wiske_font">Alle Albums</h1>
 
     <div class="row">
       <div class="col-md-4 mb-3">
         @if (Auth::user() && Auth::user()->isAdmin())
           <a href="{{ route('albums.create') }}" class="btn btn-primary">
-            Create
+            Nieuw
           </a>
         @endif
       </div>
@@ -16,9 +16,9 @@
         <form action="{{ route('albums.search') }}" method="post">
           @csrf
           <div class="input-group">
-            <input type="text" class="form-control" placeholder="Search..." name="search">
+            <input type="text" class="form-control" placeholder="Zoeken..." name="search">
             <div class="input-group-append">
-              <button class="btn btn-primary" type="submit">Search</button>
+              <button class="btn btn-primary" type="submit">Zoeken</button>
             </div>
           </div>
         </form>
@@ -26,12 +26,12 @@
       <div class="col-md-4 mb-3">
         @if (Route::currentRouteName() !== 'albums.index')
           <a href="{{ route('albums.index') }}" class="btn btn-primary">
-            All
+            Alle
           </a>
         @endif
         @if (Route::currentRouteName() !== 'collection.index')
           <a href="{{ route('collection.index') }}" class="btn btn-warning">
-            Collection
+            Collectie
           </a>
         @endif
         {{-- add wishlist route --}}
@@ -40,9 +40,9 @@
 
     <div class="row">
       <form id="filterForm" action="{{ route('albums.index') }}" method="GET">
-        <label for="serie_id">Filter by Serie:</label>
+        <label for="serie_id">Filter d.m.v. Serie:</label>
         <select class="form-select mb-1" name="serie_id" id="serie_id">
-          <option value="">All Series</option>
+          <option value="">Alle Series</option>
           @foreach ($series as $serie)
             <option value="{{ $serie->id }}" {{ request('serie_id') == $serie->id ? 'selected' : '' }}>
               {{ $serie->name }}
@@ -75,15 +75,14 @@
       <table class="table">
         <thead>
           <tr>
-            <th>Collected</th>
-            <th>Name</th>
-            <th>Comic</th>
+            <th>Verzameld</th>
+            <th>Naam</th>
             <th>Serie</th>
-            <th>Volume</th>
-            <th>Cover</th>
-            <th>First Print</th>
+            <th>Nummer</th>
+            <th>Kaft</th>
+            <th>Uitgebracht</th>
             @if (Auth::user() && Auth::user()->isAdmin())
-              <th>Actions</th>
+              <th>Acties</th>
             @endif
           </tr>
         </thead>
@@ -97,11 +96,11 @@
                   @if ($album->isInCollection())
                     @method('DELETE')
                     <button type="submit" class="btn btn-danger">
-                      Remove
+                      Verwijder
                     </button>
                   @else
                     <button type="submit" class="btn btn-success">
-                      Collect
+                      Verzamel
                     </button>
                   @endif
                 </form>
@@ -118,17 +117,16 @@
                 </form> --}}
               </td>
               <td>{{ $album->name }}</td>
-              <td>{{ $album->comics->name }}</td>
               <td>{{ $album->serie->name }}</td>
               <td>{{ $album->volume }}</td>
               <td>{{ $album->cover }}</td>
               <td>{{ $album->first_print }}</td>
               <td>
-                <a href="{{ route('albums.show', $album->id) }}" class="btn btn-info">View</a>
+                <a href="{{ route('albums.show', $album->id) }}" class="btn btn-info">Bekijk</a>
 
                 {{-- admin actions | CRUD albums --}}
                 @if (Auth::user() && Auth::user()->isAdmin())
-                  <a href="{{ route('albums.edit', $album->id) }}" class="btn btn-warning">Edit</a>
+                  <a href="{{ route('albums.edit', $album->id) }}" class="btn btn-warning">Wijzig</a>
                   <form action="{{ route('albums.destroy', $album->id) }}" method="POST" style="display: inline;">
                     @csrf
                     @method('DELETE')

@@ -12,20 +12,20 @@
                     @endif
                     <div class="carousel-caption d-none d-md-block">
                         <h5 class="font-weight-bold text-black">{{ $recentAlbum->name }}</h5>
-                        <p>Some representative placeholder content for the slide.</p>
+                        {{-- <p>Some representative placeholder content for the slide.</p> --}}
                     </div>
                 </div>
             @endforeach
         </div>
         <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
             <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Previous</span>
+            <span class="visually-hidden">Vorige</span>
         </button>
         <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
             <span class="carousel-control-next-icon" aria-hidden="true"></span>
-            <span class="visually-hidden">Next</span>
+            <span class="visually-hidden">Volgende</span>
         </button>
     </div>
 @else
-    <p><i>Currently no albums in your collection</i></p>
+    <p><i>Er zijn geen albums gevonden in je collectie</i></p>
 @endif
