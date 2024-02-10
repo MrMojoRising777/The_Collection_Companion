@@ -18,16 +18,26 @@
         <link rel="stylesheet" href="{{ mix('css/app.css') }}">
     </head>
     <body class="font-sans text-gray-900 antialiased">
-        <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
-
-            <!-- Image -->
-            <div>
-                <img src="{{ asset('images/sw_welcome.jpeg') }}" alt="Description" class="mx-auto rounded-lg shadow-md max-w-full h-auto mt-4">
+        <div class="container mx-auto p-4 bg-gray-100 dark:bg-gray-900">
+            <div class="flex justify-end space-x-2">
+                <button class="hover:bg-red-500 hover:text-white text-black bg-transparent font-bold py-2 px-4 rounded-full" onclick="window.location='{{ route('login') }}'">
+                    Log in
+                </button>
+                @if (Route::has('register'))
+                    <button class="hover:bg-red-500 hover:text-white text-black bg-transparent font-bold py-2 px-4 rounded-full" onclick="window.location='{{ route('register') }}'">Register</button>
+                @endif
             </div>
+            <div class="min-h-screen flex flex-col sm:justify-center items-center pt-6 sm:pt-0">
 
-            <!-- Content -->
-            <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
-                {{ $slot }}
+                <!-- Image -->
+                <div>
+                    <img src="{{ asset('images/sw_welcome.jpeg') }}" alt="Description" class="mx-auto rounded-lg shadow-md max-w-full h-auto mt-4">
+                </div>
+    
+                <!-- Content -->
+                <div class="w-full sm:max-w-md mt-6 px-6 py-4 bg-white shadow-md overflow-hidden sm:rounded-lg">
+                    {{ $slot }}
+                </div>
             </div>
         </div>
 

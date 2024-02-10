@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Mail\UserConfirmation;
 use App\Mail\AdminNotification;
 use App\Mail\ContactFormSubmitted;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Mail;
 
 class ContactController extends Controller
@@ -23,12 +24,17 @@ class ContactController extends Controller
             'message' => 'required|string',
         ]);
 
-        // Send email to user
-        Mail::to($request->input('email'))->send(new UserConfirmation($request->all()));
+        // get user's name
+        $user = Auth::user()->name;
 
-        // Send notification email to admin
-        Mail::to('alexander.goyens@gmail.com')->send(new AdminNotification($request->all()));
+        $formData = array_merge($request->only(['subject', 'email', 'message']), ['name' => $user]);
 
-        // return redirect()->back()->with('success', 'Your contact form has been sent!');
+        // send email to user
+        Mail::to($request->input('email'))->send(new UserConfirmation($formData));
+
+        // send notification email to admin
+        Mail::to('alexander.goyens@gmail.com')->send(new AdminNotification($formData));
+
+        return redirect()->back()->with('success', 'Your contact form has been sent!');
     }
 }
