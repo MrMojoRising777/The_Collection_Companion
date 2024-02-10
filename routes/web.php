@@ -70,6 +70,10 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact/form', [ContactController::class, 'show'])->name('contact.show');
     Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.submit');
 
+    Route::get('/', function () {
+        return view('credits');
+    })->name('credits');
+
     // SerieController (old)
     Route::get('/series', [SerieController::class, 'index'])->name('series.index');
     Route::get('/series/{id}', [SerieController::class, 'show'])->name('series.show');
