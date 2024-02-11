@@ -105,16 +105,16 @@
                   @endif
                 </form>
 
-                {{-- <form method="POST" action="{{ route('albums.toggleWanted', $album) }}">
+                <form method="POST" action="{{ route('wishlist.toggleWishlist', $album) }}">
                   @csrf
                   <button type="submit" class="btn">
-                    @if ($album->wanted == 1)
-                      <i class="bi bi-bookmark-fill"></i>
+                    @if ($wishlist->contains('album_id', $album->id))
+                        <i class="bi bi-heart-fill" style="color: #b4311f;"></i>
                     @else
-                      <i class="bi bi-bookmark"></i>
+                        <i class="bi bi-heart"></i>
                     @endif
                   </button>
-                </form> --}}
+                </form>
               </td>
               <td>{{ $album->name }}</td>
               <td>{{ $album->serie->name }}</td>

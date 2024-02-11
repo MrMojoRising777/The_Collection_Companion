@@ -82,7 +82,7 @@ class CollectionController extends Controller
         return redirect()->back();
     }
 
-    public function removeFromCollection(Album $album) // REMOVE ALBUM FROM COLLECTION //*add confirmation check
+    public function removeFromCollection(Album $album) // REMOVE ALBUM FROM COLLECTION
     {
         $user = auth()->user();
         $collection = $user->collections()->where('album_id', $album->id)->first();

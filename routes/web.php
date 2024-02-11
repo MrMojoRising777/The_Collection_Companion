@@ -58,6 +58,11 @@ Route::middleware('auth')->group(function () {
     Route::post('/collection/toggleFirstPrint/{album}', [CollectionController::class, 'toggleFirstPrint'])->name('collection.toggleFirstPrint');
     Route::get('/collection/first_prints', [CollectionController::class, 'getFirstPrints'])->name('collection.first_prints');
 
+    // wishlist
+    Route::get('/wishlist', [AlbumController::class, 'wishlist'])->name('wishlist');
+    Route::post('/wishlist/{album}', [AlbumController::class, 'toggleWishlist'])->name('wishlist.toggleWishlist');
+    Route::delete('/wishlist/remove/{album}', [AlbumController::class, 'remove'])->name('wishlist.remove');
+
     //albums view
     Route::match(['post', 'delete'], '/collection/toggle/{album}', [CollectionController::class, 'toggleCollection'])->name('albums.toggleCollected');
 

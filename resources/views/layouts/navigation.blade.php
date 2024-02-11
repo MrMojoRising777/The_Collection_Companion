@@ -21,6 +21,9 @@
                     <x-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
                         {{ __('Collectie') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
+                        {{ __('Verlanglijst') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
                         {{ __('Contact') }}
                     </x-nav-link>
@@ -87,6 +90,9 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
                 {{ __('Collectie') }}
+            </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
+                {{ __('Verlanglijst') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
                 {{ __('Contact') }}
