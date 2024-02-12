@@ -72,14 +72,14 @@ class CollectionController extends Controller
 
     public function toggleFavorite(Album $album) // SWITCH COLLECTED ALBUM (UN)FAVORITE
     {
-        $message = $this->toggleItemProperty($album);
-        return redirect()->back();
+        $message = $this->toggleItemProperty($album, 'favorite', 'Favorite status toggled successfully.');
+        return redirect()->back()->with('message', $message);
     }
 
     public function toggleFirstPrint(Album $album) // SWITCH COLLECTED ALBUM (NOT)FIRST_PRINT
     {
-        $message = $this->toggleItemProperty($album);
-        return redirect()->back();
+        $message = $this->toggleItemProperty($album, 'first_print', 'First print status toggled successfully.');
+        return redirect()->back()->with('message', $message);
     }
 
     public function removeFromCollection(Album $album) // REMOVE ALBUM FROM COLLECTION

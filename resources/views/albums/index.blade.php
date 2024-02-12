@@ -4,6 +4,12 @@
   <div class="container">
     <h1 class="h1 text-center mb-3 suske_wiske_font">Alle Albums</h1>
 
+    {{-- @if (session('message'))
+      <div class="alert alert-success">
+        {{ session('message') }}
+      </div>
+    @endif --}}
+
     <div class="row">
       <div class="col-md-4 mb-3">
         @if (Auth::user() && Auth::user()->isAdmin())
@@ -57,17 +63,6 @@
         });
       </script>
     </div>
-
-    @if (session('success'))
-      <div class="alert alert-success">
-        {{ session('success') }}
-      </div>
-    @endif
-    @if (session('error'))
-      <div class="alert alert-danger">
-        {{ session('error') }}
-      </div>
-    @endif
 
     {{ $albums->links() }}
 
