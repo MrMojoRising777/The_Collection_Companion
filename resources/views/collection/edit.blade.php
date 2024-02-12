@@ -12,7 +12,7 @@
           <div class="col-md-12">
             <div class="form-group mb-3"> {{-- CONDITION --}}
               <label for="condition" class="text-black">Conditie</label>
-              <button onclick="legendModal()"><i class="bi bi-question-circle"></i></button>
+              <button type="button" onclick="legendModal()"><i class="bi bi-question-circle"></i></button>
               <select class="form-select" name="condition" id="condition">
                 <option value="{{ old('condition', $collected->condition) }}" disabled></option>
                 @foreach ($conditions as $condition)
@@ -40,7 +40,7 @@
   </div>
 
   <!-- Modal -->
-  {{-- <div class="modal fade" id="legendModal" tabindex="-1" aria-labelledby="legendModalLabel" aria-hidden="true">
+  <div id="legendModal" class="modal fade">
     <div class="modal-dialog">
       <div class="modal-content">
         <div class="modal-header">
@@ -74,11 +74,13 @@
         </div>
       </div>
     </div>
-  </div> --}}
+  </div>
 @endsection
 
-<script>
-  function legendModal() {
-    $('#legendModal').modal('show');
-  }
-</script>
+@section('scripts')
+  <script>
+    function legendModal() {
+      $('#legendModal').modal('show');
+    }
+  </script>
+@endsection
