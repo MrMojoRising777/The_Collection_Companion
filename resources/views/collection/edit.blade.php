@@ -10,10 +10,14 @@
 
         <div class="row">
           <div class="col-md-12">
-
             <div class="form-group mb-3"> {{-- CONDITION --}}
               <label for="condition" class="text-black">Conditie</label>
-              <input type="text" name="condition" class="form-control" value="{{ old('condition', $collected->condition) }}">
+              <select class="form-select" name="condition" id="condition">
+                <option value="{{ old('condition', $collected->condition) }}" disabled></option>
+                @foreach ($conditions as $condition)
+                    <option value="{{ $condition }}">{{ $condition }}</option>
+                @endforeach
+              </select>
             </div>
 
             <div class="form-group mb-3"> {{-- NOTES --}}

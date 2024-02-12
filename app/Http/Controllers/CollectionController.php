@@ -18,7 +18,8 @@ class CollectionController extends Controller
     public function edit(Album $album)
     {
         $collected = auth()->user()->collections()->where('album_id', $album->id)->first();
-        return view('collection.edit', compact('collected'));
+        $conditions = ['Nieuw', 'Zeer Goed', 'Goed', 'Redelijk', 'Slecht'];
+        return view('collection.edit', compact('collected', 'conditions'));
     }
 
     public function update(Request $request, Album $album) // UPDATE COLLECTEC ALBUM //*needs logic
@@ -30,7 +31,6 @@ class CollectionController extends Controller
         ]);
 
         $collected = Collection::where('album_id', $album->id)->update($validatedData);
-        dd($validatedData);
 
         return redirect()->route('collection.index')->with('success', 'Album succesvol bijgewerkt.');
     }
