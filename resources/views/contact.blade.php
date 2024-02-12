@@ -29,17 +29,6 @@
               </div>
 
               <div class="form-group">
-                <label for="email">Emailadres</label>
-                <input id="email" type="email" class="form-control @error('email') is-invalid @enderror"
-                  name="email" value="{{ old('email') }}" required>
-                @error('email')
-                  <span class="invalid-feedback" role="alert">
-                    <strong>{{ $message }}</strong>
-                  </span>
-                @enderror
-              </div>
-
-              <div class="form-group">
                 <label for="message">Bericht</label>
                 <textarea id="message" class="form-control @error('message') is-invalid @enderror" name="message" rows="6"
                   required>{{ old('message') }}</textarea>

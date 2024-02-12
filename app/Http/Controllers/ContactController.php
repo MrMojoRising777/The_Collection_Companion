@@ -20,17 +20,17 @@ class ContactController extends Controller
     {
         $request->validate([
             'subject' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
             'message' => 'required|string',
         ]);
 
         // get user's name
         $user = Auth::user()->name;
+        $email = Auth::user()->email;
 
-        $formData = array_merge($request->only(['subject', 'email', 'message']), ['name' => $user]);
+        $formData = array_merge($request->only(['subject', 'message']), ['name' => $user, 'email' => $email]);
 
         // send email to user
-        Mail::to($request->input('email'))->send(new UserConfirmation($formData));
+        Mail::to($email)->send(new UserConfirmation($formData));
 
         // send notification email to admin
         Mail::to('alexander.goyens@gmail.com')->send(new AdminNotification($formData));
