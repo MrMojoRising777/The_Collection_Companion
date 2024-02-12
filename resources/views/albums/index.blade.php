@@ -88,7 +88,7 @@
         </thead>
         <tbody>
           @foreach ($albums as $album)
-            <tr>
+            <tr onclick="window.location='{{ route('albums.show', $album->id) }}';" style="cursor:pointer;">
               <td class="d-flex">
 
                 <form method="POST" action="{{ route('albums.toggleCollected', $album) }}">

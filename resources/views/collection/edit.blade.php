@@ -12,10 +12,11 @@
           <div class="col-md-12">
             <div class="form-group mb-3"> {{-- CONDITION --}}
               <label for="condition" class="text-black">Conditie</label>
+              <button onclick="legendModal()"><i class="bi bi-question-circle"></i></button>
               <select class="form-select" name="condition" id="condition">
                 <option value="{{ old('condition', $collected->condition) }}" disabled></option>
                 @foreach ($conditions as $condition)
-                    <option value="{{ $condition }}">{{ $condition }}</option>
+                  <option value="{{ $condition }}">{{ $condition }}</option>
                 @endforeach
               </select>
             </div>
@@ -27,7 +28,8 @@
 
             <div class="form-group mb-3"> {{-- PRINT_YEAR --}}
               <label for="print_year" class="text-black">Drukjaar</label>
-              <input type="text" name="print_year" class="form-control" value="{{ old('condition', $collected->print_year) }}">
+              <input type="text" name="print_year" class="form-control"
+                value="{{ old('condition', $collected->print_year) }}">
             </div>
 
             <button class="btn btn-success" type="submit">Update Album</button>
@@ -36,4 +38,47 @@
       </form>
     </div>
   </div>
+
+  <!-- Modal -->
+  {{-- <div class="modal fade" id="legendModal" tabindex="-1" aria-labelledby="legendModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="legendModalLabel">Conditie Legenda</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>
+            <strong>Nieuw: </strong>
+            Perfecte, ongelezen staat, zonder enige schade of gebreken.
+          </p>
+          <p>
+            <strong>Zeer Goed: </strong>
+            Minimale tekenen van slijtage, zoals lichte krasjes op de cover of een lichte vervaging van de kleuren.
+          </p>
+          <p>
+            <strong>Goed: </strong>
+            Enige tekenen van gebruik, zoals lichte vouwen, kleine scheurtjes of verkleuring van de pagina's.
+          </p>
+          <p>
+            <strong>Redelijk: </strong>
+            Aanzienlijke slijtage of schade, zoals grote vouwen, scheuren, ontbrekende pagina's of losse binding.
+          </p>
+          <p>
+            <strong>Slecht: </strong>
+            Ernstige beschadiging, met aanzienlijke scheuren, loszittende pagina's, water- of vochtschade, of andere ernstige gebreken die de leesbaarheid aantasten.
+          </p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        </div>
+      </div>
+    </div>
+  </div> --}}
 @endsection
+
+<script>
+  function legendModal() {
+    $('#legendModal').modal('show');
+  }
+</script>

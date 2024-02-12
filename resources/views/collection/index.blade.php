@@ -50,7 +50,7 @@
           </thead>
           <tbody>
             @foreach ($collection as $collected)
-              <tr>
+              <tr onclick="window.location='{{ route('collection.show', $collected->album_id) }}';" style="cursor:pointer;">
                 <td class="d-flex">
 
                   <form method="POST" action="{{ route('collection.removeFromCollection', $collected->album_id) }}">
