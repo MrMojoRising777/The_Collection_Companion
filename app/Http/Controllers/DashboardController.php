@@ -4,52 +4,54 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Album;
+use App\Models\Collection;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class DashboardController extends Controller
 {
     public function index()
     {
-        // recent albums
-        $recentAlbums = $this->getRecentAdditions();
-        // most value albums
-        $valueAlbums = $this->getMostValued();
-
-        // percentage of collection (/serie)
-        $groupedAlbums = $this->getGroupedAlbums();
-        $groupedObtainedAlbums = $this->getGroupedObtainedAlbums();
-        $seriesPercentages = $this->calculateObtainedPercentage($groupedAlbums, $groupedObtainedAlbums);
-
-        // favorite albums
+        $recentAlbums = $this->getRecentAlbums(5);
+        $mostValuedAlbums = $this->getMostValuedAlbums(5);
+        $collectionValue = $this->calculateCollectionValue();
+        $seriesPercentages = $this->calculateObtainedPercentage();
         $favorites = $this->getFavoriteAlbums();
+        $achievements = $this->getUserAchievements(1);
 
-        // value of collection
-        $collectionValue = $this->getCollectionValue();
-
-        // achievements
-        $achievements = $this->getAchievements();
-
-        return view('dashboard', compact('recentAlbums', 'valueAlbums', 'seriesPercentages', 'favorites', 'collectionValue', 'achievements'));
+        return view('dashboard', compact('recentAlbums', 'mostValuedAlbums', 'collectionValue', 'favorites', 'achievements', 'seriesPercentages'));
     }
 
-    private function getGroupedAlbums()
+    private function getRecentAlbums($limit)
     {
-        return $this->getGroupedAlbumsQuery()->get()->groupBy('serie.name');
+        return Collection::with('album')
+            ->join('albums', 'collections.album_id', '=', 'albums.id')
+            ->select('albums.*')
+            ->orderBy('collections.updated_at', 'desc')
+            ->take($limit)
+            ->get();
+    }
+    
+    private function getMostValuedAlbums($limit)
+    {
+        return Collection::with('album')
+            ->join('albums', 'collections.album_id', '=', 'albums.id')
+            ->orderBy('albums.value', 'desc')
+            ->take($limit)
+            ->get(['albums.*']);
     }
 
-    private function getGroupedObtainedAlbums()
+    private function calculateCollectionValue()
     {
-        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->get()->groupBy('serie.name');
+        return Collection::join('albums', 'collections.album_id', '=', 'albums.id')->sum('albums.value');
     }
 
-    private function getGroupedAlbumsQuery()
+    private function calculateObtainedPercentage()
     {
-        return Album::with('comics', 'serie')->orderBy('serie_id');
-    }
+        $groupedAlbums = Album::with('serie')->get()->groupBy('serie.name');
+        $groupedObtainedAlbums = Collection::with('album')->get()->groupBy('album.serie.name');
 
-    private function calculateObtainedPercentage($groupedAlbums, $groupedObtainedAlbums)
-    {
-        $percentageData = collect($groupedAlbums)->map(function ($albums, $seriesName) use ($groupedObtainedAlbums) {
+        return $groupedAlbums->map(function ($albums, $seriesName) use ($groupedObtainedAlbums) {
             $totalAlbums = count($albums);
             $obtainedAlbums = $groupedObtainedAlbums->has($seriesName) ? count($groupedObtainedAlbums[$seriesName]) : 0;
             $percentage = ($totalAlbums > 0) ? round(($obtainedAlbums / $totalAlbums) * 100) : 0;
@@ -61,33 +63,19 @@ class DashboardController extends Controller
                 'percentage' => $percentage,
             ];
         });
-
-        return $percentageData;
-    }
-
-    private function getRecentAdditions()
-    {
-        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->orderBy('updated_at', 'desc')->take(5)->get();
-    }
-
-    private function getMostValued()
-    {
-        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->orderBy('value', 'desc')->take(5)->get();
     }
 
     private function getFavoriteAlbums()
     {
-        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->where('favorite', 1)->take(5)->get();
+        return Collection::with('album')
+            ->where('favorite', 1)
+            ->take(5)
+            ->get();
     }
 
-    private function getCollectionValue()
+    private function getUserAchievements($userId)
     {
-        return $this->getGroupedAlbumsQuery()->where('obtained', 1)->sum('value');
-    }
-
-    private function getAchievements()
-    {
-        $user = User::where('id', 1)->first();
-        return $achievements = $user->achievements;
+        $user = User::findOrFail($userId);
+        return $user->achievements;
     }
 }

@@ -32,9 +32,9 @@
             </div>
             <div class="col-md-4">
                 <h2>Meest waardevolle albums</h2>
-                @if ($valueAlbums->isNotEmpty())
+                @if ($mostValuedAlbums->isNotEmpty())
                     <ul class="list-group list-group-flush">
-                        @foreach ($valueAlbums as $valueAlbum)
+                        @foreach ($mostValuedAlbums as $valueAlbum)
                             <li class="list-group-item">{{ $valueAlbum->name }} - €{{ $valueAlbum->value }}</li>
                         @endforeach
                     </ul>

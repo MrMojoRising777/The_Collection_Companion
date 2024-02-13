@@ -75,7 +75,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/contact/form', [ContactController::class, 'show'])->name('contact.show');
     Route::post('/contact/send', [ContactController::class, 'send'])->name('contact.submit');
 
-    Route::get('/', function () {
+    Route::get('/credits', function () {
         return view('credits');
     })->name('credits');
 
