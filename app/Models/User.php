@@ -27,6 +27,11 @@ class User extends Authenticatable
         return $this->belongsToMany(Album::class, 'favorites', 'user_id', 'album_id')->withTimestamps();
     }
 
+    public function trackedSeries()
+    {
+        return $this->belongsToMany(Serie::class, 'serie_user')->withTimestamps();
+    }
+
     /**
      * The attributes that are mass assignable.
      *

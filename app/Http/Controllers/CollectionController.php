@@ -9,17 +9,22 @@ use Illuminate\Http\Request;
 
 class CollectionController extends Controller
 {
-    public function index() // SHOW COLLECTION
+    public function index()
+    {
+        return view('collection.index');
+    }
+
+    public function indexAlbums() // SHOW ALBUMS IN COLLECTION
     {
         $collection = auth()->user()->collections()->with('album')->paginate(10);
-        return view('collection.index', compact('collection'));
+        return view('collection.albums.index', compact('collection'));
     }
 
     public function edit(Album $album)
     {
         $collected = auth()->user()->collections()->where('album_id', $album->id)->first();
         $conditions = ['Nieuw', 'Zeer Goed', 'Goed', 'Redelijk', 'Slecht'];
-        return view('collection.edit', compact('collected', 'conditions'));
+        return view('collection.albums.edit', compact('collected', 'conditions'));
     }
 
     public function update(Request $request, Album $album) // UPDATE COLLECTEC ALBUM //*needs logic
@@ -32,25 +37,25 @@ class CollectionController extends Controller
 
         $collected = Collection::where('album_id', $album->id)->update($validatedData);
 
-        return redirect()->route('collection.index')->with('success', 'Album succesvol bijgewerkt.');
+        return redirect()->route('collection.albums.index')->with('success', 'Album succesvol bijgewerkt.');
     }
 
     public function show(Album $album) // SHOW SPECIFIC COLLECTED ALBUM
     {
         $collected = auth()->user()->collections()->where('album_id', $album->id)->first();
-        return view('collection.show', compact('collected'));
+        return view('collection.albums.show', compact('collected'));
     }
 
     public function getFavorites() // SHOW FAVORITES ONLY
     {
         $collection = auth()->user()->collections()->where('favorite', 1)->with('album')->paginate(10);
-        return view('collection', compact('collection'));
+        return view('collection.albums.index', compact('collection'));
     }
 
     public function getFirstPrints() // SHOW FIRST_PRINTS ONLY
     {
         $collection = auth()->user()->collections()->where('first_print', 1)->with('album')->paginate(10);
-        return view('collection', compact('collection'));
+        return view('collection.albums.index', compact('collection'));
     }
 
     public function toggleCollection(Album $album) // SWITCH ALBUM (UN)OBTAINED //*maybe better in AblumController

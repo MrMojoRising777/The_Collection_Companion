@@ -8,6 +8,7 @@ use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SerieUserController;
 use App\Http\Controllers\CollectionController;
 
 /*
@@ -44,19 +45,31 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
     // AlbumController
-    Route::post('/search', [AlbumController::class, 'search'])->name('albums.search');
+    Route::post('/search-albums', [AlbumController::class, 'search'])->name('albums.search');
     Route::resource('albums', AlbumController::class);
 
     // collections view
-    Route::get('/collection', [CollectionController::class, 'index'])->name('collection.index');
-    Route::get('/show/{album}', [CollectionController::class, 'show'])->name('collection.show');
-    Route::get('/edit/{album}', [CollectionController::class, 'edit'])->name('collection.edit');
-    Route::put('/update/{album}', [CollectionController::class, 'update'])->name('collection.update');
-    Route::delete('/collection/remove/{album}', [CollectionController::class, 'removeFromCollection'])->name('collection.removeFromCollection');
-    Route::post('/collection/toggleFavorite/{album}', [CollectionController::class, 'toggleFavorite'])->name('collection.toggleFavorite');
-    Route::get('/collection/favorites', [CollectionController::class, 'getFavorites'])->name('collection.favorites');
-    Route::post('/collection/toggleFirstPrint/{album}', [CollectionController::class, 'toggleFirstPrint'])->name('collection.toggleFirstPrint');
-    Route::get('/collection/first_prints', [CollectionController::class, 'getFirstPrints'])->name('collection.first_prints');
+    Route::get('/collection', [CollectionController::class, 'index'])->name('collection.albums.index');
+    // albums
+    Route::get('/collection/albums', [CollectionController::class, 'indexAlbums'])->name('collection.albums.index');
+    Route::get('/collection/show/album/{album}', [CollectionController::class, 'show'])->name('collection.albums.show');
+    Route::get('/collection/edit/album/{album}', [CollectionController::class, 'edit'])->name('collection.albums.edit');
+    Route::put('/collection/update/album/{album}', [CollectionController::class, 'update'])->name('collection.albums.update');
+    Route::delete('/collection/remove/album/{album}', [CollectionController::class, 'removeFromCollection'])->name('collection.albums.removeFromCollection');
+    Route::post('/collection/toggleFavorite/album/{album}', [CollectionController::class, 'toggleFavorite'])->name('collection.albums.toggleFavorite');
+    Route::get('/collection/favorites', [CollectionController::class, 'getFavorites'])->name('collection.albums.favorites');
+    Route::post('/collection/toggleFirstPrint/album/{album}', [CollectionController::class, 'toggleFirstPrint'])->name('collection.albums.toggleFirstPrint');
+    Route::get('/collection/first_prints', [CollectionController::class, 'getFirstPrints'])->name('collection.albums.first_prints');
+
+    // SerieUserController
+    Route::get('/collection-series', [SerieUserController::class, 'index'])->name('collection.series.index');
+
+    // SerieController
+    Route::get('/series', [SerieController::class, 'index'])->name('series.index');
+    Route::get('/series/{id}', [SerieController::class, 'show'])->name('series.show');
+    Route::post('/search-series', [SerieController::class, 'search'])->name('series.search');
+    Route::match(['post', 'delete'], '/series/{serie}/toggleTracking', [SerieController::class, 'toggleTracking'])->name('series.toggleTracking');
+
 
     // wishlist
     Route::get('/wishlist', [AlbumController::class, 'wishlist'])->name('wishlist');
@@ -78,10 +91,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/credits', function () {
         return view('credits');
     })->name('credits');
-
-    // SerieController (old)
-    Route::get('/series', [SerieController::class, 'index'])->name('series.index');
-    Route::get('/series/{id}', [SerieController::class, 'show'])->name('series.show');
 });
 
 require __DIR__.'/auth.php';

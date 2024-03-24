@@ -4,7 +4,7 @@
   <div class="container dark-mode">
     <div class="p-4">
       <h2 class="text-black">Wijzig Album</h2>
-      <form method="POST" action="{{ route('collection.update', $collected->album_id) }}">
+      <form method="POST" action="{{ route('collection.albums.update', $collected->album_id) }}">
         @csrf
         @method('PUT')
 

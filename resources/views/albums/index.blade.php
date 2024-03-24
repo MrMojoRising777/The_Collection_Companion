@@ -4,6 +4,10 @@
   <div class="container">
     <h1 class="h1 text-center mb-3 suske_wiske_font">Alle Albums</h1>
 
+    <blockquote>
+      <i>Bekijk en doorzoek ALLE albums in de app. Hier kan je ook selecteren of je dit album reeds hebt verzamelt, deze verschijnt dan ook in jouw collectie.</i>
+    </blockquote>
+
     {{-- @if (session('message'))
       <div class="alert alert-success">
         {{ session('message') }}
@@ -48,8 +52,8 @@
             Alle
           </a>
         @endif
-        @if (Route::currentRouteName() !== 'collection.index')
-          <a href="{{ route('collection.index') }}" class="btn btn-warning">
+        @if (Route::currentRouteName() !== 'collection.albums.index')
+          <a href="{{ route('collection.albums.index') }}" class="btn btn-warning">
             Collectie
           </a>
         @endif

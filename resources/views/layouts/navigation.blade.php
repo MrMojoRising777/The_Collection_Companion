@@ -15,10 +15,13 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <x-nav-link :href="route('series.index')" :active="request()->routeIs('series.index')">
+                        {{ __('Series') }}
+                    </x-nav-link>
                     <x-nav-link :href="route('albums.index')" :active="request()->routeIs('albums.index')">
                         {{ __('Albums') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
+                    <x-nav-link :href="route('collection.albums.index')" :active="request()->routeIs('collection.albums.index')">
                         {{ __('Collectie') }}
                     </x-nav-link>
                     <x-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
@@ -85,10 +88,13 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <x-responsive-nav-link :href="route('series.index')" :active="request()->routeIs('series.index')">
+                {{ __('Series') }}
+            </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('albums.index')" :active="request()->routeIs('albums.index')">
                 {{ __('Albums') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
+            <x-responsive-nav-link :href="route('collection.albums.index')" :active="request()->routeIs('collection.albums.index')">
                 {{ __('Collectie') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">

@@ -4,6 +4,10 @@
   <div class="container">
     <h1 class="h1 text-center mb-3 suske_wiske_font">Verlanglijst</h1>
 
+    <blockquote>
+      <i>Bekijk en doorzoek JOUW verlanglijst. Bekijk welke strips je graag zou willen (bekijk ook welke je kan kopen en waar).</i>
+    </blockquote>
+
     @if ($wishlist->isEmpty())
       <p><i>Er zijn geen albums gevonden in je verlanglijst</i></p>
     @else
@@ -51,7 +55,7 @@
                 <td>{{ $item->album->cover }}</td>
                 <td>{{ $item->album->first_print }}</td>
                 <td>
-                  <a href="{{ route('collection.show', $item->album_id) }}" class="btn btn-info">Bekijk</a>
+                  <a href="{{ route('collection.albums.show', $item->album_id) }}" class="btn btn-info">Bekijk</a>
                 </td>
               </tr>
             @endforeach

@@ -10,7 +10,7 @@
         <div class="row">
           <div class="d-flex">
             {{-- FAVORITE --}}
-            <form method="POST" action="{{ route('collection.toggleFavorite', $collected->album_id) }}">
+            <form method="POST" action="{{ route('collection.albums.toggleFavorite', $collected->album_id) }}">
               @csrf
               <button type="submit" class="btn">
                 @if ($collected->favorite == 1)
@@ -22,7 +22,7 @@
             </form>
     
             {{-- FIRST_PRINT --}}
-            <form method="POST" action="{{ route('collection.toggleFirstPrint', $collected->album_id) }}">
+            <form method="POST" action="{{ route('collection.albums.toggleFirstPrint', $collected->album_id) }}">
               @csrf
               <button type="submit" class="btn">
                 @if ($collected->first_print == 1)
