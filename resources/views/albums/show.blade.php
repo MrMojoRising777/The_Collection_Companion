@@ -7,7 +7,7 @@
         </div>
         <div class="album-content flex flex-col md:flex-row">
             <div class="album-info mb-4 md:mb-0 md:mr-4 w-full md:w-2/3 lg:w-1/2 bg-gray-100 p-4 rounded-lg">
-                <p class="mb-2"><strong>Serie:</strong> {{ $album->serie->name }}</p>
+{{--                <p class="mb-2"><strong>Serie:</strong> {{ $album->serie->name }}</p>--}}
                 <p class="mb-2"><strong>Nummer:</strong> {{ $album->volume }}</p>
                 <p class="mb-2"><strong>Kaft:</strong> {{ $album->cover }}</p>
                 <p class="mb-2"><strong>Kleur:</strong> {{ $album->color }}</p>

@@ -1,11 +1,4 @@
-@extends('layouts.app')
-
-@section('content')
-    <x-slot name="header">
-        <h2 class="text-xl font-semibold leading-tight text-gray-800 dark:text-gray-200">
-            {{ __('Dashboard') }}
-        </h2>
-    </x-slot>
+<x-layouts.app>
     <div class="container-fluid">
         <div class="row mt-2">
             <div class="col-md-8">
@@ -32,23 +25,23 @@
             </div>
             <div class="col-md-4">
                 <h2>Meest waardevolle albums</h2>
-                @if ($mostValuedAlbums->isNotEmpty())
-                    <ul class="list-group list-group-flush">
-                        @foreach ($mostValuedAlbums as $valueAlbum)
-                            <li class="list-group-item">{{ $valueAlbum->name }} - €{{ $valueAlbum->value }}</li>
-                        @endforeach
-                    </ul>
-                @else
-                    <p><i>Er zijn geen albums gevonden in je collectie</i></p>
-                @endif
+{{--                @if ($mostValuedAlbums->isNotEmpty())--}}
+{{--                    <ul class="list-group list-group-flush">--}}
+{{--                        @foreach ($mostValuedAlbums as $valueAlbum)--}}
+{{--                            <li class="list-group-item">{{ $valueAlbum->name }} - €{{ $valueAlbum->value }}</li>--}}
+{{--                        @endforeach--}}
+{{--                    </ul>--}}
+{{--                @else--}}
+{{--                    <p><i>Er zijn geen albums gevonden in je collectie</i></p>--}}
+{{--                @endif--}}
             </div>
             <div class="col-md-4">
                 <h2>Collectie waarde</h2>
-                @if ($collectionValue)
-                    <p>€ {{ $collectionValue }}</p>
-                @else
-                    <p><i>Er zijn geen albums gevonden in je collectie</i></p>
-                @endif
+{{--                @if ($collectionValue)--}}
+{{--                    <p>€ {{ $collectionValue }}</p>--}}
+{{--                @else--}}
+{{--                    <p><i>Er zijn geen albums gevonden in je collectie</i></p>--}}
+{{--                @endif--}}
                 <h2>Prestaties</h2>
                 @if($achievements)
                     @foreach ($achievements as $achievement)
@@ -61,4 +54,4 @@
             </div>
         </div>
     </div>
-@endsection
+</x-layouts.app>

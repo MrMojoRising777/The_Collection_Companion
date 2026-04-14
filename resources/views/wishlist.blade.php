@@ -50,7 +50,7 @@
                   </form>
                 </td>
                 <td>{{ $item->album->name }}</td>
-                <td>{{ $item->album->serie->name }}</td>
+                <td>{{ $item->album->serie?->name }}</td>
                 <td>{{ $item->album->volume }}</td>
                 <td>{{ $item->album->cover }}</td>
                 <td>{{ $item->album->first_print }}</td>

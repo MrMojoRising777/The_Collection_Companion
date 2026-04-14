@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
 use App\Http\Controllers\ComicController;
@@ -10,6 +12,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SerieUserController;
 use App\Http\Controllers\CollectionController;
+use App\Livewire\Dashboard;
 
 /*
 |--------------------------------------------------------------------------
@@ -42,10 +45,9 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     // DashboardController
-    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
-
+//    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+    Route::get('/dashboard', Dashboard::class)->name('dashboard');
     // AlbumController
-    Route::post('/search-albums', [AlbumController::class, 'search'])->name('albums.search');
     Route::resource('albums', AlbumController::class);
 
     // collections view

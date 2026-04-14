@@ -12,27 +12,41 @@ class AlbumController extends Controller
 {
     public function index(Request $request)
     {
-        // Get all series for filter dropdown
         $series = Serie::all();
 
-        // Start with all albums
-        $albums = Album::query();
+        $wishlist = Wishlist::query()
+            ->where('user_id', auth()->id())
+            ->get();
 
-        // wishlist albums
-        $wishlist = Wishlist::where('user_id', auth()->id())->get();
+        $search = $request->input('search');
+        $serieId = $request->input('serie_id');
 
-        if ($request->has('serie_id')) {
-            $serieId = $request->input('serie_id');
+        $albums = Album::query()
+            ->with('series')
+            ->when($search, function ($query) use ($search) {
+                $query->where(function ($q) use ($search) {
+                    $q->where('name', 'like', "%{$search}%")
+                        ->orWhereHas('series', function ($q2) use ($search) {
+                            $q2->where('name', 'like', "%{$search}%");
+                        });
+                });
+            })
+            ->when($serieId, function ($query) use ($serieId) {
+                $query->whereHas('series', function ($q) use ($serieId) {
+                    $q->where('series.id', $serieId);
+                });
+            })
 
-            if ($serieId !== null) {
-                $albums->where('serie_id', $serieId);
-            }
-        }
+            ->paginate(15)
+            ->withQueryString();
 
-        // Paginate the filtered albums
-        $albums = $albums->paginate(10);
-
-        return view('albums.index', compact('albums', 'series', 'wishlist'));
+        return view('albums.index', compact(
+            'albums',
+            'series',
+            'wishlist',
+            'search',
+            'serieId'
+        ));
     }
 
     public function getObtained()
@@ -66,14 +80,6 @@ class AlbumController extends Controller
     public function getDamaged()
     {
         $albums = Album::where('damaged', 1)->paginate(15);
-        $series = Serie::all();
-        return view('albums.index', compact('albums', 'series'));
-    }
-
-    public function search(Request $request)
-    {
-        $search = $request->input('search');
-        $albums = Album::where('name', 'like', '%'.$search.'%')->paginate(15);
         $series = Serie::all();
         return view('albums.index', compact('albums', 'series'));
     }
@@ -115,7 +121,7 @@ class AlbumController extends Controller
             // Handle uploaded image
             $image = $request->file('image');
             $serieId = $request->serie_id;
-            
+
             // Fetch serie
             $serie = Serie::where('id', $serieId)->first();
 
@@ -124,7 +130,7 @@ class AlbumController extends Controller
 
             // Save image to 'public_uploads' disk
             $image->storeAs('images', $filename, ['disk' => 'public_uploads']);
-            
+
             // Store image path in $validatedData array
             $validatedData['image'] = 'uploads/images/' . $filename;
         }
@@ -141,7 +147,7 @@ class AlbumController extends Controller
 
         return redirect()->route('albums.index')->with('success', 'Album deleted successfully.');
     }
-    
+
     public function create()
     {
         $comics = Comic::all();

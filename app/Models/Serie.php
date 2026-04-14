@@ -4,18 +4,23 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasOne;
 
 class Serie extends Model
 {
     use HasFactory;
 
-    public function comics()
+    protected $table = 'series';
+
+    public function comic(): HasOne
     {
-        return $this->hasMany(Comic::class);
+        return $this->hasOne(Comic::class);
     }
 
-    public function albums()
+    public function albums(): BelongsToMany
     {
-        return $this->hasMany(Album::class);
+        return $this->belongsToMany(Album::class)
+            ->withPivot('number');
     }
 }

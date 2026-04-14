@@ -13,13 +13,20 @@ class DashboardController extends Controller
     public function index()
     {
         $recentAlbums = $this->getRecentAlbums(5);
-        $mostValuedAlbums = $this->getMostValuedAlbums(5);
-        $collectionValue = $this->calculateCollectionValue();
+//        $mostValuedAlbums = $this->getMostValuedAlbums(5);
+//        $collectionValue = $this->calculateCollectionValue();
         $seriesPercentages = $this->calculateObtainedPercentage();
         $favorites = $this->getFavoriteAlbums();
         $achievements = $this->getUserAchievements(1);
 
-        return view('dashboard', compact('recentAlbums', 'mostValuedAlbums', 'collectionValue', 'favorites', 'achievements', 'seriesPercentages'));
+        return view('dashboard', compact(
+            'recentAlbums',
+//            'mostValuedAlbums',
+//            'collectionValue',
+            'favorites',
+            'achievements',
+            'seriesPercentages',
+        ));
     }
 
     private function getRecentAlbums($limit)
@@ -31,7 +38,7 @@ class DashboardController extends Controller
             ->take($limit)
             ->get();
     }
-    
+
     private function getMostValuedAlbums($limit)
     {
         return Collection::with('album')

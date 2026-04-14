@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -11,12 +13,10 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('series', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->string('abbreviation');
-            $table->string('period');
-            $table->timestamps();
+        Schema::create('album_serie', function (Blueprint $table) {
+            $table->foreignId('album_id')->constrained();
+            $table->foreignId('serie_id')->constrained();
+            $table->string('number');
         });
     }
 
@@ -25,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('series');
+        Schema::dropIfExists('album_serie');
     }
 };

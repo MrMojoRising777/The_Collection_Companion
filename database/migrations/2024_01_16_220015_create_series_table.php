@@ -11,14 +11,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('albums', function (Blueprint $table) {
+        Schema::create('series', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
             $table->foreignId('comic_id')->constrained();
-            $table->integer('volume')->nullable();
-            $table->string('image')->nullable();
-            $table->string('cover')->nullable();
-            $table->string('color')->nullable();
+            $table->string('name');
+            $table->string('abbreviation');
+            $table->string('period')->nullable();
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('albums');
+        Schema::dropIfExists('series');
     }
 };
