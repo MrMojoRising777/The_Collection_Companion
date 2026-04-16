@@ -13,25 +13,18 @@
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     @livewireStyles
 </head>
-<body class="font-sans antialiased">
-    <div class="min-h-screen"> <!-- bg-gray-100 dark:bg-gray-900 -->
-        {{--            @include('layouts.navigation')--}}
 
-        @if (isset($header))
-            <header class="dark:bg-gray-800 shadow">
-                <div class="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
-                    {{ $header }}
-                </div>
-            </header>
-        @endif
+<body class="font-sans antialiased bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+    <div class="min-h-screen flex flex-col">
+        @include('components.auth-login-nav')
 
-        <main>
-            {{ $slot }}
-            LIVEWIRE
+        <main class="flex-1 flex items-center justify-center px-4">
+            <div class="w-full max-w-lg">
+                {{ $slot }}
+            </div>
         </main>
     </div>
 
-    {{--        @yield('scripts')--}}
     @livewireScripts
 </body>
 </html>

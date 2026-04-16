@@ -13,6 +13,7 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SerieUserController;
 use App\Http\Controllers\CollectionController;
 use App\Livewire\Dashboard;
+use App\Livewire\Series\Index;
 
 /*
 |--------------------------------------------------------------------------
@@ -67,7 +68,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/collection-series', [SerieUserController::class, 'index'])->name('collection.series.index');
 
     // SerieController
-    Route::get('/series', [SerieController::class, 'index'])->name('series.index');
+    Route::get('/series', Index::class)->name('series.index');
     Route::get('/series/{id}', [SerieController::class, 'show'])->name('series.show');
     Route::post('/search-series', [SerieController::class, 'search'])->name('series.search');
     Route::match(['post', 'delete'], '/series/{serie}/toggleTracking', [SerieController::class, 'toggleTracking'])->name('series.toggleTracking');

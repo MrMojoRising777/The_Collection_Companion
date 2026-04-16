@@ -6,7 +6,7 @@
                 <!-- Logo -->
                 <div class="shrink-0 flex items-center">
                     <a href="{{ route('dashboard') }}">
-                        
+
                     </a>
                 </div>
 
@@ -57,15 +57,7 @@
                         </x-dropdown-link>
 
                         <!-- Authentication -->
-                        <form method="POST" action="{{ route('logout') }}">
-                            @csrf
-
-                            <x-dropdown-link :href="route('logout')"
-                                    onclick="event.preventDefault();
-                                                this.closest('form').submit();">
-                                {{ __('Uitloggen') }}
-                            </x-dropdown-link>
-                        </form>
+                        <livewire:auth.logout />
                     </x-slot>
                 </x-dropdown>
             </div>
@@ -120,15 +112,7 @@
                 </x-responsive-nav-link>
 
                 <!-- Authentication -->
-                <form method="POST" action="{{ route('logout') }}">
-                    @csrf
-
-                    <x-responsive-nav-link :href="route('logout')"
-                            onclick="event.preventDefault();
-                                        this.closest('form').submit();">
-                        {{ __('Uitloggen') }}
-                    </x-responsive-nav-link>
-                </form>
+                <livewire:auth.logout />
             </div>
         </div>
     </div>
