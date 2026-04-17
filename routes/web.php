@@ -13,8 +13,10 @@ use App\Http\Controllers\DashboardController;
 use App\Http\Controllers\SerieUserController;
 use App\Http\Controllers\CollectionController;
 use App\Livewire\Dashboard;
-use App\Livewire\Series\Index;
-use App\Livewire\Series\Show;
+use App\Livewire\Series\Index as SeriesIndex;
+use App\Livewire\Series\Show as SeriesShow;
+use App\Livewire\Albums\Index as AlbumsIndex;
+use App\Livewire\Albums\Show as AlbumsShow;
 
 /*
 |--------------------------------------------------------------------------
@@ -51,6 +53,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     // AlbumController
     Route::resource('albums', AlbumController::class);
+    Route::get('/albums', AlbumsIndex::class)->name('albums.index');
+    Route::get('/albums/{album}', AlbumsShow::class)->name('albums.show');;
 
     // collections view
     Route::get('/collection', [CollectionController::class, 'index'])->name('collection.albums.index');
@@ -69,8 +73,8 @@ Route::middleware('auth')->group(function () {
     Route::get('/collection-series', [SerieUserController::class, 'index'])->name('collection.series.index');
 
     // SerieController
-    Route::get('/series', Index::class)->name('series.index');
-    Route::get('/series/{serie}', Show::class)->name('series.show');
+    Route::get('/series', SeriesIndex::class)->name('series.index');
+    Route::get('/series/{serie}', SeriesShow::class)->name('series.show');
     Route::post('/search-series', [SerieController::class, 'search'])->name('series.search');
     Route::match(['post', 'delete'], '/series/{serie}/toggleTracking', [SerieController::class, 'toggleTracking'])->name('series.toggleTracking');
 

@@ -11,7 +11,8 @@
         <button
             wire:click="setView('table')"
             class="p-3 rounded-full border transition
-            {{ $view === 'table' ? 'bg-gray-900 text-white' : 'bg-white hover:bg-gray-100' }}">
+            {{ $view === 'table' ? 'bg-gray-900 text-white' : 'bg-white hover:bg-gray-100' }}"
+        >
             <i class="bi bi-table"></i>
         </button>
 
@@ -103,6 +104,7 @@
                                 Aantal strips: {{ $serie->albums_count }}
                             </p>
                         </div>
+
                         <div class="mt-3 flex flex-col gap-2">
                             <a
                                 href="{{ route('series.show', $serie->id) }}"
