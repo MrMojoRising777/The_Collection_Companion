@@ -30,9 +30,6 @@
                     <x-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
                         {{ __('Contact') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('credits')" :active="request()->routeIs('credits')">
-                        {{ __('Credits') }}
-                    </x-nav-link>
                 </div>
             </div>
 
@@ -94,9 +91,6 @@
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
                 {{ __('Contact') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('credits')" :active="request()->routeIs('credits')">
-                {{ __('Credits') }}
             </x-responsive-nav-link>
 
         <!-- Responsive Settings Options -->
