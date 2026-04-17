@@ -4,10 +4,15 @@ declare(strict_types=1);
 
 namespace App\Livewire\Series;
 
+use Illuminate\Support\Collection;
+use Illuminate\View\View;
+use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Serie;
 use Illuminate\Support\Facades\Auth;
+use Livewire\Features\SupportRedirects\Redirector;
 
+#[Layout('components.layouts.app')]
 class Index extends Component
 {
     public string $search = '';
@@ -33,7 +38,12 @@ class Index extends Component
         $user->refresh();
     }
 
-    public function getSeriesProperty()
+    public function showSerie(Serie $serie): Redirector
+    {
+        return redirect()->route('series.show', $serie);
+    }
+
+    public function getSeriesProperty(): Collection
     {
         return Serie::query()
             ->withCount('albums')
@@ -45,7 +55,7 @@ class Index extends Component
             ->get();
     }
 
-    public function render()
+    public function render(): View
     {
         return view('livewire.series.index', [
             'series' => $this->series,

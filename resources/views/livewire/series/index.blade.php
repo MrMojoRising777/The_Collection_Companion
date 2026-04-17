@@ -1,9 +1,9 @@
 <div class="max-w-7xl mx-auto px-4 py-6">
-    <h1 class="text-3xl font-bold text-center mb-3 font-serif">
+    <h1 class="text-mist-100 text-3xl font-bold text-center mb-3 font-serif">
         Alle Series
     </h1>
 
-    <blockquote class="text-center text-gray-600 italic mb-6">
+    <blockquote class="text-center text-mist-300 italic mb-6">
         Bekijk en doorzoek ALLE series in de app. Beslis hier of je de serie wil verzamelen.
     </blockquote>
 
@@ -39,8 +39,8 @@
 
     @if ($view === 'table')
         <div class="overflow-x-auto">
-            <table class="w-full border border-gray-200 rounded-lg overflow-hidden">
-                <thead class="bg-gray-100 text-left">
+            <table class="w-full border border-gray-600 rounded-lg overflow-hidden">
+                <thead class="bg-gray-600 text-mist-300 text-left">
                     <tr>
                         <th class="p-3">Verzamelen</th>
                         <th class="p-3">Afkorting</th>
@@ -51,26 +51,27 @@
                 </thead>
 
                 <tbody>
-                @foreach ($series as $serie)
-                    <tr
-                        class="border-t hover:bg-gray-50 cursor-pointer"
-                        wire:click="redirectToSeries({{ $serie->id }})"
-                    >
-                        <td class="p-3" @click.stop>
-                            <button
-                                wire:click="toggleTracking({{ $serie->id }})"
-                                class="px-3 py-1 rounded text-white text-sm
-                                    {{ $user->trackedSeries->contains($serie) ? 'bg-red-500' : 'bg-green-500' }}">
-                                {{ $user->trackedSeries->contains($serie) ? 'Verwijder' : 'Verzamel' }}
-                            </button>
-                        </td>
+                    @foreach ($series as $serie)
+                        <tr
+                            class="border-t hover:bg-gray-400 cursor-pointer"
+                            wire:click="showSerie({{ $serie->id }})"
+                        >
+                            <td class="p-3" @click.stop>
+                                <button
+                                    wire:click="toggleTracking({{ $serie->id }})"
+                                    class="px-3 py-1 rounded text-white text-sm
+                                        {{ $user->trackedSeries->contains($serie) ? 'bg-red-500' : 'bg-green-500' }}"
+                                >
+                                    {{ $user->trackedSeries->contains($serie) ? 'Verwijder' : 'Verzamel' }}
+                                </button>
+                            </td>
 
-                        <td class="p-3">{{ $serie->abbreviation }}</td>
-                        <td class="p-3">{{ $serie->name }}</td>
-                        <td class="p-3">{{ $serie->period }}</td>
-                        <td class="p-3">{{ $serie->albums_count }}</td>
-                    </tr>
-                @endforeach
+                            <td class="p-3">{{ $serie->abbreviation }}</td>
+                            <td class="p-3">{{ $serie->name }}</td>
+                            <td class="p-3">{{ $serie->period }}</td>
+                            <td class="p-3">{{ $serie->albums_count }}</td>
+                        </tr>
+                    @endforeach
                 </tbody>
             </table>
         </div>
@@ -113,7 +114,8 @@
                             <button
                                 wire:click="toggleTracking({{ $serie->id }})"
                                 class="px-3 py-1 rounded text-white text-sm
-                                {{ $user->trackedSeries->contains($serie) ? 'bg-red-500' : 'bg-green-500' }}">
+                                {{ $user->trackedSeries->contains($serie) ? 'bg-red-500' : 'bg-green-500' }}"
+                            >
                                 {{ $user->trackedSeries->contains($serie) ? 'Verwijder' : 'Verzamel' }}
                             </button>
                         </div>
