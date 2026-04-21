@@ -72,11 +72,15 @@
                         </td>
 
                         <td class="p-3">
-                            <button
-                                class="px-3 py-1 rounded text-white text-sm bg-green-500 hover:bg-green-600"
-                            >
-                                In collectie
-                            </button>
+                            @if(! $this->hasAlbum($album))
+                                <button
+                                    class="px-3 py-1 rounded text-white text-sm bg-green-500 hover:bg-green-600"
+                                    wire:click="collectAlbum({{ $album->id }})"
+                                >
+                                    In collectie
+                                </button>
+                            @else
+                            @endif
                         </td>
                     </tr>
                 @endforeach

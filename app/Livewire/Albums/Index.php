@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Albums;
 
 use App\Models\Album;
+use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
@@ -48,15 +49,34 @@ class Index extends Component
         return redirect()->route('albums.show', $album);
     }
 
+    public function collectAlbum(Album $album): void
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $user->albums()->attach($album->id, [
+            'acquisition_date' => now(),
+        ]);
+    }
+
+    public function hasAlbum(Album $album): bool
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        return $user
+            ->albums()
+            ->where('album_id', $album->id)
+            ->exists();
+    }
+
     public function render(): View
     {
         $series = Serie::all();
 
-        $wishlist = auth()->check()
-            ? Wishlist::query()
-                ->where('user_id', auth()->id())
-                ->get()
-            : collect();
+        $wishlist = Wishlist::query()
+            ->where('user_id', auth()->id())
+            ->get();
 
         $albums = Album::query()
             ->with('series')

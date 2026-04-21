@@ -6,13 +6,11 @@
                     @if ($recentAlbum->image)
                         <img src="{{ $recentAlbum->image }}" class="d-block w-100" alt="{{ $recentAlbum->name }}">
                     @else
-                        {{-- Placeholder image --}}
-                        <img class="h-auto w-full rounded-lg" src="{{ asset('uploads/images/placeholder_cover.jpg') }}"
+                        <img class="h-auto w-50 rounded-lg" src="{{ asset('uploads/images/placeholder_cover.jpg') }}"
                             alt="Placeholder Image">
                     @endif
                     <div class="carousel-caption d-none d-md-block">
-                        <h5 class="font-weight-bold text-black">{{ $recentAlbum->name }}</h5>
-                        {{-- <p>Some representative placeholder content for the slide.</p> --}}
+                        <h5 class="font-weight-bold text-mist-300">{{ $recentAlbum->name }}</h5>
                     </div>
                 </div>
             @endforeach

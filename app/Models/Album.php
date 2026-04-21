@@ -23,6 +23,15 @@ class Album extends Model
         'value', 'damaged', 'damage'
     ];
 
+    // region attributes
+    public int $id {
+        get => $this->getAttribute('id');
+        set {
+            $this->setAttribute('id', $value);
+        }
+    }
+    // endregion
+
     public function comics()
     {
         return $this->belongsTo(Comic::class, 'comic_id');

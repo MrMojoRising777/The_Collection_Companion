@@ -29,7 +29,7 @@
                 <strong>Waarde:</strong> €{{ $album->value }}
             </p>
 
-            @if ($album->obtained)
+            @if ($this->hasAlbum())
                 <hr class="my-4 border-gray-700">
 
                 <p class="mb-2">

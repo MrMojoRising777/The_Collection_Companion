@@ -4,6 +4,8 @@ namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -60,9 +62,23 @@ class User extends Authenticatable
         return $this->belongsToMany(Achievement::class)->withPivot('unlocked_at');
     }
 
-    public function collections()
+    public function collections(): HasMany
     {
         return $this->hasMany(Collection::class);
+    }
+
+    public function albums(): BelongsToMany
+    {
+        return $this->belongsToMany(Album::class, 'collections')
+            ->withPivot([
+                'acquisition_date',
+                'favorite',
+                'first_print',
+                'condition',
+                'notes',
+                'print_year'
+            ])
+            ->withTimestamps();
     }
 
     public function favorites()

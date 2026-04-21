@@ -4,55 +4,62 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use Illuminate\View\View;
 use Livewire\Component;
-use App\Models\User;
 use App\Models\Album;
-use App\Models\Collection;
+use App\Models\Collection as CollectionModel;
+use Illuminate\Support\Collection;
 
+/**
+ * @property Collection<int, CollectionModel> $recentAlbums
+ */
 class Dashboard extends Component
 {
-    public $recentAlbums;
-    public $favorites;
-    public $achievements;
-    public $seriesPercentages;
+    public Collection $recentAlbums;
+    public Collection $favorites;
+    public Collection $achievements;
+    public Collection $seriesPercentages;
 
     public function mount(): void
     {
-        $this->recentAlbums = $this->getRecentAlbums(5);
+        $this->recentAlbums = $this->getRecentAlbums();
         $this->seriesPercentages = $this->calculateObtainedPercentage();
         $this->favorites = $this->getFavoriteAlbums();
         $this->achievements = $this->getUserAchievements(auth()->id());
     }
 
-    public function render()
+    private function getRecentAlbums(): Collection
     {
-        return view('livewire.dashboard');
-    }
-
-    private function getRecentAlbums($limit)
-    {
-        return Collection::with('album')
+        return CollectionModel::query()
+            ->with('album')
             ->join('albums', 'collections.album_id', '=', 'albums.id')
             ->select('albums.*')
             ->orderBy('collections.updated_at', 'desc')
-            ->take($limit)
+            ->take(5)
             ->get();
     }
 
-    private function getFavoriteAlbums()
+    private function getFavoriteAlbums(): Collection
     {
-        return Collection::with('album')
+        return CollectionModel::with('album')
             ->where('favorite', 1)
             ->take(5)
             ->get();
     }
 
-    private function calculateObtainedPercentage()
+    private function calculateObtainedPercentage(): Collection
     {
-        $groupedAlbums = Album::with('serie')->get()->groupBy('serie.name');
-        $groupedObtainedAlbums = Collection::with('album')->get()->groupBy('album.serie.name');
+        $groupedAlbums = Album::query()
+            ->with('serie')
+            ->get()
+            ->groupBy('serie.name');
 
-        return $groupedAlbums->map(function ($albums, $seriesName) use ($groupedObtainedAlbums) {
+        $groupedObtainedAlbums = CollectionModel::query()
+            ->with('album')
+            ->get()
+            ->groupBy('album.serie.name');
+
+        return $groupedAlbums->map(function ($albums, $seriesName) use ($groupedObtainedAlbums): array {
             $totalAlbums = count($albums);
             $obtainedAlbums = $groupedObtainedAlbums->has($seriesName)
                 ? count($groupedObtainedAlbums[$seriesName])
@@ -69,8 +76,15 @@ class Dashboard extends Component
         });
     }
 
-    private function getUserAchievements($userId)
+    /** TODO achievements need to be implemented */
+    private function getUserAchievements($userId): Collection
     {
-        return User::query()->findOrFail($userId)->achievements;
+        return collect();
+//        return User::query()->findOrFail($userId)->achievements;
+    }
+
+    public function render(): View
+    {
+        return view('livewire.dashboard');
     }
 }
