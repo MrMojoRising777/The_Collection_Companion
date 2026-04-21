@@ -21,7 +21,7 @@
                     <x-nav-link :href="route('albums.index')" :active="request()->routeIs('albums.index')">
                         {{ __('Albums') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('collection.albums.index')" :active="request()->routeIs('collection.albums.index')">
+                    <x-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
                         {{ __('Collectie') }}
                     </x-nav-link>
                     <x-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
@@ -83,7 +83,7 @@
             <x-responsive-nav-link :href="route('albums.index')" :active="request()->routeIs('albums.index')">
                 {{ __('Albums') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('collection.albums.index')" :active="request()->routeIs('collection.albums.index')">
+            <x-responsive-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
                 {{ __('Collectie') }}
             </x-responsive-nav-link>
             <x-responsive-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">

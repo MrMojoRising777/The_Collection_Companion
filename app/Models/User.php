@@ -10,27 +10,9 @@ use Laravel\Sanctum\HasApiTokens;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
-
-    public function achievements()
-    {
-        return $this->belongsToMany(Achievement::class)->withPivot('unlocked_at');
-    }
-
-    public function collections()
-    {
-        return $this->hasMany(Collection::class);
-    }
-
-    public function favorites()
-    {
-        return $this->belongsToMany(Album::class, 'favorites', 'user_id', 'album_id')->withTimestamps();
-    }
-
-    public function trackedSeries()
-    {
-        return $this->belongsToMany(Serie::class, 'serie_user')->withTimestamps();
-    }
+    use HasApiTokens,
+        HasFactory,
+        Notifiable;
 
     /**
      * The attributes that are mass assignable.
@@ -70,7 +52,26 @@ class User extends Authenticatable
      */
     public function isAdmin()
     {
-
         return $this->name === 'admin';
+    }
+
+    public function achievements()
+    {
+        return $this->belongsToMany(Achievement::class)->withPivot('unlocked_at');
+    }
+
+    public function collections()
+    {
+        return $this->hasMany(Collection::class);
+    }
+
+    public function favorites()
+    {
+        return $this->belongsToMany(Album::class, 'favorites', 'user_id', 'album_id')->withTimestamps();
+    }
+
+    public function trackedSeries()
+    {
+        return $this->belongsToMany(Serie::class, 'serie_user')->withTimestamps();
     }
 }

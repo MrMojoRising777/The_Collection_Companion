@@ -2,21 +2,21 @@
 
 declare(strict_types=1);
 
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\ComicController;
-use App\Http\Controllers\SerieController;
 use App\Http\Controllers\BarcodeController;
+use App\Http\Controllers\CollectionController;
+use App\Http\Controllers\ComicController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\SerieController;
 use App\Http\Controllers\SerieUserController;
-use App\Http\Controllers\CollectionController;
+use App\Livewire\Albums\Index as AlbumsIndex;
+use App\Livewire\Albums\Show as AlbumsShow;
+use App\Livewire\Collection\Index as CollectionIndex;
 use App\Livewire\Dashboard;
 use App\Livewire\Series\Index as SeriesIndex;
 use App\Livewire\Series\Show as SeriesShow;
-use App\Livewire\Albums\Index as AlbumsIndex;
-use App\Livewire\Albums\Show as AlbumsShow;
+use Illuminate\Support\Facades\Route;
 
 /*
 |--------------------------------------------------------------------------
@@ -45,7 +45,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/albums/{album}', AlbumsShow::class)->name('albums.show');;
 
     // collections view
-    Route::get('/collection', [CollectionController::class, 'index'])->name('collection.albums.index');
+    Route::get('/collection', CollectionIndex::class)->name('collection.index');
     // albums
     Route::get('/collection/albums', [CollectionController::class, 'indexAlbums'])->name('collection.albums.index');
     Route::get('/collection/show/album/{album}', [CollectionController::class, 'show'])->name('collection.albums.show');
