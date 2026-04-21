@@ -29,18 +29,6 @@ use App\Livewire\Albums\Show as AlbumsShow;
 |
 */
 
-Route::get('/test', function () {
-    return view('scan');
-});
-
-Route::get('/test-blade', function () {
-    return view('test');
-});
-
-Route::get('/sw.js', function () {
-    return response()->file(public_path('sw.js'));
-});
-
 Route::get('sendTitle/{title}', [ISBNController::class, 'setAlbumObtained']);
 
 Route::get('/', function () {

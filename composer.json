@@ -13,6 +13,8 @@
         "laravel/tinker": "^2.8",
         "livewire/livewire": "^3.7.15",
         "nativephp/mobile": "^3.2",
+        "nativephp/mobile-camera": "^1.0.2",
+        "nativephp/mobile-scanner": "^1.0",
         "symfony/css-selector": "^8.0",
         "symfony/dom-crawler": "^8.0"
     },
@@ -68,5 +70,10 @@
         }
     },
     "minimum-stability": "stable",
-    "prefer-stable": true
+    "prefer-stable": true,
+    "repositories": [{
+        "name": "nativephp-plugins",
+        "type": "composer",
+        "url": "https://plugins.nativephp.com"
+    }]
 }

@@ -29,6 +29,14 @@
 
     <div class="flex justify-center mb-6">
         <div class="w-full max-w-md">
+            <button class="bg-red-500 mb-4 rounded-full p-2 cursor-pointer" wire:click="scanISBN()">
+                <span class="font-bold">Scan ISBN</span>
+            </button>
+
+            <button class="bg-indigo-500 nm-4 rounded-full p-2" wire:click="seedDB()">
+                <span class="font-bold">Seed DB</span>
+            </button>
+
             <input
                 type="text"
                 wire:model.live="search"
@@ -126,4 +134,6 @@
             @endforeach
         </div>
     @endif
+
+    <livewire:components.modal />
 </div>
