@@ -14,9 +14,10 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('album_serie', function (Blueprint $table) {
+            $table->id();
             $table->foreignId('album_id')->constrained();
             $table->foreignId('serie_id')->constrained();
-            $table->string('number');
+            $table->string('volume');
         });
     }
 

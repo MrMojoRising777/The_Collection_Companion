@@ -22,7 +22,7 @@
                                     </p>
 
                                     <small class="text-muted">
-                                        Nummer: {{ $serie->pivot->number }}
+                                        Nummer: {{ $serie->pivot->volume }}
                                     </small>
 
                                     <div class="mt-2">

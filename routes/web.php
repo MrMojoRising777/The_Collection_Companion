@@ -13,6 +13,7 @@ use App\Http\Controllers\SerieUserController;
 use App\Livewire\Albums\Index as AlbumsIndex;
 use App\Livewire\Albums\Show as AlbumsShow;
 use App\Livewire\Collection\Index as CollectionIndex;
+use App\Livewire\Collection\Albums\Index as CollectionAlbumsIndex;
 use App\Livewire\Dashboard;
 use App\Livewire\Series\Index as SeriesIndex;
 use App\Livewire\Series\Show as SeriesShow;
@@ -47,7 +48,9 @@ Route::middleware('auth')->group(function () {
     // collections view
     Route::get('/collection', CollectionIndex::class)->name('collection.index');
     // albums
-    Route::get('/collection/albums', [CollectionController::class, 'indexAlbums'])->name('collection.albums.index');
+//    Route::get('/collection/albums', [CollectionController::class, 'indexAlbums'])->name('collection.albums.index');
+    Route::get('/collection/albums', CollectionAlbumsIndex::class)->name('collection.albums.index');
+
     Route::get('/collection/show/album/{album}', [CollectionController::class, 'show'])->name('collection.albums.show');
     Route::get('/collection/edit/album/{album}', [CollectionController::class, 'edit'])->name('collection.albums.edit');
     Route::put('/collection/update/album/{album}', [CollectionController::class, 'update'])->name('collection.albums.update');

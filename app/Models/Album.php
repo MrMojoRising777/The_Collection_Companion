@@ -37,11 +37,6 @@ class Album extends Model
         return $this->belongsTo(Comic::class, 'comic_id');
     }
 
-    public function serie(): BelongsTo
-    {
-        return $this->belongsTo(Serie::class);
-    }
-
     public function collections(): HasMany
     {
         return $this->hasMany(Collection::class);
@@ -62,6 +57,11 @@ class Album extends Model
     public function series(): belongsToMany
     {
         return $this->belongsToMany(Serie::class)
-            ->withPivot('number');
+            ->withPivot('volume');
+    }
+
+    public function albumSeries(): HasMany
+    {
+        return $this->hasMany(AlbumSerie::class);
     }
 }

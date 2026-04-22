@@ -65,25 +65,31 @@
                 </thead>
 
                 <tbody>
-                @foreach ($albums as $album)
+                @forelse ($albums as $album)
                     <tr class="border-t hover:bg-gray-400 cursor-pointer" wire:click="showAlbum({{ $album->id }})">
                         <td class="p-3 font-medium">
                             {{ $album->name }}
                         </td>
 
                         <td class="p-3">
-                            @if(! $this->hasAlbum($album))
-                                <button
-                                    class="px-3 py-1 rounded text-white text-sm bg-green-500 hover:bg-green-600"
-                                    wire:click="collectAlbum({{ $album->id }})"
-                                >
-                                    In collectie
-                                </button>
-                            @else
-                            @endif
+{{--                            @if(! $this->hasAlbum($album))--}}
+{{--                                <button--}}
+{{--                                    class="px-3 py-1 rounded text-white text-sm bg-green-500 hover:bg-green-600"--}}
+{{--                                    wire:click="collectAlbum({{ $album->id }})"--}}
+{{--                                >--}}
+{{--                                    In collectie--}}
+{{--                                </button>--}}
+{{--                            @else--}}
+{{--                            @endif--}}
                         </td>
                     </tr>
-                @endforeach
+                @empty
+                    <tr class="border-t">
+                        <td colspan="2">
+                            No albums found.
+                        </td>
+                    </tr>
+                @endforelse
                 </tbody>
             </table>
         </div>

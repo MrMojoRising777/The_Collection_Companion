@@ -13,17 +13,18 @@ return new class extends Migration
     {
         Schema::create('collections', function (Blueprint $table) {
             $table->id();
-            $table->foreignId('user_id')->constrained('users');         // USER
-            $table->foreignId('album_id')->constrained('albums');       // ALBUM
+            $table->foreignId('user_id')->constrained('users');
+            $table->foreignId('album_serie_id')->constrained('album_serie');
+
             $table->date('acquisition_date');                           // COLLECTION - ACQUIRE DATE
-            $table->boolean('favorite')->nullable();                    // ALBUM - FAVORITE
-            $table->boolean('first_print')->nullable();                 // ALBUM - FIRST PRINT OWNED
+            $table->boolean('favorite')->default(false);          // ALBUM - FAVORITE
+            $table->boolean('first_print')->default(false);                 // ALBUM - FIRST PRINT OWNED
             $table->string('condition')->nullable();                    // ALBUM - CONDITION (dropdown menu)
             $table->text('notes')->nullable();                          // ALBUM - NOTES (could be combined with damages)
             $table->string('print_year')->nullable();                   // ALBUM - PRINT DATE OWNED
-            // $table->string('purchase_place')->nullable();               // ARE THESE NECESSARY
-            // $table->decimal('purchase_price')->nullable();              // ARE THESE NECESSARY
-            // $table->date('purchase_date')->nullable();                  // ARE THESE NECESSARY
+            // $table->string('purchase_place')->nullable();
+            // $table->decimal('purchase_price')->nullable();
+            // $table->date('purchase_date')->nullable();
             $table->timestamps();
         });
     }

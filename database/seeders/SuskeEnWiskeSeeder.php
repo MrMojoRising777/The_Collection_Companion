@@ -206,11 +206,11 @@ class SuskeEnWiskeSeeder extends Seeder
                 // Update or attach pivot
                 if ($album->series()->where('serie_id', $serieId)->exists()) {
                     $album->series()->updateExistingPivot($serieId, [
-                        'number' => $value
+                        'volume' => $value
                     ]);
                 } else {
                     $album->series()->attach($serieId, [
-                        'number' => $value
+                        'volume' => $value
                     ]);
                 }
             }

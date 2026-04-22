@@ -21,6 +21,6 @@ class Serie extends Model
     public function albums(): BelongsToMany
     {
         return $this->belongsToMany(Album::class)
-            ->withPivot('number');
+            ->withPivot('volume');
     }
 }

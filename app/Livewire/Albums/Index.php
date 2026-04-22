@@ -49,14 +49,15 @@ class Index extends Component
         return redirect()->route('albums.show', $album);
     }
 
-    public function collectAlbum(Album $album): void
+    public function collectAlbum(Album $album): void // TODO move to show
     {
-        /** @var User $user */
-        $user = auth()->user();
-
-        $user->albums()->attach($album->id, [
-            'acquisition_date' => now(),
-        ]);
+//        /** @var User $user */
+//        $user = auth()->user();
+//
+//        $user->collections()->create([
+//            'album_serie_id' => $albumSerieId,
+//            'acquisition_date' => now(),
+//        ]);
     }
 
     public function hasAlbum(Album $album): bool
@@ -64,9 +65,8 @@ class Index extends Component
         /** @var User $user */
         $user = auth()->user();
 
-        return $user
-            ->albums()
-            ->where('album_id', $album->id)
+        return $user->collections()
+            ->where('album_serie_id', $album->id)
             ->exists();
     }
 
