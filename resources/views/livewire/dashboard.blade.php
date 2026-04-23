@@ -31,35 +31,34 @@
 
         <div class="bg-white dark:bg-gray-500 shadow rounded-lg p-6">
             <h2 class="text-xl font-semibold mb-4">Meest waardevolle albums</h2>
-            {{--
-            @if ($mostValuedAlbums->isNotEmpty())
-                <ul class="divide-y divide-gray-200 dark:divide-gray-700">
-                    @foreach ($mostValuedAlbums as $valueAlbum)
-                        <li class="py-2">
-                            {{ $valueAlbum->name }} - €{{ $valueAlbum->value }}
-                        </li>
-                    @endforeach
-                </ul>
-            @else
-                <p class="text-gray-500 italic">Er zijn geen albums gevonden in je collectie</p>
-            @endif
-            --}}
+{{--TODO NEEDS TO BE IMPLEMENTED--}}
+{{--            @if ($mostValuedAlbums->isNotEmpty())--}}
+{{--                <ul class="divide-y divide-gray-200 dark:divide-gray-700">--}}
+{{--                    @foreach ($mostValuedAlbums as $valueAlbum)--}}
+{{--                        <li class="py-2">--}}
+{{--                            {{ $valueAlbum->name }} - €{{ $valueAlbum->value }}--}}
+{{--                        </li>--}}
+{{--                    @endforeach--}}
+{{--                </ul>--}}
+{{--            @else--}}
+{{--                <p class="text-gray-500 italic">Er zijn geen albums gevonden in je collectie</p>--}}
+{{--            @endif--}}
+
         </div>
 
         <div class="bg-white dark:bg-gray-500 shadow rounded-lg p-6 space-y-6">
             <div>
                 <h2 class="text-xl font-semibold mb-3">Collectie waarde</h2>
-                {{--
-                @if ($collectionValue)
-                    <p class="text-2xl font-bold text-gray-900 dark:text-white">
-                        € {{ $collectionValue }}
-                    </p>
-                @else
-                    <p class="text-gray-500 italic">
-                        Er zijn geen albums gevonden in je collectie
-                    </p>
-                @endif
-                --}}
+{{--TODO NEEDS TO BE IMPLEMENTED--}}
+{{--                @if ($collectionValue)--}}
+{{--                    <p class="text-2xl font-bold text-gray-900 dark:text-white">--}}
+{{--                        € {{ $collectionValue }}--}}
+{{--                    </p>--}}
+{{--                @else--}}
+{{--                    <p class="text-gray-500 italic">--}}
+{{--                        Er zijn geen albums gevonden in je collectie--}}
+{{--                    </p>--}}
+{{--                @endif--}}
             </div>
 
             <div>

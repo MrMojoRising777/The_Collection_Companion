@@ -3,14 +3,21 @@
         <div class="carousel-inner">
             @foreach ($recentAlbums as $key => $recentAlbum)
                 <div class="carousel-item{{ $key === 0 ? ' active' : '' }}">
-                    @if ($recentAlbum->image)
-                        <img src="{{ $recentAlbum->image }}" class="d-block w-100" alt="{{ $recentAlbum->name }}">
+                    @if ($recentAlbum->albumSerie->album->image)
+                        <img
+                            src="{{ $recentAlbum->albumSerie->album->image }}"
+                            alt="{{ $recentAlbum->albumSerie->album->name }}"
+                            class="h-auto w-50 rounded-lg"
+                        />
                     @else
-                        <img class="h-auto w-50 rounded-lg" src="{{ asset('uploads/images/placeholder_cover.jpg') }}"
-                            alt="Placeholder Image">
+                        <img
+                            src="{{ asset('uploads/images/placeholder_cover.jpg') }}"
+                            alt="Placeholder Image"
+                            class="h-auto w-50 rounded-lg"
+                        />
                     @endif
                     <div class="carousel-caption d-none d-md-block">
-                        <h5 class="font-weight-bold text-mist-300">{{ $recentAlbum->name }}</h5>
+                        <h5 class="font-weight-bold text-mist-300">{{ $recentAlbum->albumSerie->album->name }}</h5>
                     </div>
                 </div>
             @endforeach

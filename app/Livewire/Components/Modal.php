@@ -27,7 +27,7 @@ class Modal extends Component
         $this->title = $title;
         $this->view = $view;
         $this->viewData = $viewData;
-
+//dd($title, $view, $viewData);
         $this->open = true;
     }
 

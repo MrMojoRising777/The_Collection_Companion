@@ -32,8 +32,6 @@ class Dashboard extends Component
     {
         return CollectionModel::query()
             ->with('album')
-            ->join('albums', 'collections.album_id', '=', 'albums.id')
-            ->select('albums.*')
             ->orderBy('collections.updated_at', 'desc')
             ->take(5)
             ->get();
@@ -50,9 +48,9 @@ class Dashboard extends Component
     private function calculateObtainedPercentage(): Collection
     {
         $groupedAlbums = Album::query()
-            ->with('serie')
+            ->with('series')
             ->get()
-            ->groupBy('serie.name');
+            ->groupBy('series.name');
 
         $groupedObtainedAlbums = CollectionModel::query()
             ->with('album')

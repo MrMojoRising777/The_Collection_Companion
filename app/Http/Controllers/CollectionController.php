@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\AlbumSerie;
+use App\Models\Serie;
+use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Album;
 use App\Models\Collection;
@@ -13,6 +16,24 @@ class CollectionController extends Controller
     {
         return view('collection.index');
     }
+
+
+    public function collectAlbum(Album $album, Serie $serie): void
+    {
+        /** @var User $user */
+        $user = auth()->user();
+
+        $albumSerie = AlbumSerie::query()
+            ->where('album_id', $album->id)
+            ->where('serie_id', $serie->id)
+            ->firstOrFail();
+
+        $user->collections()->create([
+            'album_serie_id' => $albumSerie->id,
+            'acquisition_date' => now(),
+        ]);
+    }
+
 
     public function indexAlbums() // SHOW ALBUMS IN COLLECTION
     {

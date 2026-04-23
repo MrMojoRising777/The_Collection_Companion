@@ -15,8 +15,7 @@ class Collection extends Model
 
     protected $fillable = [
         'user_id',
-        'album_id',
-        'serie_id',
+        'album_serie_id',
         'acquisition_date',
         'favorite',
         'first_print',

@@ -66,7 +66,7 @@
 
                 <tbody>
                 @forelse ($albums as $album)
-                    <tr class="border-t hover:bg-gray-400 cursor-pointer" wire:click="showAlbum({{ $album->id }})">
+                    <tr class="border-t hover:bg-gray-400 cursor-pointer" wire:click="openCollectModal({{ $album->id }})">
                         <td class="p-3 font-medium">
                             {{ $album->name }}
                         </td>
@@ -131,4 +131,6 @@
     <div class="mt-6 flex justify-center">
         {{ $albums->links() }}
     </div>
+
+    <livewire:components.modal />
 </div>

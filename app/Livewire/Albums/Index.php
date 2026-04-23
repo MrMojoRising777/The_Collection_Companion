@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Albums;
 
 use App\Models\Album;
+use App\Models\AlbumSerie;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\View\View;
@@ -44,9 +45,15 @@ class Index extends Component
         $this->view = $view;
     }
 
-    public function showAlbum(Album $album): Redirector
+    public function openCollectModal(Album $album): void
     {
-        return redirect()->route('albums.show', $album);
+        $this->dispatch('openModal',
+            title: $album->name,
+            view: 'modals.series-table',
+            viewData: [
+                'album' => $album->load('series'),
+            ],
+        );
     }
 
     public function collectAlbum(Album $album): void // TODO move to show
@@ -80,6 +87,7 @@ class Index extends Component
 
         $albums = Album::query()
             ->with('series')
+            // Filter search term
             ->when($this->search, function ($query) {
                 $query->where(function ($q) {
                     $q->where('name', 'like', "%{$this->search}%")
@@ -88,6 +96,7 @@ class Index extends Component
                         });
                 });
             })
+//            // Filter selected serie
             ->when($this->serieId, function ($query) {
                 $query->whereHas('series', function ($q) {
                     $q->where('series.id', $this->serieId);
