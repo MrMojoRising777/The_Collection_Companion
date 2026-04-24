@@ -10,31 +10,17 @@ use App\Models\Album;
 use App\Models\Collection as CollectionModel;
 use Illuminate\Support\Collection;
 
-/**
- * @property Collection<int, CollectionModel> $recentAlbums
- */
 class Dashboard extends Component
 {
-    public Collection $recentAlbums;
     public Collection $favorites;
     public Collection $achievements;
     public Collection $seriesPercentages;
 
     public function mount(): void
     {
-        $this->recentAlbums = $this->getRecentAlbums();
         $this->seriesPercentages = $this->calculateObtainedPercentage();
         $this->favorites = $this->getFavoriteAlbums();
         $this->achievements = $this->getUserAchievements(auth()->id());
-    }
-
-    private function getRecentAlbums(): Collection
-    {
-        return CollectionModel::query()
-            ->with('album')
-            ->orderBy('collections.updated_at', 'desc')
-            ->take(5)
-            ->get();
     }
 
     private function getFavoriteAlbums(): Collection
@@ -53,7 +39,6 @@ class Dashboard extends Component
             ->groupBy('series.name');
 
         $groupedObtainedAlbums = CollectionModel::query()
-            ->with('album')
             ->get()
             ->groupBy('album.serie.name');
 

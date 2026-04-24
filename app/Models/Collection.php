@@ -111,16 +111,6 @@ class Collection extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function album(): BelongsTo
-    {
-        return $this->belongsTo(Album::class);
-    }
-
-    public function serie(): BelongsTo
-    {
-        return $this->belongsTo(Serie::class);
-    }
-
     public function albumSerie(): BelongsTo
     {
         return $this->belongsTo(AlbumSerie::class);

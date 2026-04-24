@@ -26,7 +26,14 @@
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
         <div class="bg-white dark:bg-gray-500 shadow rounded-lg p-6">
             <h2 class="text-xl font-semibold mb-4">Recente toevoegingen</h2>
-             @include('components.carousel')
+
+            <div
+                x-init="interval = setInterval(() => $wire.dispatch('next'), 5000)"
+                x-on:mouseenter="clearInterval(interval)"
+                x-on:mouseleave="interval = setInterval(() => $wire.dispatch('next'), 5000)"
+            >
+                <livewire:components.carousel />
+            </div>
         </div>
 
         <div class="bg-white dark:bg-gray-500 shadow rounded-lg p-6">
