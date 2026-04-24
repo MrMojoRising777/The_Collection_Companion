@@ -14,6 +14,7 @@ use App\Livewire\Albums\Index as AlbumsIndex;
 use App\Livewire\Albums\Show as AlbumsShow;
 use App\Livewire\Collection\Index as CollectionIndex;
 use App\Livewire\Collection\Albums\Index as CollectionAlbumsIndex;
+use App\Livewire\Collection\Albums\Show as CollectionAlbumsShow;
 use App\Livewire\Dashboard;
 use App\Livewire\Series\Index as SeriesIndex;
 use App\Livewire\Series\Show as SeriesShow;
@@ -23,10 +24,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
 |
 */
 
@@ -38,7 +35,6 @@ Route::get('/', function () {
 
 Route::middleware('auth')->group(function () {
     // DashboardController
-//    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
     Route::get('/dashboard', Dashboard::class)->name('dashboard');
     // AlbumController
     Route::resource('albums', AlbumController::class);
@@ -47,12 +43,12 @@ Route::middleware('auth')->group(function () {
 
     // collections view
     Route::get('/collection', CollectionIndex::class)->name('collection.index');
-    // albums
-//    Route::get('/collection/albums', [CollectionController::class, 'indexAlbums'])->name('collection.albums.index');
-    Route::get('/collection/albums', CollectionAlbumsIndex::class)->name('collection.albums.index');
-    Route::get('collect-album/{album}/{serie}', [CollectionController::class, 'collectAlbum'])->name('collect-album');
 
-    Route::get('/collection/show/album/{album}', [CollectionController::class, 'show'])->name('collection.albums.show');
+    // albums
+    Route::get('/collection/albums', CollectionAlbumsIndex::class)->name('collection.albums.index');
+    Route::get('/collection/albums/{albumSerie}', CollectionAlbumsShow::class)->name('collection.albums.show');
+
+//    Route::get('/collection/show/album/{album}', [CollectionController::class, 'show'])->name('collection.albums.show');
     Route::get('/collection/edit/album/{album}', [CollectionController::class, 'edit'])->name('collection.albums.edit');
     Route::put('/collection/update/album/{album}', [CollectionController::class, 'update'])->name('collection.albums.update');
     Route::delete('/collection/remove/album/{album}', [CollectionController::class, 'removeFromCollection'])->name('collection.albums.removeFromCollection');

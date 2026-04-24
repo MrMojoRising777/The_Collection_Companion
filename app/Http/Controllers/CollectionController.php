@@ -18,15 +18,10 @@ class CollectionController extends Controller
     }
 
 
-    public function collectAlbum(Album $album, Serie $serie): void
+    public function collectAlbum(AlbumSerie $albumSerie): void
     {
         /** @var User $user */
         $user = auth()->user();
-
-        $albumSerie = AlbumSerie::query()
-            ->where('album_id', $album->id)
-            ->where('serie_id', $serie->id)
-            ->firstOrFail();
 
         $user->collections()->create([
             'album_serie_id' => $albumSerie->id,

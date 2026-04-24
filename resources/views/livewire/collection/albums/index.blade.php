@@ -32,55 +32,47 @@
         @if ($viewMode === 'grid')
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
                 @foreach ($collection as $collected)
-                    <div class="bg-gray-500 rounded-xl shadow border hover:shadow-lg transition overflow-hidden">
+                    <div
+                        wire:click="showAlbum({{ $collected->albumSerie->id }})"
+                        class="bg-gray-500 rounded-xl shadow border hover:shadow-lg transition overflow-hidden"
+                    >
 
-                        <img src="{{ asset($collected->album->image) }}"
-                             alt="{{ $collected->album->name }}"
-                             class="w-full h-48 object-cover">
+                        <img src="{{ asset($collected->albumSerie->album->image) }}"
+                             alt="{{ $collected->albumSerie->album->name }}"
+                             class="w-full h-48 object-cover"
+                        />
 
                         <div class="p-4 text-center">
-
                             <h2 class="text-lg font-semibold mb-1">
-                                {{ $collected->album->name }}
+                                {{ $collected->albumSerie->album->name }}
                             </h2>
 
                             <p class="text-mist-300 text-sm mb-2">
-                                {{ $collected->album->serie?->name }}
+                                {{ $collected->albumSerie->serie->name }}
                             </p>
 
                             <p class="text-xs text-gray-300 mb-3">
-                                Nr. {{ $collected->album->volume }}
+                                Nr. {{ $collected->albumSerie->volume }}
                             </p>
 
                             <div class="flex justify-center gap-2 mb-3">
-                                <button wire:click="toggleFavorite({{ $collected->albumId }})"
-                                        class="px-2 py-1 rounded bg-gray-700 hover:bg-gray-600">
-                                    @if ($collected->favorite)
-                                        ⭐
-                                    @else
-                                        ☆
-                                    @endif
+                                <button wire:click="toggleFavorite({{ $collected->albumId }})">
+                                    <i class="bi {{ $collected->favorite ? 'bi-star-fill' : 'bi-star' }} text-yellow-400"></i>
                                 </button>
 
-                                <button wire:click="toggleFirstPrint({{ $collected->albumId }})"
-                                        class="px-2 py-1 rounded bg-gray-700 hover:bg-gray-600">
-                                    @if ($collected->firstPrint)
-                                        ✔
-                                    @else
-                                        ○
-                                    @endif
+                                <button wire:click="toggleFirstPrint({{ $collected->albumId }})">
+                                    <i class="bi {{ $collected->firstPrint ? 'bi-check-circle-fill' : 'bi-circle' }}"></i>
                                 </button>
 
-                                <button wire:click="remove({{ $collected->albumId }})"
-                                        class="px-2 py-1 rounded bg-red-600 hover:bg-red-500">
-                                    ✕
+                                <button wire:click="remove({{ $collected->albumId }})">
+                                    <i class="bi bi-x text-red-400"></i>
                                 </button>
                             </div>
 
-                            <a href="{{ route('collection.albums.show', $collected->albumId) }}"
-                               class="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded text-white text-sm">
-                                Bekijk
-                            </a>
+{{--                            <a href="{{ route('collection.albums.show', $collected->albumId) }}"--}}
+{{--                               class="inline-block mt-2 px-4 py-2 bg-blue-600 hover:bg-blue-500 rounded text-white text-sm">--}}
+{{--                                Bekijk--}}
+{{--                            </a>--}}
                         </div>
                     </div>
                 @endforeach
@@ -102,17 +94,20 @@
 
                     <tbody>
                     @foreach ($collection as $collected)
-                        <tr class="border-t border-gray-400 hover:bg-gray-600 transition">
+                        <tr
+                            wire:click="showAlbum({{ $collected->albumSerie->id }})"
+                            class="border-t border-gray-400 hover:bg-gray-600 transition"
+                        >
                             <td class="p-3">
-                                {{ $collected->album->name }}
+                                {{ $collected->albumSerie->album->name }}
                             </td>
 
                             <td class="p-3">
-                                {{ $collected->serie->name }}
+                                {{ $collected->albumSerie->serie->name }}
                             </td>
 
                             <td class="p-3">
-                                {{ $collected->album->volume }}
+                                {{ $collected->albumSerie->volume }}
                             </td>
 
                             <td class="p-3 flex gap-2">

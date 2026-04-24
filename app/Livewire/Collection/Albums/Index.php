@@ -5,16 +5,20 @@ declare(strict_types=1);
 namespace App\Livewire\Collection\Albums;
 
 use App\Models\Album;
+use App\Models\AlbumSerie;
+use App\Traits\HasAlerts;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithPagination;
 use App\Models\Collection;
 
 #[Layout('components.layouts.app')]
 class Index extends Component
 {
-    use WithPagination;
+    use HasAlerts,
+        WithPagination;
 
     public string $viewMode = 'table';
 
@@ -29,6 +33,8 @@ class Index extends Component
             ->where('user_id', auth()->id())
             ->where('album_id', $album->id)
             ->delete();
+
+        $this->alert(message: 'Deleted successfully!');
     }
 
     public function toggleFavorite(Album $album): void
@@ -42,6 +48,8 @@ class Index extends Component
         if ($item) {
             $item->favorite = ! $item->favorite;
             $item->save();
+
+            $this->alert(message: 'Saved successfully!');
         }
     }
 
@@ -56,13 +64,23 @@ class Index extends Component
         if ($item) {
             $item->firstPrint = ! $item->firstPrint;
             $item->save();
+
+            $this->alert(message: 'Saved successfully!');
         }
+    }
+
+    public function showAlbum(AlbumSerie $albumSerie): void
+    {
+        $this->redirectRoute(
+            'collection.albums.show',
+            ['albumSerie' => $albumSerie]
+        );
     }
 
     public function render(): View
     {
         $collection = Collection::query()
-            ->with(['album', 'serie'])
+            ->with(['albumSerie.album', 'albumSerie.serie'])
             ->where('user_id', auth()->id())
             ->paginate(10);
 

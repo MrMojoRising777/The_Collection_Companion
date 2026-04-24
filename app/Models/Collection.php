@@ -37,16 +37,10 @@ class Collection extends Model
             $this->setAttribute('user_id', $value);
         }
     }
-    public int $albumId {
-        get => $this->getAttribute('album_id');
+    public int $albumSerieId {
+        get => $this->getAttribute('album_serie_id');
         set {
             $this->setAttribute('album_id', $value);
-        }
-    }
-    public int $serieId {
-        get => $this->getAttribute('serie_id');
-        set {
-            $this->setAttribute('serie_id', $value);
         }
     }
     public CarbonImmutable $acquisitionDate {

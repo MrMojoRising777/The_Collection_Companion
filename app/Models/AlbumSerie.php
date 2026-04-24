@@ -15,6 +15,15 @@ class AlbumSerie extends Model
 
     protected $table = 'album_serie';
 
+    // region attributes
+    public int $id {
+        get => $this->getAttribute('id');
+        set {
+            $this->setAttribute('id', $value);
+        }
+    }
+    // endregion
+
     public function album(): BelongsTo
     {
         return $this->belongsTo(Album::class);

@@ -3,6 +3,7 @@
 namespace App\Models;
 
 // use Illuminate\Contracts\Auth\MustVerifyEmail;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -89,5 +90,12 @@ class User extends Authenticatable
     public function trackedSeries()
     {
         return $this->belongsToMany(Serie::class, 'serie_user')->withTimestamps();
+    }
+
+    public function collectedAlbum(AlbumSerie $albumSerie): bool
+    {
+        return $this->collections()
+            ->where('album_serie_id', $albumSerie->id)
+            ->exists();
     }
 }

@@ -4,15 +4,14 @@ declare(strict_types=1);
 
 namespace App\Livewire\Albums;
 
+use App\Livewire\Modals\SeriesTable;
 use App\Models\Album;
-use App\Models\AlbumSerie;
 use App\Models\User;
 use App\Models\Wishlist;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Serie;
-use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithPagination;
 
 #[Layout('components.layouts.app')]
@@ -48,33 +47,12 @@ class Index extends Component
     public function openCollectModal(Album $album): void
     {
         $this->dispatch('openModal',
-            title: $album->name,
-            view: 'modals.series-table',
-            viewData: [
-                'album' => $album->load('series'),
+            component: SeriesTable::class,
+            props: [
+                'albumId' => $album->id,
             ],
+            title: $album->name,
         );
-    }
-
-    public function collectAlbum(Album $album): void // TODO move to show
-    {
-//        /** @var User $user */
-//        $user = auth()->user();
-//
-//        $user->collections()->create([
-//            'album_serie_id' => $albumSerieId,
-//            'acquisition_date' => now(),
-//        ]);
-    }
-
-    public function hasAlbum(Album $album): bool
-    {
-        /** @var User $user */
-        $user = auth()->user();
-
-        return $user->collections()
-            ->where('album_serie_id', $album->id)
-            ->exists();
     }
 
     public function render(): View
@@ -96,7 +74,7 @@ class Index extends Component
                         });
                 });
             })
-//            // Filter selected serie
+            // Filter selected serie
             ->when($this->serieId, function ($query) {
                 $query->whereHas('series', function ($q) {
                     $q->where('series.id', $this->serieId);

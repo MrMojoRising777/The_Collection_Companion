@@ -15,10 +15,10 @@
         class="relative bg-gray-600 rounded-2xl shadow-xl w-full max-w-lg p-6"
     >
         <button
-            class="absolute top-2 right-2 text-mist-300"
+            class="absolute top-2 right-3 text-mist-300 cursor-pointer"
             @click="open = false"
         >
-            ✕
+            <i class="bi bi-x text-2xl text-gray-300 hover:text-red-300"></i>
         </button>
 
         <h2 class="text-xl font-bold mb-4">
@@ -26,8 +26,8 @@
         </h2>
 
         <div>
-            @if($view)
-                @include($view, $viewData)
+            @if($component)
+                @livewire($component, $props, key($component.'-'.($props['albumId'] ?? 'default')))
             @endif
         </div>
     </div>

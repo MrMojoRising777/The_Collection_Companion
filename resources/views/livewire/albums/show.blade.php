@@ -29,33 +29,9 @@
                 <strong>Waarde:</strong> €{{ $album->value }}
             </p>
 
-{{--            @if ($this->hasAlbum())--}}
-{{--                <hr class="my-4 border-gray-700">--}}
-
-{{--                <p class="mb-2">--}}
-{{--                    <strong>Notitie:</strong> {{ $album->notes }}--}}
-{{--                </p>--}}
-
-{{--                <p class="mb-2">--}}
-{{--                    <strong>Print Jaar:</strong> {{ $album->print_year }}--}}
-{{--                </p>--}}
-
-{{--                <p class="mb-2">--}}
-{{--                    <strong>Plaats van aankoop:</strong> {{ $album->purchase_place }}--}}
-{{--                </p>--}}
-
-{{--                <p class="mb-2">--}}
-{{--                    <strong>Aankoopprijs:</strong> €{{ $album->purchase_price }}--}}
-{{--                </p>--}}
-
-{{--                <p class="mb-2">--}}
-{{--                    <strong>Aankoopdatum:</strong> {{ $album->purchase_date }}--}}
-{{--                </p>--}}
-{{--            @else--}}
-{{--                <p class="italic text-gray-400 mt-4">--}}
-{{--                    Meer informatie wordt beschikbaar als je dit album in je collectie hebt.--}}
-{{--                </p>--}}
-{{--            @endif--}}
+            <p class="italic text-gray-400 mt-4">
+                Meer informatie wordt beschikbaar als je dit album in je collectie hebt.
+            </p>
         </div>
 
         <div class="w-full md:w-1/3 flex items-center justify-center">

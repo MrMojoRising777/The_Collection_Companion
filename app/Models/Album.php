@@ -30,6 +30,12 @@ class Album extends Model
             $this->setAttribute('id', $value);
         }
     }
+    public string $name {
+        get => $this->getAttribute('name');
+        set {
+            $this->setAttribute('name', $value);
+        }
+    }
     // endregion
 
     public function comics()

@@ -44,9 +44,9 @@
                 wire:model.live="serieId"
                 class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
             >
-                <option value="">Alle Series</option>
+                <option value="" class="dark:text-gray-400 dark:bg-gray-800">Alle Series</option>
                 @foreach ($series as $serie)
-                    <option value="{{ $serie->id }}">
+                    <option value="{{ $serie->id }}" class="dark:text-gray-400 dark:bg-gray-800">
                         {{ $serie->name }}
                     </option>
                 @endforeach
@@ -60,36 +60,28 @@
                 <thead class="bg-gray-600 text-mist-300 text-left">
                 <tr>
                     <th class="p-3">Naam</th>
-                    <th class="p-3">Acties</th>
+                    <th class="p-3">Aantal uitgaven</th>
                 </tr>
                 </thead>
 
                 <tbody>
-                @forelse ($albums as $album)
-                    <tr class="border-t hover:bg-gray-400 cursor-pointer" wire:click="openCollectModal({{ $album->id }})">
-                        <td class="p-3 font-medium">
-                            {{ $album->name }}
-                        </td>
+                    @forelse ($albums as $album)
+                        <tr class="border-t hover:bg-gray-400 cursor-pointer" wire:click="openCollectModal({{ $album->id }})">
+                            <td class="p-3 font-medium">
+                                {{ $album->name }}
+                            </td>
 
-                        <td class="p-3">
-{{--                            @if(! $this->hasAlbum($album))--}}
-{{--                                <button--}}
-{{--                                    class="px-3 py-1 rounded text-white text-sm bg-green-500 hover:bg-green-600"--}}
-{{--                                    wire:click="collectAlbum({{ $album->id }})"--}}
-{{--                                >--}}
-{{--                                    In collectie--}}
-{{--                                </button>--}}
-{{--                            @else--}}
-{{--                            @endif--}}
-                        </td>
-                    </tr>
-                @empty
-                    <tr class="border-t">
-                        <td colspan="2">
-                            No albums found.
-                        </td>
-                    </tr>
-                @endforelse
+                            <td class="p-3 font-medium">
+                                {{ $album->albumSeries->count() }}
+                            </td>
+                        </tr>
+                    @empty
+                        <tr class="border-t">
+                            <td colspan="2">
+                                No albums found.
+                            </td>
+                        </tr>
+                    @endforelse
                 </tbody>
             </table>
         </div>
@@ -131,6 +123,4 @@
     <div class="mt-6 flex justify-center">
         {{ $albums->links() }}
     </div>
-
-    <livewire:components.modal />
 </div>
