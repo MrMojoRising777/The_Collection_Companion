@@ -7,27 +7,27 @@
     </tr>
     </thead>
     <tbody>
-    @foreach($album->albumSeries as $albumSerie)
+    @foreach($album->editions as $edition)
         <tr class="border-t">
             <td class="p-2">
-                {{ $albumSerie->serie->name }}
+                {{ $edition->serie->name }}
             </td>
 
             <td class="p-2">
-                {{ $albumSerie->volume }}
+                {{ $edition->volume }}
             </td>
 
             <td class="p-2">
-                @if(! auth()->user()?->collectedAlbum($albumSerie))
+                @if(! auth()->user()?->collectedEdition($edition))
                     <button
-                        wire:click="collectAlbum({{ $albumSerie->id }})"
+                        wire:click="collectAlbum({{ $edition->id }})"
                         class="p-1 rounded bg-emerald-700 text-mist-300 cursor-pointer"
                     >
                         Collect
                     </button>
                 @else
                     <button
-                        wire:click="showAlbum({{ $albumSerie->id }})"
+                        wire:click="showAlbum({{ $edition->id }})"
                         class="p-1 rounded bg-sky-600 text-mist-300 cursor-pointer"
                     >
                         View

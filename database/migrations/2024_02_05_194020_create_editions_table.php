@@ -13,11 +13,17 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('album_serie', function (Blueprint $table) {
+        Schema::create('editions', function (Blueprint $table) {
             $table->id();
             $table->foreignId('album_id')->constrained();
             $table->foreignId('serie_id')->constrained();
             $table->string('volume');
+            $table->string('image')->nullable();
+            $table->string('cover')->nullable();
+            $table->string('color')->nullable();
+            $table->timestamps();
+
+            $table->unique(['album_id', 'serie_id']);
         });
     }
 

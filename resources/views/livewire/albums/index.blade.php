@@ -61,6 +61,9 @@
                 <tr>
                     <th class="p-3">Naam</th>
                     <th class="p-3">Aantal uitgaven</th>
+                    @if($filteredOnSerie)
+                        <th class="p-3"># in serie</th>
+                    @endif
                 </tr>
                 </thead>
 
@@ -72,12 +75,18 @@
                             </td>
 
                             <td class="p-3 font-medium">
-                                {{ $album->albumSeries->count() }}
+                                {{ $album->editions->count() }}
                             </td>
+
+                            @if($filteredOnSerie)
+                                <td class="p-3 font-medium">
+                                    {{ $album->editions->first()->volume }}
+                                </td>
+                            @endif
                         </tr>
                     @empty
                         <tr class="border-t">
-                            <td colspan="2">
+                            <td colspan="{{ $filteredOnSerie ? 3 : 2 }}">
                                 No albums found.
                             </td>
                         </tr>

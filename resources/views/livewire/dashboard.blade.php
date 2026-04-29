@@ -11,7 +11,7 @@
                 <ul class="divide-y divide-gray-200 dark:divide-gray-700">
                     @foreach ($favorites as $favorite)
                         <li class="py-2 text-gray-800 dark:text-gray-200">
-                            {{ $favorite->name }}
+                            {{ $favorite->edition->album->name }}
                         </li>
                     @endforeach
                 </ul>

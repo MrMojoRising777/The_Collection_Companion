@@ -4,18 +4,21 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use App\Enums\Condition;
 use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class Collection extends Model
+class OwnedCopy extends Model
 {
     use HasFactory;
 
+    protected $table = 'owned_copies';
+
     protected $fillable = [
         'user_id',
-        'album_serie_id',
+        'edition_id',
         'acquisition_date',
         'favorite',
         'first_print',
@@ -37,10 +40,10 @@ class Collection extends Model
             $this->setAttribute('user_id', $value);
         }
     }
-    public int $albumSerieId {
-        get => $this->getAttribute('album_serie_id');
+    public int $editionId {
+        get => $this->getAttribute('edition_id');
         set {
-            $this->setAttribute('album_id', $value);
+            $this->setAttribute('edition_id', $value);
         }
     }
     public CarbonImmutable $acquisitionDate {
@@ -61,7 +64,7 @@ class Collection extends Model
             $this->setAttribute('first_print', $value);
         }
     }
-    public ?string $condition {
+    public ?Condition $condition {
         get => $this->getAttribute('condition');
         set {
             $this->setAttribute('condition', $value);
@@ -102,6 +105,7 @@ class Collection extends Model
         'acquisition_date' => 'datetime',
         'favorite' => 'boolean',
         'first_print' => 'boolean',
+        'condition' => Condition::class,
         'created_at' => 'datetime',
         'updated_at' => 'datetime',
     ];
@@ -111,8 +115,8 @@ class Collection extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function albumSerie(): BelongsTo
+    public function edition(): BelongsTo
     {
-        return $this->belongsTo(AlbumSerie::class);
+        return $this->belongsTo(Edition::class);
     }
 }

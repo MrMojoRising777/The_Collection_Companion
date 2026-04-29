@@ -46,7 +46,7 @@ Route::middleware('auth')->group(function () {
 
     // albums
     Route::get('/collection/albums', CollectionAlbumsIndex::class)->name('collection.albums.index');
-    Route::get('/collection/albums/{albumSerie}', CollectionAlbumsShow::class)->name('collection.albums.show');
+    Route::get('/collection/albums/{edition}', CollectionAlbumsShow::class)->name('collection.albums.show');
 
 //    Route::get('/collection/show/album/{album}', [CollectionController::class, 'show'])->name('collection.albums.show');
     Route::get('/collection/edit/album/{album}', [CollectionController::class, 'edit'])->name('collection.albums.edit');

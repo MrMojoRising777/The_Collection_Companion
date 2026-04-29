@@ -14,7 +14,6 @@ return new class extends Migration
         Schema::create('albums', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->foreignId('comic_id')->constrained();
             $table->integer('volume')->nullable();
             $table->string('image')->nullable();
             $table->string('cover')->nullable();

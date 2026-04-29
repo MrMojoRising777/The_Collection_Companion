@@ -1,23 +1,33 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Comic extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['obtained'];
+    protected $table = 'comics';
 
-    public function series()
+    protected $fillable = ['name'];
+
+    public function series(): HasMany
     {
-        return $this->belongsTo(Serie::class);
+        return $this->hasMany(Serie::class);
     }
 
-    public function albums()
+    public function albums(): HasManyThrough
     {
-        return $this->hasMany(Album::class, 'comic_id');
+        return $this->hasManyThrough(
+            Album::class, Edition::class,
+            'serie_id', 'id',
+            'id', 'album_id',
+        );
     }
 }

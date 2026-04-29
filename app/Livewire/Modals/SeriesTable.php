@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Modals;
 
 use App\Models\Album;
-use App\Models\AlbumSerie;
+use App\Models\Edition;
 use App\Models\User;
 use App\Traits\HasAlerts;
 use Illuminate\View\View;
@@ -26,31 +26,31 @@ class SeriesTable extends Component
     {
         /** @var Album $album */
         $album = Album::query()
-            ->with('albumSeries.serie')
+            ->with('editions.serie')
             ->findOrFail($id);
 
         return $album;
     }
 
-    public function collectAlbum(AlbumSerie $albumSerie): void
+    public function collectAlbum(Edition $edition): void
     {
         /** @var User $user */
         $user = auth()->user();
 
-        $user->collections()->create([
-            'album_serie_id' => $albumSerie->id,
+        $user->ownedCopies()->create([
+            'edition_id' => $edition->id,
             'acquisition_date' => now(),
         ]);
 
         $this->alert(message: 'Added to collection!');
     }
 
-    public function showAlbum(AlbumSerie $albumSerie): void
+    public function showAlbum(Edition $edition): void
     {
         $this->redirectRoute(
             'collection.albums.show',
             [
-                'album' => $albumSerie->album->id,
+                'albumSerie' => $edition->id,
             ],
         );
     }

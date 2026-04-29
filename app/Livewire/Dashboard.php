@@ -4,10 +4,11 @@ declare(strict_types=1);
 
 namespace App\Livewire;
 
+use App\Models\Serie;
 use Illuminate\View\View;
 use Livewire\Component;
 use App\Models\Album;
-use App\Models\Collection as CollectionModel;
+use App\Models\OwnedCopy;
 use Illuminate\Support\Collection;
 
 class Dashboard extends Component
@@ -25,7 +26,8 @@ class Dashboard extends Component
 
     private function getFavoriteAlbums(): Collection
     {
-        return CollectionModel::with('album')
+        return OwnedCopy::with('edition.album', 'edition.serie')
+            ->where('user_id', auth()->id())
             ->where('favorite', 1)
             ->take(5)
             ->get();
@@ -33,37 +35,28 @@ class Dashboard extends Component
 
     private function calculateObtainedPercentage(): Collection
     {
-        $groupedAlbums = Album::query()
-            ->with('series')
+        $userId = auth()->id();
+
+        return Serie::query()
+            ->withCount('editions')
+            ->with(['editions' => function ($query) use ($userId) {
+                $query->whereHas('ownedCopies', fn($q) => $q->where('user_id', $userId));
+            }])
             ->get()
-            ->groupBy('series.name');
-
-        $groupedObtainedAlbums = CollectionModel::query()
-            ->get()
-            ->groupBy('album.serie.name');
-
-        return $groupedAlbums->map(function ($albums, $seriesName) use ($groupedObtainedAlbums): array {
-            $totalAlbums = count($albums);
-            $obtainedAlbums = $groupedObtainedAlbums->has($seriesName)
-                ? count($groupedObtainedAlbums[$seriesName])
-                : 0;
-
-            return [
-                'serie_name' => $seriesName,
-                'total' => $totalAlbums,
-                'obtained' => $obtainedAlbums,
-                'percentage' => $totalAlbums > 0
-                    ? round(($obtainedAlbums / $totalAlbums) * 100)
+            ->map(fn(Serie $serie): array => [
+                'serie_name' => $serie->name,
+                'total'      => (int) $serie->editions_count,
+                'obtained'   => $serie->editions->count(),
+                'percentage' => (int) $serie->editions_count > 0
+                    ? round(($serie->editions->count() / (int) $serie->editions_count) * 100)
                     : 0,
-            ];
-        });
+            ]);
     }
 
     /** TODO achievements need to be implemented */
     private function getUserAchievements($userId): Collection
     {
         return collect();
-//        return User::query()->findOrFail($userId)->achievements;
     }
 
     public function render(): View

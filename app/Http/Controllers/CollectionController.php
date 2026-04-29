@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\AlbumSerie;
+use App\Models\Edition;
 use App\Models\Serie;
 use App\Models\User;
 use Carbon\Carbon;
 use App\Models\Album;
-use App\Models\Collection;
+use App\Models\OwnedCopy;
 use Illuminate\Http\Request;
 
 class CollectionController extends Controller
@@ -18,7 +18,7 @@ class CollectionController extends Controller
     }
 
 
-    public function collectAlbum(AlbumSerie $albumSerie): void
+    public function collectAlbum(Edition $albumSerie): void
     {
         /** @var User $user */
         $user = auth()->user();
@@ -51,7 +51,7 @@ class CollectionController extends Controller
             'condition' => 'nullable|string|max:255'
         ]);
 
-        $collected = Collection::where('album_id', $album->id)->update($validatedData);
+        $collected = OwnedCopy::where('album_id', $album->id)->update($validatedData);
 
         return redirect()->route('collection.albums.index')->with('success', 'Album succesvol bijgewerkt.');
     }

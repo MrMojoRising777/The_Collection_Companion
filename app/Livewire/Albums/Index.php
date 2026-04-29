@@ -6,8 +6,8 @@ namespace App\Livewire\Albums;
 
 use App\Livewire\Modals\SeriesTable;
 use App\Models\Album;
-use App\Models\User;
 use App\Models\Wishlist;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
@@ -22,6 +22,7 @@ class Index extends Component
     public string $search = '';
     public ?int $serieId = null;
     public string $view = 'table';
+    public bool $filteredOnSerie = false;
 
     protected array $queryString = [
         'search' => ['except' => ''],
@@ -36,6 +37,8 @@ class Index extends Component
 
     public function updatingSerieId(): void
     {
+        $this->filteredOnSerie = false;
+
         $this->resetPage();
     }
 
@@ -64,23 +67,29 @@ class Index extends Component
             ->get();
 
         $albums = Album::query()
-            ->with('series')
-            // Filter search term
-            ->when($this->search, function ($query) {
-                $query->where(function ($q) {
-                    $q->where('name', 'like', "%{$this->search}%")
-                        ->orWhereHas('series', function ($q2) {
+            ->with(['series', 'editions'])
+            ->withCount('editions')
+
+            // search
+            ->when($this->search, function (Builder $query): void {
+                $query->where(function (Builder $subquery): void {
+                    $subquery->where('name', 'like', "%{$this->search}%")
+                        ->orWhereHas('series', function (Builder $q2): void {
                             $q2->where('name', 'like', "%{$this->search}%");
                         });
                 });
             })
-            // Filter selected serie
-            ->when($this->serieId, function ($query) {
-                $query->whereHas('series', function ($q) {
-                    $q->where('series.id', $this->serieId);
+
+            // serie filter
+            ->when($this->serieId, function (Builder $query): void {
+                $this->filteredOnSerie = true;
+
+                $query->whereHas('series', function (Builder $subquery): void {
+                    $subquery->where('series.id', $this->serieId);
                 });
             })
-            ->paginate(15);
+
+           ->paginate(15);
 
         return view('livewire.albums.index', [
             'albums' => $albums,

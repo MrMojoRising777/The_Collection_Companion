@@ -9,11 +9,20 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class AlbumSerie extends Model
+class Edition extends Model
 {
     use HasFactory;
 
-    protected $table = 'album_serie';
+    protected $table = 'editions';
+
+    protected $fillable = [
+        'album_id',
+        'serie_id',
+        'volume',
+        'image',
+        'cover',
+        'color',
+    ];
 
     // region attributes
     public int $id {
@@ -34,8 +43,8 @@ class AlbumSerie extends Model
         return $this->belongsTo(Serie::class);
     }
 
-    public function collections(): HasMany
+    public function ownedCopies(): HasMany
     {
-        return $this->hasMany(Collection::class);
+        return $this->hasMany(OwnedCopy::class, 'edition_id');
     }
 }

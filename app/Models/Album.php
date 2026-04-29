@@ -17,10 +17,8 @@ class Album extends Model
     protected $table = 'albums';
 
     protected $fillable = [
-        'name', 'volume', 'cover', 'color', 'print_year',
-        'obtained', 'condition', 'purchase_place', 'purchase_price', 'purchase_date',
-        'notes', 'image', 'first_print', 'favorite', 'wanted', 'first_print_obtained',
-        'value', 'damaged', 'damage'
+        'name',
+        'volume',
     ];
 
     // region attributes
@@ -38,36 +36,20 @@ class Album extends Model
     }
     // endregion
 
-    public function comics()
+    public function series(): BelongsToMany
     {
-        return $this->belongsTo(Comic::class, 'comic_id');
+        return $this->belongsToMany(Serie::class, 'editions')
+            ->withPivot('volume', 'image', 'cover', 'color')
+            ->withTimestamps();
     }
 
-    public function collections(): HasMany
+    public function editions(): HasMany
     {
-        return $this->hasMany(Collection::class);
+        return $this->hasMany(Edition::class);
     }
 
-    public function isInCollection()
+    public function ownedCopies(): HasMany
     {
-        return $this->collections()->where('user_id', auth()->id())->exists();
-    }
-
-    public function collection()
-    {
-        return $this->collections()
-            ->where('user_id', auth()->id())
-            ->first();
-    }
-
-    public function series(): belongsToMany
-    {
-        return $this->belongsToMany(Serie::class)
-            ->withPivot('volume');
-    }
-
-    public function albumSeries(): HasMany
-    {
-        return $this->hasMany(AlbumSerie::class);
+        return $this->hasMany(OwnedCopy::class, 'edition_id');
     }
 }

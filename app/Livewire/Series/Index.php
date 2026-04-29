@@ -5,7 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Series;
 
 use App\Models\Album;
-use App\Models\AlbumSerie;
+use App\Models\Edition;
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
@@ -21,7 +21,7 @@ use Native\Mobile\Events\Scanner\CodeScanned;
 use App\Services\IsbnScraperService;
 
 /**
- * @property Collection<int, AlbumSerie> $books
+ * @property Collection<int, Edition> $books
  */
 #[Layout('components.layouts.app')]
 class Index extends Component
@@ -64,7 +64,7 @@ class Index extends Component
             return;
         }
 
-        $albums = AlbumSerie::query()
+        $albums = Edition::query()
             ->whereHas('album', function (Builder $query) use ($book): Builder {
                 return $query->where('name', $book->title);
             })

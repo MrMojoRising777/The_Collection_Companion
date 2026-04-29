@@ -4,15 +4,13 @@ declare(strict_types=1);
 
 namespace App\Livewire\Collection\Albums;
 
-use App\Models\Album;
-use App\Models\AlbumSerie;
+use App\Models\Edition;
 use App\Traits\HasAlerts;
 use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
-use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithPagination;
-use App\Models\Collection;
+use App\Models\OwnedCopy;
 
 #[Layout('components.layouts.app')]
 class Index extends Component
@@ -27,22 +25,22 @@ class Index extends Component
         $this->viewMode = $view;
     }
 
-    public function remove(Album $album): void
+    public function remove(Edition $edition): void
     {
-        Collection::query()
+        OwnedCopy::query()
             ->where('user_id', auth()->id())
-            ->where('album_id', $album->id)
+            ->where('edition_id', $edition->id)
             ->delete();
 
         $this->alert(message: 'Deleted successfully!');
     }
 
-    public function toggleFavorite(Album $album): void
+    public function toggleFavorite(Edition $edition): void
     {
-        /** @var Collection $item */
-        $item = Collection::query()
+        /** @var OwnedCopy $item */
+        $item = OwnedCopy::query()
             ->where('user_id', auth()->id())
-            ->where('album_id', $album->id)
+            ->where('edition_id', $edition->id)
             ->first();
 
         if ($item) {
@@ -53,12 +51,12 @@ class Index extends Component
         }
     }
 
-    public function toggleFirstPrint(Album $album): void
+    public function toggleFirstPrint(Edition $edition): void
     {
-        /** @var Collection $item */
-        $item = Collection::query()
+        /** @var OwnedCopy $item */
+        $item = OwnedCopy::query()
             ->where('user_id', auth()->id())
-            ->where('album_id', $album->id)
+            ->where('edition_id', $edition->id)
             ->first();
 
         if ($item) {
@@ -69,18 +67,18 @@ class Index extends Component
         }
     }
 
-    public function showAlbum(AlbumSerie $albumSerie): void
+    public function showAlbum(Edition $edition): void
     {
         $this->redirectRoute(
             'collection.albums.show',
-            ['albumSerie' => $albumSerie]
+            ['edition' => $edition]
         );
     }
 
     public function render(): View
     {
-        $collection = Collection::query()
-            ->with(['albumSerie.album', 'albumSerie.serie'])
+        $collection = OwnedCopy::query()
+            ->with(['edition.album', 'edition.serie'])
             ->where('user_id', auth()->id())
             ->paginate(10);
 

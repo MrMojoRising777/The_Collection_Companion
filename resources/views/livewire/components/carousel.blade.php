@@ -8,13 +8,13 @@
             @foreach ($recentAlbums as $recentAlbum)
                 <div class="w-full flex-shrink-0">
                     <img
-                        src="{{ $recentAlbum->albumSerie->cover }}"
-                        alt="{{ $recentAlbum->albumSerie->album->name }}"
-                         class="w-full h-64 object-cover"
+                        src="{{ $recentAlbum->edition->cover }}"
+                        alt="{{ $recentAlbum->edition->album->name }}"
+                        class="w-full h-64 object-cover"
                     />
 
                     <div class="p-4 bg-black/50 text-white absolute bottom-0 w-full">
-                        {{ $recentAlbum->albumSerie->album->name }}
+                        {{ $recentAlbum->edition->album->name }}
                     </div>
                 </div>
             @endforeach

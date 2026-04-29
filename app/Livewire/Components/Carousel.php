@@ -4,14 +4,14 @@ declare(strict_types=1);
 
 namespace App\Livewire\Components;
 
-use App\Models\Collection as CollectionModel;
+use App\Models\OwnedCopy;
 use Illuminate\Database\Eloquent\Collection;
 use Illuminate\View\View;
 use Livewire\Attributes\On;
 use Livewire\Component;
 
 /**
- * @property Collection<int, CollectionModel> $recentAlbums
+ * @property Collection<int, OwnedCopy> $recentAlbums
  */
 class Carousel extends Component
 {
@@ -23,10 +23,13 @@ class Carousel extends Component
         $this->recentAlbums = $this->getRecentAlbums();
     }
 
+    /**
+     * @return Collection<int, OwnedCopy>
+     */
     private function getRecentAlbums(): Collection
     {
-        return CollectionModel::query()
-            ->with('albumSerie.album', 'albumSerie.serie')
+        return OwnedCopy::query()
+            ->with('edition.album', 'edition.serie')
             ->orderBy('updated_at', 'desc')
             ->take(5)
             ->get();

@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\User;
 use App\Models\Album;
-use App\Models\Collection;
+use App\Models\OwnedCopy;
 
 class DashboardController extends Controller
 {
@@ -29,7 +29,7 @@ class DashboardController extends Controller
 
     private function getRecentAlbums($limit)
     {
-        return Collection::with('album')
+        return OwnedCopy::with('album')
             ->join('albums', 'collections.album_id', '=', 'albums.id')
             ->select('albums.*')
             ->orderBy('collections.updated_at', 'desc')
@@ -39,7 +39,7 @@ class DashboardController extends Controller
 
     private function getMostValuedAlbums($limit)
     {
-        return Collection::with('album')
+        return OwnedCopy::with('album')
             ->join('albums', 'collections.album_id', '=', 'albums.id')
             ->orderBy('albums.value', 'desc')
             ->take($limit)
@@ -48,13 +48,13 @@ class DashboardController extends Controller
 
     private function calculateCollectionValue()
     {
-        return Collection::join('albums', 'collections.album_id', '=', 'albums.id')->sum('albums.value');
+        return OwnedCopy::join('albums', 'collections.album_id', '=', 'albums.id')->sum('albums.value');
     }
 
     private function calculateObtainedPercentage()
     {
         $groupedAlbums = Album::with('serie')->get()->groupBy('serie.name');
-        $groupedObtainedAlbums = Collection::with('album')->get()->groupBy('album.serie.name');
+        $groupedObtainedAlbums = OwnedCopy::with('album')->get()->groupBy('album.serie.name');
 
         return $groupedAlbums->map(function ($albums, $seriesName) use ($groupedObtainedAlbums) {
             $totalAlbums = count($albums);
@@ -72,7 +72,7 @@ class DashboardController extends Controller
 
     private function getFavoriteAlbums()
     {
-        return Collection::with('album')
+        return OwnedCopy::with('album')
             ->where('favorite', 1)
             ->take(5)
             ->get();

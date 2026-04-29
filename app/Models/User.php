@@ -1,9 +1,9 @@
 <?php
 
+declare(strict_types=1);
+
 namespace App\Models;
 
-// use Illuminate\Contracts\Auth\MustVerifyEmail;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -48,54 +48,20 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
-    /**
-     * Check if the user is an admin.
-     *
-     * @return bool
-     */
-    public function isAdmin()
+    public function ownedCopies(): HasMany
     {
-        return $this->name === 'admin';
+        return $this->hasMany(OwnedCopy::class);
     }
 
-    public function achievements()
-    {
-        return $this->belongsToMany(Achievement::class)->withPivot('unlocked_at');
-    }
-
-    public function collections(): HasMany
-    {
-        return $this->hasMany(Collection::class);
-    }
-
-    public function albums(): BelongsToMany
-    {
-        return $this->belongsToMany(Album::class, 'collections')
-            ->withPivot([
-                'acquisition_date',
-                'favorite',
-                'first_print',
-                'condition',
-                'notes',
-                'print_year'
-            ])
-            ->withTimestamps();
-    }
-
-    public function favorites()
-    {
-        return $this->belongsToMany(Album::class, 'favorites', 'user_id', 'album_id')->withTimestamps();
-    }
-
-    public function trackedSeries()
+    public function trackedSeries(): BelongsToMany
     {
         return $this->belongsToMany(Serie::class, 'serie_user')->withTimestamps();
     }
 
-    public function collectedAlbum(AlbumSerie $albumSerie): bool
+    public function collectedEdition(Edition $edition): bool
     {
-        return $this->collections()
-            ->where('album_serie_id', $albumSerie->id)
+        return $this->ownedCopies()
+            ->where('edition_id', $edition->id)
             ->exists();
     }
 }
