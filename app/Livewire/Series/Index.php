@@ -28,12 +28,6 @@ class Index extends Component
 {
     public string $search = '';
     public string $view = 'table';
-    protected IsbnScraperService $scraper;
-
-    public function boot(IsbnScraperService $scraper): void
-    {
-        $this->scraper = $scraper;
-    }
 
     public function setView(string $view): void
     {
@@ -45,40 +39,6 @@ class Index extends Component
         if (Album::query()->count() === 0) {
             Artisan::call('migrate --seed');
         }
-    }
-
-    public function scanISBN(): void
-    {
-        Scanner::scan()->formats(['ean13']);
-    }
-
-    #[OnNative(CodeScanned::class)]
-    public function handleScan(string $data): void
-    {
-        $isbn = preg_replace('/[^0-9X]/', '', trim($data));
-
-        $book = $this->scraper->fetch(isbn: $isbn);
-
-        if (! $book) {
-            $this->dispatch('notify', type: 'error', message: 'Book not found');
-            return;
-        }
-
-        $albums = Edition::query()
-            ->whereHas('album', function (Builder $query) use ($book): Builder {
-                return $query->where('name', $book->title);
-            })
-            ->with(['album', 'serie'])
-            ->get()
-            ->toArray();;
-
-        $this->dispatch('openModal',
-            title: 'Scanned: '.$book->title.' - '.$book->publishedDate,
-            view: 'modals.albums-table',
-            viewData: [
-                'albums' => $albums,
-            ],
-        );
     }
 
     public function toggleTracking($serieId): void

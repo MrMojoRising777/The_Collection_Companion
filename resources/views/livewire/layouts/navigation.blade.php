@@ -15,6 +15,12 @@
                     <x-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                         {{ __('Dashboard') }}
                     </x-nav-link>
+                    <button
+                        wire:click="openComicWizard"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded cursor-pointer"
+                    >
+                        Scan ISBN
+                    </button>
                     <x-nav-link :href="route('series.index')" :active="request()->routeIs('series.index')">
                         {{ __('Series') }}
                     </x-nav-link>
@@ -24,12 +30,12 @@
                     <x-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
                         {{ __('Collectie') }}
                     </x-nav-link>
-                    <x-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
-                        {{ __('Verlanglijst') }}
-                    </x-nav-link>
-                    <x-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
-                        {{ __('Contact') }}
-                    </x-nav-link>
+{{--                    <x-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">--}}
+{{--                        {{ __('Verlanglijst') }}--}}
+{{--                    </x-nav-link>--}}
+{{--                    <x-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">--}}
+{{--                        {{ __('Contact') }}--}}
+{{--                    </x-nav-link>--}}
                 </div>
             </div>
 
@@ -77,6 +83,12 @@
             <x-responsive-nav-link :href="route('dashboard')" :active="request()->routeIs('dashboard')">
                 {{ __('Dashboard') }}
             </x-responsive-nav-link>
+            <button
+                wire:click="openComicWizard"
+                class="px-4 py-2 bg-indigo-600 text-white rounded cursor-pointer"
+            >
+                Scan ISBN
+            </button>
             <x-responsive-nav-link :href="route('series.index')" :active="request()->routeIs('series.index')">
                 {{ __('Series') }}
             </x-responsive-nav-link>
@@ -86,28 +98,28 @@
             <x-responsive-nav-link :href="route('collection.index')" :active="request()->routeIs('collection.index')">
                 {{ __('Collectie') }}
             </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">
-                {{ __('Verlanglijst') }}
-            </x-responsive-nav-link>
-            <x-responsive-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">
-                {{ __('Contact') }}
-            </x-responsive-nav-link>
+{{--            <x-responsive-nav-link :href="route('wishlist')" :active="request()->routeIs('wishlist')">--}}
+{{--                {{ __('Verlanglijst') }}--}}
+{{--            </x-responsive-nav-link>--}}
+{{--            <x-responsive-nav-link :href="route('contact.show')" :active="request()->routeIs('contact.show')">--}}
+{{--                {{ __('Contact') }}--}}
+{{--            </x-responsive-nav-link>--}}
 
-        <!-- Responsive Settings Options -->
-        <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
-            <div class="px-4">
-                <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
-                <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
-            </div>
+            <!-- Responsive Settings Options -->
+            <div class="pt-4 pb-1 border-t border-gray-200 dark:border-gray-600">
+                <div class="px-4">
+                    <div class="font-medium text-base text-gray-800 dark:text-gray-200">{{ Auth::user()->name }}</div>
+                    <div class="font-medium text-sm text-gray-500">{{ Auth::user()->email }}</div>
+                </div>
 
-            <div class="mt-3 space-y-1">
-                <x-responsive-nav-link :href="route('profile.edit')">
-                    {{ __('Profiel') }}
-                </x-responsive-nav-link>
+                <div class="mt-3 space-y-1">
+                    <x-responsive-nav-link :href="route('profile.edit')">
+                        {{ __('Profiel') }}
+                    </x-responsive-nav-link>
 
-                <!-- Authentication -->
-                <livewire:auth.logout />
+                    <!-- Authentication -->
+                    <livewire:auth.logout />
+                </div>
             </div>
         </div>
-    </div>
 </nav>

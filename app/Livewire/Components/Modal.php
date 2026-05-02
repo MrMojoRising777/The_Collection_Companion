@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Livewire\Components;
 
+use Livewire\Attributes\On;
 use Livewire\Component;
 
 class Modal extends Component
@@ -29,9 +30,12 @@ class Modal extends Component
         $this->open = true;
     }
 
+    #[On('closeModal')]
     public function close(): void
     {
-        $this->reset();
+        $this->component = null;
+        $this->title = '';
+        $this->props = [];
         $this->open = false;
     }
 }

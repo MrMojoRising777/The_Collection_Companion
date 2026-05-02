@@ -32,7 +32,7 @@
                 x-on:mouseenter="clearInterval(interval)"
                 x-on:mouseleave="interval = setInterval(() => $wire.dispatch('next'), 5000)"
             >
-                <livewire:components.carousel />
+{{--                <livewire:components.carousel />--}}
             </div>
         </div>
 

@@ -18,7 +18,7 @@
 
 <body class="font-sans antialiased bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
     <div class="min-h-screen flex flex-col">
-         @include('layouts.navigation')
+        <livewire:layouts.navigation />
 
         @if (isset($header))
             <header class="bg-white dark:bg-gray-800 shadow">
