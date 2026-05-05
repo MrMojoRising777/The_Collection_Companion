@@ -16,6 +16,21 @@ class Serie extends Model
 
     protected $table = 'series';
 
+    // region attributes
+    public int $id {
+        get => $this->getAttribute('id');
+        set {
+            $this->setAttribute('id', $value);
+        }
+    }
+    public string $abbreviation {
+        get => $this->getAttribute('abbreviation');
+        set {
+            $this->setAttribute('abbreviation', $value);
+        }
+    }
+    // endregion
+
     public function comic(): BelongsTo
     {
         return $this->belongsTo(Comic::class);

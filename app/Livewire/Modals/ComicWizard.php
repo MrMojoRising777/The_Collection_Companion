@@ -79,7 +79,6 @@ class ComicWizard extends Component
         $comic = $this->resolver->resolveFromIsbn(isbn: $isbn);
 
         if (! $comic) {
-            // fallback → search mode
             $this->step = 'search';
             $this->query = null;
 
@@ -137,6 +136,15 @@ class ComicWizard extends Component
             ->find($payload['editionId']);
 
         if (! $edition) {
+            return;
+        }
+
+        if ($user->ownedCopies()->where('edition_id', $edition->id)->exists()) {
+            $this->alert(
+                message: 'Comic already in collection!',
+                type: 'info',
+            );
+
             return;
         }
 

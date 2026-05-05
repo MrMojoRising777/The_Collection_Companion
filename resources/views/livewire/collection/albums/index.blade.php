@@ -82,7 +82,6 @@
         @if ($viewMode === 'table')
             <div class="bg-gray-500 rounded-xl shadow border overflow-hidden">
                 <table class="w-full text-sm">
-
                     <thead class="bg-gray-600 text-white">
                         <tr>
                             <th class="p-3 text-left">Naam</th>
@@ -96,7 +95,7 @@
                     @foreach ($collection as $collected)
                         <tr
                             wire:click="showAlbum({{ $collected->edition->id }})"
-                            class="border-t border-gray-400 hover:bg-gray-600 transition"
+                            class="border-t border-gray-400 hover:bg-gray-600 transition cursor-pointer"
                         >
                             <td class="p-3">
                                 {{ $collected->edition->album->name }}
@@ -111,15 +110,15 @@
                             </td>
 
                             <td class="p-3 flex gap-2">
-                                <button wire:click="toggleFavorite({{ $collected->editionId }})">
+                                <button wire:click.stop="toggleFavorite({{ $collected->editionId }})">
                                     <i class="bi {{ $collected->favorite ? 'bi-star-fill' : 'bi-star' }} text-yellow-400 cursor-pointer"></i>
                                 </button>
 
-                                <button wire:click="toggleFirstPrint({{ $collected->editionId }})">
+                                <button wire:click.stop="toggleFirstPrint({{ $collected->editionId }})">
                                     <i class="bi {{ $collected->firstPrint ? 'bi-check-circle-fill' : 'bi-circle' }} text-mist-400 cursor-pointer"></i>
                                 </button>
 
-                                <button wire:click="remove({{ $collected->editionId }})">
+                                <button wire:click.stop="remove({{ $collected->editionId }})">
                                     <i class="bi bi-x text-xl text-red-400 cursor-pointer"></i>
                                 </button>
                             </td>

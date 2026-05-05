@@ -17,6 +17,15 @@ class Comic extends Model
 
     protected $fillable = ['name'];
 
+    // region attributes
+    public int $id {
+        get => $this->getAttribute('id');
+        set {
+            $this->setAttribute('id', $value);
+        }
+    }
+    // endregion
+
     public function series(): HasMany
     {
         return $this->hasMany(Serie::class);
