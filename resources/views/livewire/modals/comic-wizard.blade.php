@@ -23,8 +23,13 @@
     @endif
 
     @if($step === 'confirm' && ! empty($results))
-            <div class="space-y-2">
-                <livewire:components.accordion :items="$results" />
+            <div class="space-y-3">
+                <h2 class="text-lg font-bold">Gevonden albums:</h2>
+
+                <livewire:components.accordion
+                    :items="$results"
+                    itemClickAction="albumSelected"
+                />
             </div>
     @endif
 

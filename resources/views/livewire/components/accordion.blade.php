@@ -15,11 +15,14 @@
 
                 @if (is_array($item[$contentKey] ?? null))
                     <div class="space-y-2">
-                        @foreach ($item[$contentKey] as $row)
-                            <div class="p-2 border rounded bg-gray-400">
+                        @foreach ($item[$contentKey] as $rowIndex => $row)
+                            <div
+                                wire:click.stop="selectRow({{ $index }}, {{ $rowIndex }})"
+                                class="p-2 border rounded bg-gray-400 cursor-pointer"
+                            >
                                 @if (is_array($row))
                                     <div class="font-medium">
-                                        {{ $row['name'] ?? 'Unnamed' }}
+                                        {{ $row['volume'] }} - {{ $row['name'] }}
                                     </div>
 
                                     @if (! empty($row['period']))

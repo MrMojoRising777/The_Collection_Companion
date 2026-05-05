@@ -40,7 +40,14 @@ class ComicResolverService
         return $results->map(fn (Album $album): ComicData => new ComicData(
             title: $album->name,
             series: $album->editions
-                ->map(fn (Edition $edition): array => $edition->serie?->toArray())
+                ->map(fn (Edition $edition): array => $edition->serie
+                    ? [
+                        ...$edition->serie->toArray(),
+                        'volume' => $edition->volume,
+                        'editionId' => $edition->id,
+                    ]
+                    : null
+                )
                 ->filter()
                 ->unique('id')
                 ->values()

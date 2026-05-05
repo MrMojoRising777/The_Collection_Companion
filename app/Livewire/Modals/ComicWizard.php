@@ -5,8 +5,9 @@ declare(strict_types=1);
 namespace App\Livewire\Modals;
 
 use App\Data\ComicData;
+use App\Models\User;
 use App\Services\ComicResolverService;
-use Illuminate\Support\Collection;
+use App\Traits\HasAlerts;
 use Illuminate\View\View;
 use Livewire\Component;
 use App\Models\Serie;
@@ -18,6 +19,8 @@ use Native\Mobile\Facades\System;
 
 class ComicWizard extends Component
 {
+    use HasAlerts;
+
     public string $step = 'scan';// scan | search | manual | confirm
     public ?ComicData $comic = null;
     public ?array $results = null;
@@ -27,6 +30,8 @@ class ComicWizard extends Component
     public bool $scanStarted = false;
 
     protected ComicResolverService $resolver;
+
+    protected $listeners = ['albumSelected'];
 
     public function boot(ComicResolverService $resolver): void
     {
@@ -97,8 +102,7 @@ class ComicWizard extends Component
 
         $results = $this->resolver->resolveFromSearch(query: $this->query);
 
-        if (empty($results)) {
-            // fallback → manual
+        if ($results->isEmpty()) {
             $this->step = 'manual';
             return;
         }
@@ -109,35 +113,42 @@ class ComicWizard extends Component
                 'content' => $comic->series ?? [],
             ];
         })->all();
+
         $this->step = 'confirm';
     }
 
-    /* --------------------------------
-     | SAVE FLOW
-     |--------------------------------*/
-
-    public function save(): void
+    /**
+     * @param array{
+     *     id: int,
+     *     editionId: int,
+     *     name: string,
+     *     abbreviation: string,
+     *     period: string,
+     *     created_at: string,
+     *     updated_at: string,
+     * } $payload
+     */
+    public function albumSelected(array $payload): void
     {
-        if (! $this->comic || ! $this->serieId) {
-            $this->dispatch('notify', type: 'error', message: 'Missing data');
+        /** @var User $user */
+        $user = auth()->user();
+
+        $edition = Edition::query()
+            ->find($payload['editionId']);
+
+        if (! $edition) {
             return;
         }
 
-        Edition::query()
-            ->create([
-                'serie_id' => $this->serieId,
-                'isbn' => $this->comic->isbn,
-                'title' => $this->comic->title,
-            ]);
+        $user->ownedCopies()->create([
+            'edition_id' => $edition->id,
+            'acquisition_date' => now(),
+        ]);
 
-        $this->dispatch('notify', type: 'success', message: 'Comic added');
+        $this->alert(message: 'Comic added!');
 
         $this->dispatch('closeModal');
     }
-
-    /* --------------------------------
-     | DATA
-     |--------------------------------*/
 
     public function getSeriesProperty()
     {
@@ -145,10 +156,6 @@ class ComicWizard extends Component
             ->orderBy('name')
             ->get();
     }
-
-    /* --------------------------------
-     | VIEW
-     |--------------------------------*/
 
     public function render(): View
     {
