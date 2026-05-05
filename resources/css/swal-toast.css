@@ -1,0 +1,59 @@
+/*
+ * swal-toast.css
+ *
+ * Strips SweetAlert2's built-in chrome that Tailwind !important classes can't
+ * override (box-shadow, icon colours, close-button colour). Import this once,
+ * e.g. in your app.css after the @tailwind directives:
+ *
+ *   @import "swal-toast.css";
+ *
+ * Everything else (bg, border, text, radius, progress bar) is handled by the
+ * Tailwind customClass strings in HasAlerts.php.
+ */
+
+/* Remove the default drop-shadow SweetAlert2 adds to toasts */
+.swal-toast.swal2-popup {
+    box-shadow: none;
+}
+
+/* Shrink and recolour the built-in type icon so it feels lighter */
+.swal-toast .swal2-icon {
+    width: 1.75rem;
+    height: 1.75rem;
+    margin: 0;
+    border-width: 1.5px;
+    font-size: 0.75rem;
+}
+
+/* Tighten the toast's internal padding */
+.swal-toast.swal2-popup {
+    width: auto !important;
+    height: auto !important;
+    min-height: unset !important;
+}
+
+/* Keep the progress bar flush to the bottom with no border-radius */
+.swal-toast .swal2-timer-progress-bar {
+    border-radius: 0;
+    height: 2px;
+}
+
+/* Remove icon border colours SweetAlert2 hardcodes per type */
+.swal-toast .swal2-icon.swal2-success,
+.swal-toast .swal2-icon.swal2-error,
+.swal-toast .swal2-icon.swal2-warning,
+.swal-toast .swal2-icon.swal2-info,
+.swal-toast .swal2-icon.swal2-question {
+    border-color: currentColor;
+    color: inherit;
+    opacity: 0.7;
+}
+
+/* SweetAlert2 hardcodes the success icon's animated lines — reset them */
+.swal-toast .swal2-icon.swal2-success [class^="swal2-success-line"] {
+    background-color: currentColor;
+}
+.swal-toast .swal2-icon.swal2-success .swal2-success-ring {
+    border-color: currentColor;
+    opacity: 0.3;
+}
