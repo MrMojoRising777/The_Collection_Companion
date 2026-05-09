@@ -16,7 +16,7 @@
     @livewireStyles
 </head>
 
-<body class="font-sans antialiased bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
+<body class="nativephp-safe-area font-sans antialiased bg-gray-50 text-gray-900 dark:bg-gray-900 dark:text-gray-100">
     <div class="min-h-screen flex flex-col">
         <livewire:layouts.navigation />
 

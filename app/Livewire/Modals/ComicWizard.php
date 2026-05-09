@@ -28,6 +28,7 @@ class ComicWizard extends Component
     public ?int $serieId = null;
 
     public bool $scanStarted = false;
+    public bool $isMobile = true;
 
     protected ComicResolverService $resolver;
 
@@ -40,7 +41,9 @@ class ComicWizard extends Component
 
     public function mount(): void
     {
-        $this->step = $this->isMobile() ? 'scan' : 'search';
+        $this->step = 'search';
+//        $this->step = $this->isMobile() ? 'scan' : 'search';
+        $this->isMobile = $this->isMobile();
     }
 
     public function rendered(): void

@@ -6,6 +6,10 @@
         </div>
 
         <div class="lg:col-span-4 bg-white dark:bg-gray-500 shadow rounded-lg p-6">
+            <livewire:seed-suske-en-wiske />
+        </div>
+
+        <div class="lg:col-span-4 bg-white dark:bg-gray-500 shadow rounded-lg p-6">
             <h2 class="text-xl font-semibold mb-4">Favorieten</h2>
             @if ($favorites->isNotEmpty())
                 <ul class="divide-y divide-gray-200 dark:divide-gray-700">

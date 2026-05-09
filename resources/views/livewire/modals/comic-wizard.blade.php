@@ -18,6 +18,15 @@
                 >
                     Search
                 </button>
+
+                @if($isMobile)
+                    <button
+                        wire:click="startScan"
+                        class="px-4 py-2 bg-indigo-600 text-white rounded"
+                    >
+                        Start Scan
+                    </button>
+                @endif
             </div>
         </div>
     @endif
