@@ -10,15 +10,12 @@
         </p>
     </header>
 
-    <x-danger-button
-        x-data=""
-        x-on:click.prevent="$dispatch('open-modal', 'confirm-user-deletion')"
-    >Verwijder</x-danger-button>
+    <x-danger-button wire:click="confirmUserDeletion">
+        Verwijder
+    </x-danger-button>
 
-    <x-modal name="confirm-user-deletion" :show="$errors->userDeletion->isNotEmpty()" focusable>
-        <form method="post" action="{{ route('profile.destroy') }}" class="p-6">
-            @csrf
-            @method('delete')
+    <x-modal name="confirm-user-deletion" :show="$confirmingUserDeletion" focusable>
+        <form wire:submit.prevent="deleteUser" class="p-6">
 
             <h2 class="text-lg font-medium text-gray-900 dark:text-gray-100">
                 Ben je zeker dat je je account wil verwijderen?
@@ -30,21 +27,23 @@
             </p>
 
             <div class="mt-6">
-                <x-input-label for="password" value="{{ __('Password') }}" class="sr-only" />
+                <x-input-label for="password" value="Password" class="sr-only" />
 
                 <x-text-input
+                    wire:model.defer="password"
                     id="password"
-                    name="password"
                     type="password"
-                    class="mt-1 block w-3/4"
+                    class="w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500"
                     placeholder="Wachtwoord"
                 />
 
-                <x-input-error :messages="$errors->userDeletion->get('password')" class="mt-2" />
+                @error('password')
+                    <span class="mt-2 text-sm text-red-600">{{ $message }}</span>
+                @enderror
             </div>
 
             <div class="mt-6 flex justify-end">
-                <x-secondary-button x-on:click="$dispatch('close')">
+                <x-secondary-button wire:click="$set('confirmingUserDeletion', false)">
                     Terug
                 </x-secondary-button>
 

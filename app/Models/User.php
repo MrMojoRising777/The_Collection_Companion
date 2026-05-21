@@ -4,6 +4,7 @@ declare(strict_types=1);
 
 namespace App\Models;
 
+use Carbon\CarbonImmutable;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
@@ -37,6 +38,33 @@ class User extends Authenticatable
         'password',
         'remember_token',
     ];
+
+    // region attributes
+    public int $id {
+        get => $this->getAttribute('id');
+        set {
+            $this->setAttribute('id', $value);
+        }
+    }
+    public string $name {
+        get => $this->getAttribute('name');
+        set {
+            $this->setAttribute('name', $value);
+        }
+    }
+    public string $email {
+        get => $this->getAttribute('email');
+        set {
+            $this->setAttribute('email', $value);
+        }
+    }
+    public ?CarbonImmutable $emailVerifiedAt {
+        get => $this->getAttribute('email_verified_at');
+        set {
+            $this->setAttribute('email_verified_at', $value);
+        }
+    }
+    // endregion
 
     /**
      * The attributes that should be cast.

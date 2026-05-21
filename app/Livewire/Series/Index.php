@@ -6,7 +6,6 @@ namespace App\Livewire\Series;
 
 use App\Models\Album;
 use App\Models\Edition;
-use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
 use Illuminate\Support\Facades\Artisan;
 use Illuminate\View\View;
@@ -15,10 +14,6 @@ use Livewire\Component;
 use App\Models\Serie;
 use Illuminate\Support\Facades\Auth;
 use Livewire\Features\SupportRedirects\Redirector;
-use Native\Mobile\Attributes\OnNative;
-use Native\Mobile\Facades\Scanner;
-use Native\Mobile\Events\Scanner\CodeScanned;
-use App\Services\IsbnScraperService;
 
 /**
  * @property Collection<int, Edition> $books

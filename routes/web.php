@@ -7,7 +7,6 @@ use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\CollectionController;
 use App\Http\Controllers\ComicController;
 use App\Http\Controllers\ContactController;
-use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\SerieUserController;
 use App\Livewire\Albums\Index as AlbumsIndex;
@@ -18,6 +17,7 @@ use App\Livewire\Collection\Albums\Show as CollectionAlbumsShow;
 use App\Livewire\Dashboard;
 use App\Livewire\Series\Index as SeriesIndex;
 use App\Livewire\Series\Show as SeriesShow;
+use App\Livewire\Profile\Edit as ProfileEdit;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -75,10 +75,8 @@ Route::middleware('auth')->group(function () {
     //albums view
     Route::match(['post', 'delete'], '/collection/toggle/{album}', [CollectionController::class, 'toggleCollection'])->name('albums.toggleCollected');
 
-    // ProfileController
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    // profile view
+    Route::get('/profile', ProfileEdit::class)->name('profile.edit');
 
     // Show contact form
     Route::get('/contact/form', [ContactController::class, 'show'])->name('contact.show');
