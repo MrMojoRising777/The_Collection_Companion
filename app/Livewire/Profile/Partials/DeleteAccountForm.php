@@ -4,15 +4,17 @@ declare(strict_types=1);
 
 namespace App\Livewire\Profile\Partials;
 
-use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
+use Livewire\Attributes\Validate;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 
 class DeleteAccountForm extends Component
 {
-    public $confirmingUserDeletion = false;
-    public $password = '';
+    #[validate(['required', 'current_password'])]
+    public string $password = '';
+    public bool $confirmingUserDeletion = false;
 
     public function confirmUserDeletion(): void
     {
@@ -21,11 +23,9 @@ class DeleteAccountForm extends Component
         $this->confirmingUserDeletion = true;
     }
 
-    public function deleteUser(): RedirectResponse
+    public function deleteUser(): Redirector
     {
-        $this->validate([
-            'password' => ['required', 'current_password'],
-        ]);
+        $this->validate();
 
         $user = Auth::user();
 
@@ -33,8 +33,8 @@ class DeleteAccountForm extends Component
 
         $user->delete();
 
-        request()->session()->invalidate();
-        request()->session()->regenerateToken();
+        app('session')->invalidate();
+        app('session')->regenerateToken();
 
         return redirect('/');
     }

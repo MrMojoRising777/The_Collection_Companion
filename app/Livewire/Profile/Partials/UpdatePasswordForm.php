@@ -36,7 +36,6 @@ class UpdatePasswordForm extends Component
             'password' => Hash::make($this->password),
         ]);
 
-        // reset fields
         $this->reset(['current_password', 'password', 'password_confirmation']);
 
         $this->saved = true;
