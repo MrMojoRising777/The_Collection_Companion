@@ -79,6 +79,7 @@ class ComicWizard extends Component
     {
         $isbn = preg_replace('/[^0-9X]/', '', trim($data));
 
+        /** @var ComicData|null $comic */
         $comic = $this->resolver->resolveFromIsbn(isbn: $isbn);
 
         if (! $comic) {

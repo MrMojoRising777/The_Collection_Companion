@@ -4,15 +4,16 @@ declare(strict_types=1);
 
 namespace App\Services;
 
-use App\Dtos\BookData;
+use App\Dtos\GoogleBookData;
 use Illuminate\Support\Facades\Http;
+use Throwable;
 
 class IsbnScraperService
 {
     /**
-     * @return BookData|null
+     * @throws Throwable
      */
-    public function fetch(string $isbn): ?BookData
+    public function fetch(string $isbn): ?GoogleBookData
     {
         try {
             $response = Http::get("https://www.googleapis.com/books/v1/volumes", [
@@ -28,8 +29,8 @@ class IsbnScraperService
                 return null;
             }
 
-            return BookData::fromGoogleBooks(data: $response->json());
-        } catch (\Throwable $error) {
+            return GoogleBookData::fromGoogleBooks(data: $response->json());
+        } catch (Throwable $error) {
             if ($error->getMessage() === 'RATE_LIMITED') {
                 throw $error;
             }
