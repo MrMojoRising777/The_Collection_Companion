@@ -1,2 +1,20 @@
 @import "tailwindcss";
 @import './swal-toast.css';
+
+.scroll-area::-webkit-scrollbar {
+    width: 8px;
+    height: 8px;
+}
+
+.scroll-area::-webkit-scrollbar-track {
+    background: #374151; /* gray-700 */
+}
+
+.scroll-area::-webkit-scrollbar-thumb {
+    background: #6b7280; /* gray-500 */
+    border-radius: 9999px;
+}
+
+.scroll-area::-webkit-scrollbar-thumb:hover {
+    background: #9ca3af; /* gray-400 */
+}

@@ -4,11 +4,10 @@ declare(strict_types=1);
 
 namespace App\Livewire\Series;
 
-use App\Models\Album;
-use App\Models\Edition;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Support\Collection;
-use Illuminate\Support\Facades\Artisan;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Serie;
@@ -16,7 +15,7 @@ use Illuminate\Support\Facades\Auth;
 use Livewire\Features\SupportRedirects\Redirector;
 
 /**
- * @property Collection<int, Edition> $books
+ * @property Collection<int, Serie> $series
  */
 #[Layout('components.layouts.app')]
 class Index extends Component
@@ -29,17 +28,9 @@ class Index extends Component
         $this->view = $view;
     }
 
-    public function seedDB(): void // TODO remove
-    {
-        if (Album::query()->count() === 0) {
-            Artisan::call('migrate --seed');
-        }
-    }
-
-    public function toggleTracking($serieId): void
+    public function toggleTracking(Serie $serie): void
     {
         $user = Auth::user();
-        $serie = Serie::findOrFail($serieId);
 
         if ($user->trackedSeries->contains($serie)) {
             $user->trackedSeries()->detach($serie->id);
@@ -47,7 +38,6 @@ class Index extends Component
             $user->trackedSeries()->attach($serie->id);
         }
 
-        // refresh relation
         $user->refresh();
     }
 
@@ -56,12 +46,13 @@ class Index extends Component
         return redirect()->route('series.show', $serie);
     }
 
-    public function getSeriesProperty(): Collection
+    #[Computed]
+    public function series(): Collection
     {
         return Serie::query()
             ->withCount('albums')
-            ->when($this->search, function ($query) {
-                $query->where('name', 'like', '%' . $this->search . '%')
+            ->when($this->search, function (Builder $query): Builder {
+                return $query->where('name', 'like', '%' . $this->search . '%')
                     ->orWhere('abbreviation', 'like', '%' . $this->search . '%');
             })
             ->orderBy('name')
