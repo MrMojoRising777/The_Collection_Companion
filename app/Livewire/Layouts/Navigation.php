@@ -9,6 +9,13 @@ use Livewire\Component;
 
 class Navigation extends Component
 {
+    public bool $open = false;
+
+    public function toggle(): void
+    {
+        $this->open = ! $this->open;
+    }
+
     public function openComicWizard(): void
     {
         $this->dispatch('openModal',
