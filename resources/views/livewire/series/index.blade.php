@@ -3,7 +3,7 @@
         Alle Series
     </h1>
 
-    <blockquote class="text-center text-mist-300 italic mb-6">
+    <blockquote class="text-center text-mist-300 italic mb-4">
         Bekijk en doorzoek ALLE series in de app. Beslis hier of je de serie wil verzamelen.
     </blockquote>
 
@@ -20,7 +20,7 @@
         </div>
 
         <div class="
-            flex items-center justify-center gap-2 mt-3
+            flex items-center justify-center gap-2 mt-4
             sm:absolute sm:right-0 sm:top-1/2 sm:-translate-y-1/2 sm:mt-0 sm:justify-start
         ">
             <button
@@ -40,6 +40,7 @@
             </button>
         </div>
     </div>
+
     @if ($view === 'table')
         <div class="scroll-area max-h-96 overflow-y-auto overflow-x-auto border border-gray-600 rounded-lg">
             <table class="w-full border-collapse">
