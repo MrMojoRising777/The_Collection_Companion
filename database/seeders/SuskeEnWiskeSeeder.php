@@ -15,7 +15,7 @@ use App\Models\Album;
 class SuskeEnWiskeSeeder extends Seeder
 {
     /**
-     * @throws Exception if Wikipedia page fetch fails
+     * @throws Exception when Wikipedia page fetch fails
      */
     public function run(): void
     {

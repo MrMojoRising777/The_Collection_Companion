@@ -13,7 +13,7 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('editions', function (Blueprint $table) {
+        Schema::create('editions', function (Blueprint $table): void {
             $table->id();
             $table->foreignId('album_id')->constrained();
             $table->foreignId('serie_id')->constrained();
@@ -21,6 +21,7 @@ return new class extends Migration
             $table->string('image')->nullable();
             $table->string('cover')->nullable();
             $table->string('color')->nullable();
+            $table->date('release_date')->nullable();
             $table->timestamps();
 
             $table->unique(['album_id', 'serie_id']);
@@ -32,6 +33,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('album_serie');
+        Schema::dropIfExists('editions');
     }
 };

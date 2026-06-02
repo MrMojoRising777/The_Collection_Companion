@@ -21,7 +21,6 @@ class Album extends Model
 
     protected $fillable = [
         'name',
-        'volume',
     ];
 
     // region attributes
