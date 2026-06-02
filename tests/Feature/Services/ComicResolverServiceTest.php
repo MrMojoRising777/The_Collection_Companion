@@ -7,7 +7,7 @@ namespace Tests\Feature\Services;
 use App\Data\ComicData;
 use App\Dtos\GoogleBookData;
 use App\Services\ComicResolverService;
-use App\Services\IsbnScraperService;
+use App\Services\GoogleApiService;
 use Database\Factories\AlbumFactory;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Support\Collection;
@@ -30,13 +30,13 @@ class ComicResolverServiceTest extends TestCase
             thumbnail: null,
         );
 
-        $mock = Mockery::mock(IsbnScraperService::class);
+        $mock = Mockery::mock(GoogleApiService::class);
         $mock->shouldReceive('fetch')
             ->once()
             ->with('9789002153624')
             ->andReturn($book);
 
-        $this->app->instance(IsbnScraperService::class, $mock);
+        $this->app->instance(GoogleApiService::class, $mock);
 
         $service = app(ComicResolverService::class);
 

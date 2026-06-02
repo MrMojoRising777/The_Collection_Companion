@@ -13,7 +13,7 @@ class ComicResolverService
 {
     public function resolveFromIsbn(string $isbn): ?ComicData
     {
-        $book = app(IsbnScraperService::class)->fetch(isbn: $isbn);
+        $book = app(GoogleApiService::class)->fetch(isbn: $isbn);
 
         if (! $book) {
             return null;
