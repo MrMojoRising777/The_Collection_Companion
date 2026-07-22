@@ -5,6 +5,8 @@ declare(strict_types=1);
 namespace App\Livewire\Modals;
 
 use App\Data\ComicData;
+use App\Exceptions\RateLimitException;
+use App\Exceptions\UnavailableException;
 use App\Models\User;
 use App\Services\ComicResolverService;
 use App\Traits\HasAlerts;
@@ -79,8 +81,28 @@ class ComicWizard extends Component
     {
         $isbn = preg_replace('/[^0-9X]/', '', trim($data));
 
-        /** @var ComicData|null $comic */
-        $comic = $this->resolver->resolveFromIsbn(isbn: $isbn);
+        try {
+            /** @var ComicData|null $comic */
+            $comic = $this->resolver->resolveFromIsbn(isbn: $isbn);
+        } catch (RateLimitException) {
+            $this->alert(
+                message: 'Limit reached',
+                type: 'error',
+            );
+
+            $this->step = 'search';
+
+            return;
+        } catch (UnavailableException) {
+            $this->alert(
+                message: 'Temporarily unavailable',
+                type: 'error',
+            );
+
+            $this->step = 'search';
+
+            return;
+        }
 
         if (! $comic) {
             $this->step = 'search';

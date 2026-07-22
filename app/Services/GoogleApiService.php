@@ -5,13 +5,26 @@ declare(strict_types=1);
 namespace App\Services;
 
 use App\Dtos\GoogleBookData;
+use App\Exceptions\RateLimitException;
+use App\Exceptions\UnavailableException;
 use Illuminate\Support\Facades\Http;
-use RuntimeException;
 use Throwable;
 
+/**
+ * Google Books API integration.
+ *
+ * Rate limits:
+ * - 1,000 requests per day per Google Cloud project (default quota).
+ * - 100 requests per minute per user.
+ *
+ * Response codes:
+ * - 429: quota exceeded
+ * - 503: service unavailable
+ */
 class GoogleApiService
 {
     /**
+     * @throws RateLimitException
      * @throws Throwable
      */
     public function fetch(string $isbn): ?GoogleBookData
@@ -23,7 +36,11 @@ class GoogleApiService
             ]);
 
             if ($response->tooManyRequests()) {
-                throw new RuntimeException('RATE_LIMITED');
+                throw new RateLimitException(message: 'Google Books API rate limit exceeded.');
+            }
+
+            if ($response->status() === 503) {
+                throw new UnavailableException(message: 'Google Books API is temporarily unavailable.');
             }
 
             if (! $response->successful()) {
@@ -31,11 +48,9 @@ class GoogleApiService
             }
 
             return GoogleBookData::fromGoogleBooks(data: $response->json());
+        } catch (RateLimitException|UnavailableException $error) {
+            throw $error;
         } catch (Throwable $error) {
-            if ($error->getMessage() === 'RATE_LIMITED') {
-                throw $error;
-            }
-
             logger()->error('ISBN scrape failed', [
                 'isbn' => $isbn,
                 'error' => $error->getMessage()

@@ -8,9 +8,13 @@ use App\Data\ComicData;
 use App\Models\Album;
 use App\Models\Edition;
 use Illuminate\Support\Collection;
+use Throwable;
 
 class ComicResolverService
 {
+    /**
+     * @throws Throwable
+     */
     public function resolveFromIsbn(string $isbn): ?ComicData
     {
         $book = app(GoogleApiService::class)->fetch(isbn: $isbn);
