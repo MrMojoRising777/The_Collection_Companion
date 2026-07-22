@@ -33,3 +33,7 @@ build:
 # Run Native Jump
 jump:
     php artisan native:jump
+
+# Run PHPStan
+stan:
+    composer analyse
