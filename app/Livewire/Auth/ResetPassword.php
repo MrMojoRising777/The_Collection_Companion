@@ -63,6 +63,8 @@ class ResetPassword extends Component
         }
 
         $this->addError('email', __($status));
+
+        return null;
     }
 
     public function render(): View

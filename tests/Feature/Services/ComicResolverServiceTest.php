@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Services;
+namespace Feature\Services;
 
 use App\Data\ComicData;
 use App\Dtos\GoogleBookData;

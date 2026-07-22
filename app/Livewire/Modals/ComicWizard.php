@@ -10,7 +10,9 @@ use App\Exceptions\UnavailableException;
 use App\Models\User;
 use App\Services\ComicResolverService;
 use App\Traits\HasAlerts;
+use Illuminate\Support\Collection;
 use Illuminate\View\View;
+use Livewire\Attributes\Computed;
 use Livewire\Component;
 use App\Models\Serie;
 use App\Models\Edition;
@@ -19,6 +21,9 @@ use Native\Mobile\Attributes\OnNative;
 use Native\Mobile\Events\Scanner\CodeScanned;
 use Native\Mobile\Facades\System;
 
+/**
+ * @property Collection<int, Serie> $series
+ */
 class ComicWizard extends Component
 {
     use HasAlerts;
@@ -184,7 +189,8 @@ class ComicWizard extends Component
         $this->dispatch('closeModal');
     }
 
-    public function getSeriesProperty()
+    #[Computed]
+    public function series(): Collection
     {
         return Serie::query()
             ->orderBy('name')

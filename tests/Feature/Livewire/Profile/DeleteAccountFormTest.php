@@ -2,7 +2,7 @@
 
 declare(strict_types=1);
 
-namespace Tests\Feature\Livewire\Profile;
+namespace Feature\Livewire\Profile;
 
 use App\Livewire\Profile\Partials\DeleteAccountForm;
 use App\Models\User;
