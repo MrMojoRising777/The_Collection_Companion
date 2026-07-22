@@ -32,7 +32,7 @@ class CollectionController extends Controller
 
     public function indexAlbums() // SHOW ALBUMS IN COLLECTION
     {
-        $collection = auth()->user()->ownedCopies()->with('album')->paginate(10);
+        $collection = auth()->user()->ownedCopies()->with('edition')->paginate(10);
         return view('collection.albums.index', compact('collection'));
     }
 
@@ -64,13 +64,13 @@ class CollectionController extends Controller
 
     public function getFavorites() // SHOW FAVORITES ONLY
     {
-        $collection = auth()->user()->ownedCopies()->where('favorite', 1)->with('album')->paginate(10);
+        $collection = auth()->user()->ownedCopies()->where('favorite', 1)->with('edition')->paginate(10);
         return view('collection.albums.index', compact('collection'));
     }
 
     public function getFirstPrints() // SHOW FIRST_PRINTS ONLY
     {
-        $collection = auth()->user()->ownedCopies()->where('first_print', 1)->with('album')->paginate(10);
+        $collection = auth()->user()->ownedCopies()->where('first_print', 1)->with('edition')->paginate(10);
         return view('collection.albums.index', compact('collection'));
     }
 

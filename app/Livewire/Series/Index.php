@@ -12,7 +12,6 @@ use Livewire\Attributes\Layout;
 use Livewire\Component;
 use App\Models\Serie;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Features\SupportRedirects\Redirector;
 
 /**
  * @property Collection<int, Serie> $series
@@ -41,9 +40,9 @@ class Index extends Component
         $user->refresh();
     }
 
-    public function showSerie(Serie $serie): Redirector
+    public function showSerie(Serie $serie): void
     {
-        return redirect()->route('series.show', $serie);
+        $this->redirectRoute('series.show', $serie);
     }
 
     #[Computed]

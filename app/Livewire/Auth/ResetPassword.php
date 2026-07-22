@@ -5,6 +5,7 @@ declare(strict_types=1);
 namespace App\Livewire\Auth;
 
 use App\Models\User;
+use App\Traits\HasAlerts;
 use Illuminate\Auth\Events\PasswordReset;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Password;
@@ -13,11 +14,12 @@ use Illuminate\View\View;
 use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Livewire\Features\SupportRedirects\Redirector;
 
 #[Layout('components.layouts.guest')]
 class ResetPassword extends Component
 {
+    use HasAlerts;
+
     #[Validate(['required'])]
     public string $token;
 
@@ -37,7 +39,7 @@ class ResetPassword extends Component
         $this->email = $email ?? request()->email ?? '';
     }
 
-    public function resetPassword(): Redirector|null
+    public function resetPassword(): void
     {
         $this->validate();
 
@@ -59,12 +61,13 @@ class ResetPassword extends Component
         );
 
         if ($status === Password::PASSWORD_RESET) {
-            return redirect()->route('login')->with('status', __($status));
+            $this->alert(message: __($status));
+            $this->redirectRoute('login');
+
+            return;
         }
 
         $this->addError('email', __($status));
-
-        return null;
     }
 
     public function render(): View

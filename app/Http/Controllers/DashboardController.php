@@ -53,35 +53,48 @@ class DashboardController extends Controller
             ->get(['albums.*']);
     }
 
-    /**
-     * @return Collection<int, OwnedCopy>
-     */
-    private function calculateCollectionValue(): Collection
+    private function calculateCollectionValue(): int
     {
         return OwnedCopy::join('albums', 'collections.album_id', '=', 'albums.id')
             ->sum('albums.value');
     }
 
     /**
-     * @return Collection<int, Album>
+     * @return Collection<int, array{
+     *     serie_name: string,
+     *     total: int,
+     *     obtained: int,
+     *     percentage: float|int,
+     * }>
      */
     private function calculateObtainedPercentage(): Collection
     {
+        /** @var Collection<string, Collection<int, Album>> $groupedAlbums */
         $groupedAlbums = Album::with('series')->get()->groupBy('serie.name');
+
+        /** @var Collection<string, Collection<int, OwnedCopy>> $groupedObtainedAlbums */
         $groupedObtainedAlbums = OwnedCopy::with('edition')->get()->groupBy('album.serie.name');
 
-        return $groupedAlbums->map(function ($albums, $seriesName) use ($groupedObtainedAlbums) {
-            $totalAlbums = count($albums);
-            $obtainedAlbums = $groupedObtainedAlbums->has($seriesName) ? count($groupedObtainedAlbums[$seriesName]) : 0;
-            $percentage = ($totalAlbums > 0) ? round(($obtainedAlbums / $totalAlbums) * 100) : 0;
+        return $groupedAlbums
+            ->map(function (Collection $albums, string $seriesName) use ($groupedObtainedAlbums): array {
+                $totalAlbums = $albums->count();
 
-            return [
-                'serie_name' => $seriesName,
-                'total' => $totalAlbums,
-                'obtained' => $obtainedAlbums,
-                'percentage' => $percentage,
-            ];
-        });
+                $obtainedAlbums = $groupedObtainedAlbums->has($seriesName)
+                    ? $groupedObtainedAlbums->get($seriesName)->count()
+                    : 0;
+
+                $percentage = $totalAlbums > 0
+                    ? round(($obtainedAlbums / $totalAlbums) * 100)
+                    : 0;
+
+                return [
+                    'serie_name' => $seriesName,
+                    'total' => $totalAlbums,
+                    'obtained' => $obtainedAlbums,
+                    'percentage' => $percentage,
+                ];
+            })
+            ->values();
     }
 
     /**

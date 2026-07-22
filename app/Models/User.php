@@ -18,22 +18,12 @@ class User extends Authenticatable
         HasFactory,
         Notifiable;
 
-    /**
-     * The attributes that are mass assignable.
-     *
-     * @var array<int, string>
-     */
     protected $fillable = [
         'name',
         'email',
         'password',
     ];
 
-    /**
-     * The attributes that should be hidden for serialization.
-     *
-     * @var array<int, string>
-     */
     protected $hidden = [
         'password',
         'remember_token',
@@ -76,6 +66,9 @@ class User extends Authenticatable
         'password' => 'hashed',
     ];
 
+    /**
+     * @return HasMany<OwnedCopy, $this>
+     */
     public function ownedCopies(): HasMany
     {
         return $this->hasMany(OwnedCopy::class);

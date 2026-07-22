@@ -8,7 +8,6 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
-use Livewire\Features\SupportRedirects\Redirector;
 
 class DeleteAccountForm extends Component
 {
@@ -23,7 +22,7 @@ class DeleteAccountForm extends Component
         $this->confirmingUserDeletion = true;
     }
 
-    public function deleteUser(): Redirector
+    public function deleteUser(): void
     {
         $this->validate();
 
@@ -36,7 +35,7 @@ class DeleteAccountForm extends Component
         app('session')->invalidate();
         app('session')->regenerateToken();
 
-        return redirect('/');
+        $this->redirectRoute('');
     }
 
     public function render(): View

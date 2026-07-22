@@ -3,9 +3,7 @@
 declare(strict_types=1);
 
 use App\Http\Controllers\AlbumController;
-use App\Http\Controllers\BarcodeController;
 use App\Http\Controllers\CollectionController;
-use App\Http\Controllers\ComicController;
 use App\Http\Controllers\ContactController;
 use App\Http\Controllers\SerieController;
 use App\Http\Controllers\SerieUserController;
@@ -26,9 +24,6 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 |
 */
-
-Route::get('sendTitle/{title}', [ISBNController::class, 'setAlbumObtained']);
-
 Route::get('/', function () {
     return view('welcome');
 });

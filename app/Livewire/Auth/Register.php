@@ -12,7 +12,6 @@ use Livewire\Attributes\Layout;
 use Livewire\Attributes\Validate;
 use Livewire\Component;
 use Illuminate\Support\Facades\Auth;
-use Livewire\Features\SupportRedirects\Redirector;
 
 #[Layout('components.layouts.guest')]
 class Register extends Component
@@ -28,7 +27,7 @@ class Register extends Component
 
     public string $password_confirmation = '';
 
-    public function register(): Redirector
+    public function register(): void
     {
         $this->validate();
 
@@ -44,7 +43,7 @@ class Register extends Component
 
         Auth::login($user);
 
-        return redirect()->intended(route('dashboard'));
+        $this->redirectRoute('dashboard');
     }
 
     public function render(): View

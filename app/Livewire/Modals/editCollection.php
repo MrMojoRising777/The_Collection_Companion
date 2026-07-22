@@ -14,14 +14,14 @@ class editCollection extends Component
 {
     use HasAlerts;
 
-    public OwnedCopy $collection;
+    public ?OwnedCopy $collection;
 
     public function mount(int $albumSerieId): void
     {
         $this->collection = $this->getCollection(id: $albumSerieId);
     }
 
-    private function getCollection(int $id): OwnedCopy
+    private function getCollection(int $id): ?OwnedCopy
     {
         /** @var User $user */
         $user = auth()->user();

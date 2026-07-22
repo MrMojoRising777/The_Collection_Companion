@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\Support\Str;
 use Illuminate\Validation\ValidationException;
 use Illuminate\Auth\Events\Lockout;
-use Livewire\Features\SupportRedirects\Redirector;
 
 #[Layout('components.layouts.guest')]
 class Login extends Component
@@ -27,7 +26,7 @@ class Login extends Component
     #[Validate(['required', 'bool'])]
     public bool $remember = false;
 
-    public function login(): Redirector
+    public function login(): void
     {
         $this->validate();
 
@@ -48,7 +47,7 @@ class Login extends Component
 
         request()->session()->regenerate();
 
-        return redirect()->intended(route('dashboard'));
+        $this->redirectRoute('dashboard');
     }
 
     protected function ensureIsNotRateLimited(): void
