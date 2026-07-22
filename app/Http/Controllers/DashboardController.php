@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use App\Models\Album;
 use App\Models\OwnedCopy;
+use Illuminate\Support\Collection;
 
 class DashboardController extends Controller
 {
@@ -15,19 +16,22 @@ class DashboardController extends Controller
 //        $collectionValue = $this->calculateCollectionValue();
         $seriesPercentages = $this->calculateObtainedPercentage();
         $favorites = $this->getFavoriteAlbums();
-        $achievements = $this->getUserAchievements(1);
+//        $achievements = $this->getUserAchievements(1);
 
         return view('dashboard', compact(
             'recentAlbums',
 //            'mostValuedAlbums',
 //            'collectionValue',
             'favorites',
-            'achievements',
+//            'achievements',
             'seriesPercentages',
         ));
     }
 
-    private function getRecentAlbums($limit)
+    /**
+     * @return Collection<int, OwnedCopy>
+     */
+    private function getRecentAlbums(int $limit): Collection
     {
         return OwnedCopy::with('edition')
             ->join('albums', 'collections.album_id', '=', 'albums.id')
@@ -37,7 +41,10 @@ class DashboardController extends Controller
             ->get();
     }
 
-    private function getMostValuedAlbums($limit)
+    /**
+     * @return Collection<int, OwnedCopy>
+     */
+    private function getMostValuedAlbums(int $limit): Collection
     {
         return OwnedCopy::with('edition')
             ->join('albums', 'collections.album_id', '=', 'albums.id')
@@ -46,12 +53,19 @@ class DashboardController extends Controller
             ->get(['albums.*']);
     }
 
-    private function calculateCollectionValue()
+    /**
+     * @return Collection<int, OwnedCopy>
+     */
+    private function calculateCollectionValue(): Collection
     {
-        return OwnedCopy::join('albums', 'collections.album_id', '=', 'albums.id')->sum('albums.value');
+        return OwnedCopy::join('albums', 'collections.album_id', '=', 'albums.id')
+            ->sum('albums.value');
     }
 
-    private function calculateObtainedPercentage()
+    /**
+     * @return Collection<int, Album>
+     */
+    private function calculateObtainedPercentage(): Collection
     {
         $groupedAlbums = Album::with('series')->get()->groupBy('serie.name');
         $groupedObtainedAlbums = OwnedCopy::with('edition')->get()->groupBy('album.serie.name');
@@ -70,7 +84,10 @@ class DashboardController extends Controller
         });
     }
 
-    private function getFavoriteAlbums()
+    /**
+     * @return Collection<int, OwnedCopy>
+     */
+    private function getFavoriteAlbums(): Collection
     {
         return OwnedCopy::with('edition')
             ->where('favorite', 1)
@@ -78,9 +95,9 @@ class DashboardController extends Controller
             ->get();
     }
 
-    private function getUserAchievements($userId)
-    {
-        $user = User::findOrFail($userId);
-        return $user->achievements;
-    }
+//    private function getUserAchievements(int $userId): Collection
+//    {
+//        $user = User::findOrFail($userId);
+//        return $user->achievements;
+//    }
 }

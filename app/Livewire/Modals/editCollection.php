@@ -26,7 +26,7 @@ class editCollection extends Component
         /** @var User $user */
         $user = auth()->user();
 
-        return $user->collections()
+        return $user->ownedCopies()
             ->where('album_serie_id', $id)
             ->first();
     }

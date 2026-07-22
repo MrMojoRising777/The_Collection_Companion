@@ -26,7 +26,7 @@ class Show extends Component
         $user = auth()->user();
 
         return $user
-            ->albums()
+            ->ownedCopies()
             ->where('album_id', $this->album->id)
             ->exists();
     }
