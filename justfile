@@ -22,6 +22,10 @@ update:
 test:
     php artisan test
 
+# Open Tinker
+tink:
+    php artisan tinker
+
 # Clear Laravel caches
 clear:
     php artisan optimize:clear
