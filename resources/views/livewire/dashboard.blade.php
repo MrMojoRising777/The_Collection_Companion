@@ -2,7 +2,7 @@
     <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
         <div class="lg:col-span-8 bg-white dark:bg-gray-500 shadow rounded-lg p-6">
             <h2 class="text-xl font-semibold mb-4">Progressie</h2>
-             @include('components.series-progress-bars')
+             @livewire('dashboard.series-progress-bars')
         </div>
 
         <div class="lg:col-span-4 bg-white dark:bg-gray-500 shadow rounded-lg p-6">

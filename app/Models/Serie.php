@@ -9,7 +9,12 @@ use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
+/**
+ * @property-read int $total
+ * @property-read int $obtained
+ */
 class Serie extends Model
 {
     use HasFactory;
@@ -46,5 +51,17 @@ class Serie extends Model
         return $this->belongsToMany(Album::class, 'editions')
             ->withPivot('volume', 'image', 'cover', 'color')
             ->withTimestamps();
+    }
+
+    public function ownedCopies(): HasManyThrough
+    {
+        return $this->hasManyThrough(
+            OwnedCopy::class,
+            Edition::class,
+            'serie_id',
+            'edition_id',
+            'id',
+            'id',
+        );
     }
 }

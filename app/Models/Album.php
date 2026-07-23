@@ -8,6 +8,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 use Illuminate\Support\Collection;
 
 /**
@@ -50,8 +51,15 @@ class Album extends Model
         return $this->hasMany(Edition::class);
     }
 
-    public function ownedCopies(): HasMany
+    public function ownedCopies(): HasManyThrough
     {
-        return $this->hasMany(OwnedCopy::class, 'edition_id');
+        return $this->hasManyThrough(
+            OwnedCopy::class,
+            Edition::class,
+            'album_id',
+            'edition_id',
+            'id',
+            'id',
+        );
     }
 }
